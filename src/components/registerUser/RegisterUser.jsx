@@ -14,7 +14,7 @@ const RegisterUser = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { signup, isAuthenticated, errors: registerErrors } = useAuth;
+  const { signup, isAuthenticated, errors: registerErrors } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,26 +40,28 @@ const RegisterUser = () => {
               <Form.Label></Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Nombre"
+                placeholder="Nombre y Apellido"
                 {...register("name", { required: true })}
               />
               {errors.name && (
-                <Alert key="danger" variant="danger" size="sm">
-                  El nombre es requerido.
-                </Alert>
+                <p className="text-danger">El nombre y apellido es requerido</p>
+                // <Alert key="danger" variant="danger" size="sm">
+                //   El nombre y apellido es requerido.
+                // </Alert>
               )}
             </Form.Group>
-            <Form.Group className="" controlId="formBasicLastName">
+            <Form.Group className="" controlId="formBasicUserName">
               <Form.Label></Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Apellido"
+                placeholder="Nombre de usuario"
                 {...register("lastName", { required: true })}
               />
               {errors.lastName && (
-                <Alert key="danger" variant="danger" size="sm">
-                  El apellido es requerido.
-                </Alert>
+                <p className="text-danger">El nombre de usuario es requerido</p>
+                // <Alert key="danger" variant="danger" size="sm">
+                //   El nombre de usuario es requerido.
+                // </Alert>
               )}
             </Form.Group>
             <Form.Group className="" controlId="formBasicEmail">
@@ -67,28 +69,22 @@ const RegisterUser = () => {
               <Form.Control
                 type="email"
                 placeholder="Email"
-                {...register("email", { required: true })}
+                {...register(
+                  "email",
+                  { required: true },
+                  { pattern: emailRegex }
+                )}
               />
               {errors.email && (
-                <Alert key="danger" variant="danger" size="sm">
-                  El email es requerido.
-                </Alert>
+                <p className="text-danger">El email es requerido</p>
+
+                // <Alert key="danger" variant="danger" size="sm">
+                //   El email es requerido.
+                // </Alert>
               )}
             </Form.Group>
-            <Form.Group className="" controlId="formBasicDni">
-              <Form.Label></Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="DNI (sin puntos)"
-                {...register("dni", { required: true })}
-              />
-              {errors.dni && (
-                <Alert key="danger" variant="danger" size="sm">
-                  El DNI es requerido.
-                </Alert>
-              )}
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
+
+            <Form.Group className="" controlId="formBasicPassword">
               <Form.Label></Form.Label>
               <Form.Control
                 type="password"
@@ -100,9 +96,37 @@ const RegisterUser = () => {
                 )}
               />
               {errors.password && (
-                <Alert key="danger" variant="danger" size="sm">
-                  La contraseña es requerida.
-                </Alert>
+                <p className="text-danger">La contraseña es requerida</p>
+                // <Alert key="danger" variant="danger" size="sm">
+                //   La contraseña es requerida.
+                // </Alert>
+              )}
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicPasswordCheck">
+              <Form.Label></Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Repite la Contraseña"
+                {...register("password", { required: true })}
+              />
+              {errors.password && (
+                <p className="text-danger">La contraseña es requerida</p>
+                // <Alert key="danger" variant="danger" size="sm">
+                //   La contraseña es requerida.
+                // </Alert>
+              )}
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+              <Form.Check
+                type="checkbox"
+                label="Acepto los términos y codiciones"
+                {...register("checkbox", { required: true })}
+              />
+              {errors.checkbox && (
+                <p className="text-danger">Debe aceptar los terminos y condiciones</p>
+                // <Alert key="danger" variant="danger" size="sm">
+                //   Debe acetar los términos y condiciones.
+                // </Alert>
               )}
             </Form.Group>
             <Button variant="primary" type="submit">
