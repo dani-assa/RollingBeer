@@ -3,13 +3,14 @@ import { Col, Container, Form, Row, Button, Alert } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/UserContext";
-import { passRegex, emailRegex, nameRegex } from "../../validation/registerValidation";
+import {
+  passRegex,
+  emailRegex,
+  nameRegex,
+} from "../../validation/registerValidation";
+import {img} from './RegisterUser.module.css'
 
 const RegisterUser = () => {
-  // const passRegex =
-  //   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{6,20}$/;
-  // const emailRegex =
-  //   /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
   const {
     register,
     handleSubmit,
@@ -28,7 +29,7 @@ const RegisterUser = () => {
 
   return (
     <Container>
-      <Row className="justify-content-center">
+      <Row >
         <Col sm={6}>
           {registerErrors.map((error, i) => (
             <Alert key={i} variant="danger">
@@ -158,6 +159,13 @@ const RegisterUser = () => {
               Iniciar sesión
             </Link>
           </p>
+          
+        </Col>
+        <Col>
+          <img className={img}
+            src="https://cdn.pixabay.com/photo/2017/04/07/01/01/bar-2209813_1280.jpg"
+            alt=""
+          />
         </Col>
       </Row>
     </Container>
