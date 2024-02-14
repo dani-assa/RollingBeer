@@ -1,4 +1,9 @@
-.img {
-  padding-top: 100px;
-  width: 400px;
+#imgFondo {
+  background-image:url('https://cdn.pixabay.com/photo/2017/04/07/01/01/bar-2209813_1280.jpg') ;
+  
+}
+
+.formbg {
+  background-color: #EBEBEB;
+  border-radius: 3%;
 }

@@ -8,7 +8,7 @@ import {
   emailRegex,
   nameRegex,
 } from "../../validation/registerValidation";
-import {img} from './RegisterUser.module.css'
+import { imgFondo, formbg } from "./RegisterUser.module.css";
 
 const RegisterUser = () => {
   const {
@@ -28,9 +28,9 @@ const RegisterUser = () => {
   });
 
   return (
-    <Container>
-      <Row >
-        <Col sm={6}>
+    <Container className="mt-4" id={imgFondo}>
+      <Row className="justify-content-center">
+        <Col sm={6} className={formbg}>
           {registerErrors.map((error, i) => (
             <Alert key={i} variant="danger">
               {error}
@@ -52,6 +52,10 @@ const RegisterUser = () => {
                     value: nameRegex,
                     message: "El nombre es invalido",
                   },
+                  maxLenght: {
+                    value: 40,
+                    message: 'El nombre no puede tener más de 40 caracteres'
+                  }
                 })}
               />
               {errors.name && (
@@ -159,14 +163,14 @@ const RegisterUser = () => {
               Iniciar sesión
             </Link>
           </p>
-          
         </Col>
-        <Col>
-          <img className={img}
+        {/* <Col>
+          <img
+            className={img}
             src="https://cdn.pixabay.com/photo/2017/04/07/01/01/bar-2209813_1280.jpg"
             alt=""
           />
-        </Col>
+        </Col> */}
       </Row>
     </Container>
   );
