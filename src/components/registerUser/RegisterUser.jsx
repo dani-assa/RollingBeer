@@ -98,7 +98,26 @@ const RegisterUser = () => {
                 <span className="text-danger">{errors.email.message}</span>
               )}
             </Form.Group>
-
+            <Form.Group className="" controlId="formBasicDni">
+              <Form.Label></Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="DNI (sin puntos)"
+                {...register("dni", {
+                  required: {
+                    value: true,
+                    message: "El DNI es requerido",
+                  },
+                  // pattern: {
+                  //   value: emailRegex,
+                  //   message: "El correo no es valido",
+                  // },
+                })}
+              />
+              {errors.dni && (
+                <span className="text-danger">{errors.dni.message}</span>
+              )}
+            </Form.Group>
             <Form.Group className="" controlId="formBasicPassword">
               <Form.Label></Form.Label>
               <Form.Control
