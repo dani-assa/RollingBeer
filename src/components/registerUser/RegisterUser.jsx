@@ -8,7 +8,8 @@ import {
   emailRegex,
   nameRegex,
 } from "../../validation/registerValidation";
-import { imgFondo, formbg } from "./RegisterUser.module.css";
+import { imgFondo, formbg, btnRegister } from "./RegisterUser.module.css";
+
 
 const RegisterUser = () => {
   const {
@@ -172,7 +173,7 @@ const RegisterUser = () => {
                 <span className="text-danger">{errors.checkbox.message}</span>
               )}
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" className={btnRegister}>
               Registrarse
             </Button>
           </Form>
@@ -183,13 +184,6 @@ const RegisterUser = () => {
             </Link>
           </p>
         </Col>
-        {/* <Col>
-          <img
-            className={img}
-            src="https://cdn.pixabay.com/photo/2017/04/07/01/01/bar-2209813_1280.jpg"
-            alt=""
-          />
-        </Col> */}
       </Row>
     </Container>
   );
