@@ -8,8 +8,8 @@
 
 .bgNav {
   background: transparent;
-  position: absolute;
-  width: 100vw;
+  /* position: fixed !important;
+  width: 100vw !important; */
 }
 
 .bgColorLogo {
@@ -37,14 +37,14 @@
 
 .btnNav {
   background-color: var(--colorFour) !important;
-  color: var(--colorOne);
-  font-weight: 500;
-  border: var(--colorFour);
-  margin: 0 5px;
+  color: var(--colorOne) !important;
+  font-weight: 500 !important;
+  border: var(--colorFour) !important;
+  margin: 5px 5px;
   border-radius: 10px !important;
   transition: all 0.3s;
 }
 
 .btnNav:hover {
-  color: var(--colorFive);
+  color: var(--colorFive) !important;
 }

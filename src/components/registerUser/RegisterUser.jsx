@@ -8,8 +8,7 @@ import {
   emailRegex,
   nameRegex,
 } from "../../validation/registerValidation";
-import { imgFondo, formbg, btnRegister } from "./RegisterUser.module.css";
-
+import { formbg, btnRegister } from "./RegisterUser.module.css";
 
 const RegisterUser = () => {
   const {
@@ -29,7 +28,7 @@ const RegisterUser = () => {
   });
 
   return (
-    <Container className="mt-4" id={imgFondo}>
+    <Container className="mt-5" >
       <Row className="justify-content-center">
         <Col sm={6} className={formbg}>
           {registerErrors.map((error, i) => (
@@ -55,8 +54,8 @@ const RegisterUser = () => {
                   },
                   maxLenght: {
                     value: 40,
-                    message: 'El nombre no puede tener más de 40 caracteres'
-                  }
+                    message: "El nombre no puede tener más de 40 caracteres",
+                  },
                 })}
               />
               {errors.name && (
