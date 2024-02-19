@@ -14,13 +14,14 @@ import {
   bgColorLogo,
   linkNav,
   btnNav,
+  bgNav
 } from "./navbar.module.css";
 import { Link, useNavigate } from "react-router-dom";
 
 const NavbarV1 = () => {
   const navigate = useNavigate();
   return (
-    <Navbar collapseOnSelect expand="lg" className="">
+    <Navbar collapseOnSelect expand="lg" className={bgNav}>
       <Container fluid>
         <Navbar.Brand className={bgColorLogo}>
           <Link to="/" className="text-decoration-none">

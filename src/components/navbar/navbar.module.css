@@ -6,6 +6,12 @@
   --colorFive: #ff6700;
 }
 
+.bgNav {
+  background: transparent;
+  position: absolute;
+  width: 100vw;
+}
+
 .bgColorLogo {
   background-color: var(--colorFour);
   padding: 0 10px;
