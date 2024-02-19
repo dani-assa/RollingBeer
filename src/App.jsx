@@ -5,14 +5,14 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import ErrorPage from "./pages/ErrorPage";
-import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/footer/Footer";
+import NavbarV1 from "./components/navbar/NavbarV1";
 
 const App = () => {
   return (
     <UserProvider>
       <BrowserRouter>
-        <Navbar />
+        <NavbarV1 />
         <main>
           <Routes>
             <Route path="/login" element={<Login />} />
