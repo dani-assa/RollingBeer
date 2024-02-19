@@ -1,0 +1,66 @@
+.cont{
+    background-color: #1c1c1c;;
+}
+
+#section1{
+    background-image: url('../assets/bar1.jpg');
+    border-radius: 25px;
+}
+
+#section2{
+    background-image: url('../assets/barsection2.webp');
+    border-radius: 25px;
+}
+
+#section3{
+    background-image: url('../assets/barsection3.webp');
+    border-radius: 25px;
+}
+
+#section4{
+    background-image: url('../assets/section4.webp');
+    border-radius: 25px;
+}
+
+.text1{
+    position: relative;
+    z-index: 2;
+    text-align: justify;
+    color: #EBEBEB;
+    font-size: 18px;
+    padding: 10px;
+    background-color: rgba(58, 110, 165, 0.5);
+    border-radius: 50px;
+}
+
+.h1h1{
+    font-size: 2rem;
+    padding: 20px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5); 
+    border-radius: 50px;
+}
+
+
+
+.box1{
+    color: white;
+    background-color: rgba(0, 0, 0, 0.685); 
+    border-radius: 50px;
+}
+
+@media (min-width: 768px) {
+
+    .img1{
+        margin-left: 5rem;
+    }
+    
+    .h1h1{
+        font-size: 4rem;
+        padding: 20px;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5); 
+        border-radius: 50px;
+    }
+
+}
