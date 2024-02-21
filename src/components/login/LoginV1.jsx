@@ -3,6 +3,7 @@ import { Col, Container, Form, Row, Button, Alert } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/UserContext";
 import { Link, useNavigate } from "react-router-dom";
+import { fondoLogin, btnLogin, btnReg } from "./login.module.css";
 
 const LoginV1 = () => {
   const {
@@ -31,7 +32,7 @@ const LoginV1 = () => {
   };
   return (
     <Container>
-      <Row className="justify-content-center">
+      <Row className={fondoLogin}>
         <Col sm={6}>
           {signinErrors.map((error, i) => (
             <Alert key={i} variant="danger">
@@ -45,18 +46,23 @@ const LoginV1 = () => {
               <Form.Control
                 type="text"
                 placeholder="Email"
-                {...register("email", { 
+                className={errors.email?.message ? "is-invalid" : ""}
+                {...register("email", {
                   required: {
-                    value: true, 
-                    message: "El email es requerido"
-                  } }
-                  )}
+                    value: true,
+                    message: "El email es requerido",
+                  },
+                })}
               />
-              {errors.email && (
+              <Form.Control.Feedback type="invalid">
+                {/* Message */}
+                {errors.email?.message}
+              </Form.Control.Feedback>
+              {/* {errors.email && (
                 <span className="text-danger fw-bold">
                   {errors.email.message}
                 </span>
-              )}
+              )} */}
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label></Form.Label>
@@ -64,18 +70,22 @@ const LoginV1 = () => {
                 type="password"
                 id="password"
                 placeholder="Contraseña"
-                {...register("password", { 
-                  required:{
+                className={errors.password?.message ? "is-invalid" : ""}
+                {...register("password", {
+                  required: {
                     value: true,
-                    message: "La contraseña es requerida"
-                  }  }
-                  )}
+                    message: "La contraseña es requerida",
+                  },
+                })}
               />
-              {errors.password && (
+              <Form.Control.Feedback type="invalid">
+                {errors.password?.message}
+              </Form.Control.Feedback>
+              {/* {errors.password && (
                 <span className="text-danger fw-bold">
                   {errors.password.message}
                 </span>
-              )}
+              )} */}
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Check
@@ -84,13 +94,13 @@ const LoginV1 = () => {
                 label="Mostrar contraseña"
               />
             </Form.Group>
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" className={btnLogin}>
               Iniciar sesión
             </Button>
           </Form>
           <p className="mt-2 d-flex justify-content-between">
             Todavia no tienes cuenta?
-            <Link to="/register" className="text-decoration-none">
+            <Link to="/register" className={btnReg}>
               Registrate
             </Link>
           </p>

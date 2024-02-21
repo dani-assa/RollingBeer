@@ -13,7 +13,7 @@ const App = () => {
     <UserProvider>
       <BrowserRouter>
         <NavbarV1 />
-        <main>
+        <main className="mt-5">
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Home />} />
