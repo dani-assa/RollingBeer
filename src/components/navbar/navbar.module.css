@@ -48,3 +48,11 @@
 .btnNav:hover {
   color: var(--colorFive) !important;
 }
+
+.navbarToggler {
+  border: none !important;
+}
+
+.navbarToggler:focus {
+  box-shadow: none !important;
+}
