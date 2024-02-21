@@ -1,0 +1,35 @@
+:root {
+  --colorOne: #004e98;
+  --colorTwo: #3a6ea5;
+  --colorThree: #c0c0c0;
+  --colorFour: #ebebeb;
+  --colorFive: #ff6700;
+}
+
+.fondoLogin {
+  background-color: var(--colorFour);
+  justify-content: center;
+  width: auto;
+  margin: 10px 0;
+  border-radius: 15px;
+}
+
+.btnLogin {
+  background-color: var(--colorOne) !important;
+  border: var(--colorOne) !important;
+  transition: all 0.3s;
+}
+
+.btnLogin:hover {
+  color: var(--colorFive);
+}
+
+.btnReg {
+  text-decoration: none;
+  color: var(--colorOne);
+  transition: all 0.3s;
+}
+
+.btnReg:hover {
+  color: var(--colorFive);
+}
