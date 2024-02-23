@@ -8,6 +8,7 @@ import ErrorPage from "./pages/ErrorPage";
 import Footer from "./components/footer/Footer";
 import NavbarV1 from "./components/navbar/NavbarV1";
 import NavbarV2 from "./components/navbar/NavbarV2";
+import ListadoDeProd from "./pages/ListadoDeProd";
 
 const App = () => {
   return (
@@ -21,7 +22,8 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="*" element={<ErrorPage />} />
             <Route path="/register" element={<Register />} />
-          </Routes>
+            <Route path="/listado" element={<ListadoDeProd />}/>
+         </Routes>
         </main>
         <Footer />
       </BrowserRouter>
