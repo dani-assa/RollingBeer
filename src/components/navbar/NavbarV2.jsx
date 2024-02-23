@@ -19,13 +19,20 @@ import {
   navbarToggler,
   btnCerrarSesion,
 } from "./navbar.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/UserContext";
 
 const NavbarV2 = () => {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+  const cerrarSesion = () => {
+    logout();
+    navigate("/");
+  };
   return (
     <>
-      {[false].map((expand) => (
-        <Navbar key={expand} expand={expand} className="bg-body-tertiary mb-3" >
+      {["lg"].map((expand) => (
+        <Navbar key={expand} expand={expand} className="bg-body-tertiary mb-3">
           <Container fluid>
             <Navbar.Brand className={bgColorLogo}>
               <Link to="/" className="text-decoration-none">
@@ -36,34 +43,87 @@ const NavbarV2 = () => {
                 <span className={colorLogo}> Rolling Beer</span>
               </Link>
             </Navbar.Brand>
-            <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} className={navbarToggler} />
+            <Navbar.Toggle
+              aria-controls={`offcanvasNavbar-expand-${expand}`}
+              className={navbarToggler}
+            />
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-${expand}`}
               aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
               placement="end"
             >
               <Offcanvas.Header closeButton>
-                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
+                <Offcanvas.Title
+                  id={`offcanvasNavbarLabel-expand-${expand}`}
+                >
                   RollingBeer
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link href="#action1">Home</Nav.Link>
-                  <Nav.Link href="#action2">Link</Nav.Link>
-                  <NavDropdown
-                    title="Dropdown"
-                    id={`offcanvasNavbarDropdown-expand-${expand}`}
-                  >
-                    <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
-                    <NavDropdown.Item href="#action4">
-                      Another action
-                    </NavDropdown.Item>
-                    <NavDropdown.Divider />
-                    <NavDropdown.Item href="#action5">
-                      Something else here
-                    </NavDropdown.Item>
-                  </NavDropdown>
+                  <Nav.Link>
+                    <Link to="./" className="text-decoration-none">
+                      Home
+                    </Link>
+                  </Nav.Link>
+                  <Nav.Link>
+                    <Link to="./" className="text-decoration-none">
+                      About me
+                    </Link>
+                  </Nav.Link>
+                  <Nav.Link>
+                    <Link to="./" className="text-decoration-none">
+                      Contact
+                    </Link>
+                  </Nav.Link>
+                  {user ? (
+                    <>
+                      <li className="nav-item mt-2 ms-lg-5">
+                        <b className="mb-3 fw-semibold">Bienvenid@ {user.name}</b>
+                      </li>
+                      <li className="nav-item">
+                        <Button
+                          id={btnCerrarSesion}
+                          size="sm"
+                          className="mt-1 ms-lg-3 text-ligth fw-semibold"
+                          onClick={cerrarSesion}
+                        >
+                          Cerrar sesión
+                        </Button>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        size="sm"
+                        onClick={() => navigate("/login")}
+                        className={btnNav}
+                      >
+                        Iniciar sesión
+                      </Button>
+                      <Button
+                        size="sm"
+                        onClick={() => navigate("/register")}
+                        className={btnNav}
+                      >
+                        Registrate
+                      </Button>
+                    </>
+                  )}
+                  {user?.role === "admin" ? (
+                    <li className="nav-item">
+                      <Button
+                        variant="dark"
+                        size="sm"
+                        className="mt-1 text-ligth fw-semibold"
+                        onClick={() => navigate("/admin")}
+                      >
+                        Panel Admin
+                      </Button>
+                    </li>
+                  ) : (
+                    ""
+                  )}
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>
