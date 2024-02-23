@@ -15,7 +15,8 @@ import {
   linkNav,
   btnNav,
   bgNav,
-  navbarToggler
+  navbarToggler,
+  btnCerrarSesion
 } from "./navbar.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/UserContext";
@@ -66,7 +67,7 @@ const NavbarV1 = () => {
                 </li>
                 <li className="nav-item">
                   <Button
-                    variant="info"
+                    id={btnCerrarSesion}
                     size="sm"
                     className="mt-1 ms-lg-3 text-ligth fw-semibold"
                     onClick={cerrarSesion}
