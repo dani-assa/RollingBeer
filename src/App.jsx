@@ -8,6 +8,8 @@ import ErrorPage from "./pages/ErrorPage";
 import Footer from "./components/footer/Footer";
 import NavbarV1 from "./components/navbar/NavbarV1";
 import NavbarV2 from "./components/navbar/NavbarV2";
+import Admin from "./pages/Admin";
+import ProtectedRouteAdmin from "./protectedRoute/ProtectedRouteAdmin";
 
 const App = () => {
   return (
@@ -21,6 +23,9 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="*" element={<ErrorPage />} />
             <Route path="/register" element={<Register />} />
+            <Route element={<ProtectedRouteAdmin />}>
+              <Route path="/admin" element={<Admin />} />
+            </Route>
           </Routes>
         </main>
         <Footer />
