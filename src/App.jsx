@@ -12,7 +12,6 @@ import ListadoDeProd from "./pages/ListadoDeProd";
 import Admin from "./pages/Admin";
 import ProtectedRouteAdmin from "./protectedRoute/ProtectedRouteAdmin";
 
-
 const App = () => {
   return (
     <UserProvider>
@@ -25,8 +24,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="*" element={<ErrorPage />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/listado" element={<ListadoDeProd />}/>
-         </Routes>
+            <Route path="/listado" element={<ListadoDeProd />} />
             <Route element={<ProtectedRouteAdmin />}>
               <Route path="/admin" element={<Admin />} />
             </Route>
