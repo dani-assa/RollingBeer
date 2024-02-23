@@ -76,6 +76,11 @@ const NavbarV2 = () => {
                       Contact
                     </Link>
                   </Nav.Link>
+                  <Nav.Link>
+                    <Link to="./listado" className="text-decoration-none">
+                      Listado de productos
+                    </Link>
+                  </Nav.Link>
                   {user ? (
                     <>
                       <li className="nav-item mt-2 ms-lg-5">
