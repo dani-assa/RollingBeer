@@ -15,6 +15,8 @@ import {
   linkNav,
   btnNav,
   bgNav,
+  navbarToggler,
+  btnCerrarSesion
 } from "./navbar.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/UserContext";
@@ -40,7 +42,8 @@ const NavbarV1 = () => {
             <span className={colorLogo}> Rolling Beer</span>
           </Link>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Toggle aria-controls="responsive-navbar-nav"
+        className={navbarToggler} />
         <Navbar.Collapse
           id="responsive-navbar-nav"
           className="justify-content-end"
@@ -64,7 +67,7 @@ const NavbarV1 = () => {
                 </li>
                 <li className="nav-item">
                   <Button
-                    variant="info"
+                    id={btnCerrarSesion}
                     size="sm"
                     className="mt-1 ms-lg-3 text-ligth fw-semibold"
                     onClick={cerrarSesion}

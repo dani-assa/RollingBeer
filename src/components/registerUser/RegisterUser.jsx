@@ -15,6 +15,7 @@ const RegisterUser = () => {
     register,
     handleSubmit,
     formState: { errors },
+    watch
   } = useForm();
   const { signup, isAuthenticated, errors: registerErrors } = useAuth();
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const RegisterUser = () => {
   });
 
   return (
-    <Container className="mt-5" >
+    <Container className="mt-5">
       <Row className="justify-content-center">
         <Col sm={6} className={formbg}>
           {registerErrors.map((error, i) => (
@@ -43,6 +44,7 @@ const RegisterUser = () => {
               <Form.Control
                 type="text"
                 placeholder="Nombre y Apellido"
+                className={errors.name?.message ? "is-invalid" : ""}
                 {...register("name", {
                   required: {
                     value: true,
@@ -58,15 +60,16 @@ const RegisterUser = () => {
                   },
                 })}
               />
-              {errors.name && (
-                <span className="text-danger">{errors.name.message}</span>
-              )}
+              <Form.Control.Feedback type="invalid">
+                {errors.name?.message}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="" controlId="formBasicUserName">
               <Form.Label></Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Nombre de usuario"
+                className={errors.userName?.message ? "is-invalid" : ""}
                 {...register("userName", {
                   required: {
                     value: true,
@@ -74,15 +77,16 @@ const RegisterUser = () => {
                   },
                 })}
               />
-              {errors.userName && (
-                <span className="text-danger">{errors.userName.message}</span>
-              )}
+              <Form.Control.Feedback type="invalid">
+                {errors.userName?.message}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="" controlId="formBasicEmail">
               <Form.Label></Form.Label>
               <Form.Control
                 type="email"
                 placeholder="Correo"
+                className={errors.email?.message ? "is-invalid" : ""}
                 {...register("email", {
                   required: {
                     value: true,
@@ -94,15 +98,16 @@ const RegisterUser = () => {
                   },
                 })}
               />
-              {errors.email && (
-                <span className="text-danger">{errors.email.message}</span>
-              )}
+              <Form.Control.Feedback type="invalid">
+                {errors.email?.message}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="" controlId="formBasicDni">
               <Form.Label></Form.Label>
               <Form.Control
                 type="text"
                 placeholder="DNI (sin puntos)"
+                className={errors.dni?.message ? "is-invalid" : ""}
                 {...register("dni", {
                   required: {
                     value: true,
@@ -114,15 +119,16 @@ const RegisterUser = () => {
                   // },
                 })}
               />
-              {errors.dni && (
-                <span className="text-danger">{errors.dni.message}</span>
-              )}
+              <Form.Control.Feedback type="invalid">
+                {errors.dni?.message}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="" controlId="formBasicPassword">
               <Form.Label></Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Contraseña"
+                className={errors.password?.message ? "is-invalid" : ""}
                 {...register("password", {
                   required: {
                     value: true,
@@ -135,27 +141,32 @@ const RegisterUser = () => {
                   },
                 })}
               />
-              {errors.password && (
-                <span className="text-danger">{errors.password.message}</span>
-              )}
+              <Form.Control.Feedback type="invalid">
+                {errors.password?.message}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicPasswordCheck">
               <Form.Label></Form.Label>
               <Form.Control
                 type="password"
                 placeholder="Repite la Contraseña"
+                className={errors.passwordCheck?.message ? "is-invalid" : ""}
                 {...register("passwordCheck", {
                   required: {
                     value: true,
-                    message: "Debe repetir la contraseña",
+                    message: "La contraseña es requerida",
+                  },
+                  validate: (value) => {
+                    if (value == watch("password")) {
+                      return true;
+                    }
+                    return "Las contraseñas no coinciden";
                   },
                 })}
               />
-              {errors.passwordCheck && (
-                <span className="text-danger">
-                  {errors.passwordCheck.message}
-                </span>
-              )}
+              <Form.Control.Feedback type="invalid">
+                {errors.passwordCheck?.message}
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Check

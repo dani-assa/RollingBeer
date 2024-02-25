@@ -7,18 +7,27 @@ import Login from "./pages/Login";
 import ErrorPage from "./pages/ErrorPage";
 import Footer from "./components/footer/Footer";
 import NavbarV1 from "./components/navbar/NavbarV1";
+import NavbarV2 from "./components/navbar/NavbarV2";
+import ListadoDeProd from "./pages/ListadoDeProd";
+import Admin from "./pages/Admin";
+import ProtectedRouteAdmin from "./protectedRoute/ProtectedRouteAdmin";
 
 const App = () => {
   return (
     <UserProvider>
       <BrowserRouter>
-        <NavbarV1 />
-        <main>
+        {/* <NavbarV1 /> */}
+        <NavbarV2 />
+        <main className="mt-5">
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Home />} />
             <Route path="*" element={<ErrorPage />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/listado" element={<ListadoDeProd />} />
+            <Route element={<ProtectedRouteAdmin />}>
+              <Route path="/admin" element={<Admin />} />
+            </Route>
           </Routes>
         </main>
         <Footer />

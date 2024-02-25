@@ -1,0 +1,12 @@
+:root {
+    --colorOne: #004e98;
+    --colorTwo: #3a6ea5;
+    --colorThree: #c0c0c0;
+    --colorFour: #ebebeb;
+    --colorFive: #ff6700;
+  }
+
+
+.letra {
+    color:  #004e98;
+}
