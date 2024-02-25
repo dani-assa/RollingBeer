@@ -40,10 +40,10 @@ const FormRegisterV1 = () => {
     console.log(formData);
   return (
     <Container>
-        <Row>
-            <div className='d-flex justify-content-center text-white box1 p-5'>
-                <Col lg={6}>
-                    <div>
+        <Row className='box1'>
+                <Col md={6} className="text-center text-md-start p-sm-2 d-none d-lg-block">
+                    <div className="text-white p-4">
+                        <div>
                         <p><b>Localización</b></p>
                         <h2>Te esperamos</h2>
                         <p>Horario <br/>
@@ -54,8 +54,11 @@ const FormRegisterV1 = () => {
                         <p><b>Dirección <br/> Gral. Paz 576, T4000 San Miguel de Tucumán, Tucumán <br /> teléfono <br/> 0381 578-3030 <br/> Email <br/> academy@rollingcodeschool.com <br /> Redes Sociales <br/> <a href="https://www.instagram.com/rollingcodeschool/">Instagram</a> </b></p>
                         
                     </div>
+                    </div>
+                    
                 </Col>
-                <Col lg={6}>
+                <Col xs={12} md={6} className="text-center p-sm-2">
+                   <div className="text-white p-4 p-sm-2">
                     <h1>Haz una reserva</h1>
                     <p><b>También puedes reservar por teléfono si lo prefieres.</b></p>
                 <Form onSubmit={handleSubmit}>
@@ -91,8 +94,8 @@ const FormRegisterV1 = () => {
                                     type="tel"
                                     placeholder="Ingrese un teléfono de contacto"
                                     value={telefono}
-                                    onChange={(e) => setTelefono(Math.max(1,e.target.value))}
-                                    min="1"
+                                    onChange={(e) => setTelefono(e.target.value)}
+                                    pattern="[0-9]{10}"
                                     
                                 />
                             </Form.Group>
@@ -101,8 +104,8 @@ const FormRegisterV1 = () => {
                         Reservar
                     </Button>
                     </Form>
+                    </div>
                 </Col> 
-            </div>
         </Row>
     </Container>
   )
