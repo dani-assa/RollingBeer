@@ -57,7 +57,7 @@ const FormRegisterV1 = () => {
                     </div>
                     
                 </Col>
-                <Col xs={12} md={6} className="text-center p-sm-2">
+                <Col xs={12} lg={6} className="text-center p-sm-2">
                    <div className="text-white p-4 p-sm-2">
                     <h1>Haz una reserva</h1>
                     <p><b>También puedes reservar por teléfono si lo prefieres.</b></p>
