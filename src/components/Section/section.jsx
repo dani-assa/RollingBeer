@@ -13,8 +13,8 @@ function Section() {
           <div className="d-flex flex-column justify-content-center align-items-center vh-100" id="section1"> 
               <h1 className='h1h1 text-center mb-5'>Disfruta de un ambiente único y especial</h1>
               <div className='d-flex mt-5 '>
-                <Button className=' mx-3 rounded-pill px-5' size='lg'>Ver carta</Button>
-                <Button className=' mx-3 rounded-pill px-5' size='lg'>Reservar mesa</Button>
+                <Button className=' mx-2 mx-md-3 rounded-pill px-5' size='lg'>Ver carta</Button>
+                <Button className=' mx-2 mx-md-3 rounded-pill px-5' size='lg'>Reservar mesa</Button>
               </div>
           </div>
           
@@ -24,7 +24,7 @@ function Section() {
             <CardV1 />
           </div>
           <div className="d-flex justify-content-center align-items-center vh-100" id="section3">
-              <Col lg={6} className="d-none d-lg-block" >
+              <Col lg={6} className="d-none d-xl-block" >
                     <div className='text-center text1'>
                       <h2><b>Presentamos una cerveza IPA (India Pale Ale)</b></h2>               
                         <p >Caracterizada por su color dorado ámbar profundo y su notable claridad. <br /> La espuma, de textura cremosa y duradera, se asienta en la parte superior del vaso,<br /> evidenciando la calidad y frescura de la cerveza.</p>
@@ -35,8 +35,8 @@ function Section() {
                     </div> 
                 </Col > 
                 <div className='flex-column '>
-                    <Col md={12} lg={6}  className=" d-lg-none ">
-                      <div className='text-center  text1  mb-5'>
+                    <Col md={12} xl={6}  className=" d-xl-none ">
+                      <div className=' justify-content-center text-center  text1  mb-5'>
                           <h2><b>Presentamos una cerveza IPA (India Pale Ale)</b></h2>
                       </div>
                   </Col>
