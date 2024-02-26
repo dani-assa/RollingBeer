@@ -9,13 +9,14 @@ import {
   nameRegex,
 } from "../../validation/registerValidation";
 import { formbg, btnRegister } from "./RegisterUser.module.css";
+import { replace } from "formik";
 
 const RegisterUser = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch
+    watch,
   } = useForm();
   const { signup, isAuthenticated, errors: registerErrors } = useAuth();
   const navigate = useNavigate();
@@ -50,10 +51,10 @@ const RegisterUser = () => {
                     value: true,
                     message: "El nombre y apellido es requerido",
                   },
-                  pattern: {
-                    value: nameRegex,
-                    message: "El nombre es invalido",
-                  },
+                  // pattern: {
+                  //   value: nameRegex,
+                  //   message: "El nombre es invalido",
+                  // },
                   maxLenght: {
                     value: 40,
                     message: "El nombre no puede tener más de 40 caracteres",
