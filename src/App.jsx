@@ -18,7 +18,7 @@ const App = () => {
       <BrowserRouter>
         {/* <NavbarV1 /> */}
         <NavbarV2 />
-        <main className="mt-5">
+        <main>
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Home />} />
