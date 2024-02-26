@@ -1,5 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { registerRequest, loginRequest, verifyTokenRequest } from "../api/user";
+import { registerRequest,
+  // loginRequest,
+  verifyTokenRequest } from "../api/user";
 import Cookies from "js-cookie";
 import axios from "../api/axios";
 export const UserContext = createContext();
@@ -21,7 +23,7 @@ export const UserProvider = ({ children }) => {
   const signup = async (user) => {
     try {
       const res = await registerRequest(user);
-      // setUser(res.data);
+      setUser(res.data);
       setIsAuthenticated(true);
     } catch (error) {
       setErrors(error.response.data);
@@ -96,3 +98,4 @@ export const UserProvider = ({ children }) => {
     </UserContext.Provider>
   );
 };
+
