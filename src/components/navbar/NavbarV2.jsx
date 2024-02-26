@@ -53,38 +53,34 @@ const NavbarV2 = () => {
               placement="end"
             >
               <Offcanvas.Header closeButton>
-                <Offcanvas.Title
-                  id={`offcanvasNavbarLabel-expand-${expand}`}
-                >
+                <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
                   RollingBeer
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <Nav.Link>
-                    <Link to="./" className="text-decoration-none">
-                      Home
-                    </Link>
-                  </Nav.Link>
-                  <Nav.Link>
-                    <Link to="./" className="text-decoration-none">
-                      About me
-                    </Link>
-                  </Nav.Link>
-                  <Nav.Link>
-                    <Link to="./" className="text-decoration-none">
-                      Contact
-                    </Link>
-                  </Nav.Link>
-                  <Nav.Link>
-                    <Link to="./listado" className="text-decoration-none">
-                      Listado de productos
-                    </Link>
-                  </Nav.Link>
+                  <Link to="./" className="text-decoration-none">
+                    Home
+                  </Link>
+
+                  <Link to="./" className="text-decoration-none">
+                    About me
+                  </Link>
+
+                  <Link to="./" className="text-decoration-none">
+                    Contact
+                  </Link>
+
+                  <Link to="./listado" className="text-decoration-none">
+                    Listado de productos
+                  </Link>
+
                   {user ? (
                     <>
                       <li className="nav-item mt-2 ms-lg-5">
-                        <b className="mb-3 fw-semibold">Bienvenid@ {user.name}</b>
+                        <b className="mb-3 fw-semibold">
+                          Bienvenid@ {user.name}
+                        </b>
                       </li>
                       <li className="nav-item">
                         <Button
