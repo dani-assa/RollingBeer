@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../../context/UserContext";
 import { Link, useNavigate } from "react-router-dom";
 import { fondoLogin, btnLogin, btnReg } from "./login.module.css";
+import ShowPassword from "../showPassword/ShowPassword";
 
 const LoginV1 = () => {
   const {
@@ -22,29 +23,22 @@ const LoginV1 = () => {
     signin(data);
   });
 
-  const showPassword = () => {
-    const pass = document.getElementById("password");
-    if (pass.type === "password") {
-      pass.type = "text";
-    } else {
-      pass.type = "password";
-    }
-  };
   return (
     <Container>
       <Row className={fondoLogin}>
         <Col sm={6}>
-          {signinErrors.map((error, i) => (
+          {/* {signinErrors.map((error, i) => (
             <Alert key={i} variant="danger">
               {error}
             </Alert>
-          ))}
+          ))} */}
           <h3>Login</h3>
           <Form onSubmit={onSubmit}>
-            <Form.Group className="" controlId="formBasicEmail">
-              <Form.Label></Form.Label>
+            <Form.Group className="" >
+              <Form.Label htmlFor="email"></Form.Label>
               <Form.Control
                 type="text"
+                id="email"
                 placeholder="Email"
                 className={errors.email?.message ? "is-invalid" : ""}
                 {...register("email", {
@@ -55,17 +49,11 @@ const LoginV1 = () => {
                 })}
               />
               <Form.Control.Feedback type="invalid">
-                {/* Message */}
                 {errors.email?.message}
               </Form.Control.Feedback>
-              {/* {errors.email && (
-                <span className="text-danger fw-bold">
-                  {errors.email.message}
-                </span>
-              )} */}
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPassword">
-              <Form.Label></Form.Label>
+            <Form.Group className="mb-3" >
+              <Form.Label htmlFor="password"></Form.Label>
               <Form.Control
                 type="password"
                 id="password"
@@ -89,7 +77,7 @@ const LoginV1 = () => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Check
-                onClick={showPassword}
+                onClick={ShowPassword}
                 type="checkbox"
                 label="Mostrar contraseña"
               />

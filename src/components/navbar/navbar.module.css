@@ -6,6 +6,10 @@
   --colorFive: #ff6700;
 }
 
+.titleOffCanva {
+  color: var(--colorOne);
+}
+
 .bgNav {
   background: transparent;
   /* position: fixed !important;
@@ -36,8 +40,8 @@
 }
 
 .btnNav {
-  background-color: var(--colorFour) !important;
-  color: var(--colorOne) !important;
+  background-color: var(--colorOne) !important;
+  color: var(--colorFour) !important;
   font-weight: 500 !important;
   border: var(--colorFour) !important;
   margin: 5px 5px;
@@ -55,4 +59,8 @@
 
 .navbarToggler:focus {
   box-shadow: none !important;
+}
+
+#btnCerrarSesion {
+  background-color: var(--colorOne) !important;
 }

@@ -1,0 +1,51 @@
+:root {
+    --colorOne: #004e98;
+    --colorTwo: #3a6ea5;
+    --colorThree: #c0c0c0;
+    --colorFour: #ebebeb;
+    --colorFive: #ff6700;
+  }
+
+#img1 {
+  background-image: url('/Users/nahunmelhen/Desktop/RollingBeer/RollingBeer/src/assets/cerveza3.PNG');
+  background-size: cover;
+  background-position: center;
+}
+
+#logo1{
+  position: absolute;
+  top: 60px; 
+  width: 100%; 
+}
+
+.letra1 {
+  z-index: 2;
+  text-align: center;
+  color: #EBEBEB;
+  font-size: 40px;
+  padding: 10px;
+  border-radius: 50px;
+  text-shadow: var(--colorOne);
+  background-color: rgba(121, 69, 6, 0.685);
+}
+
+#boton1 {
+  position: relative;
+  bottom: 0;
+  left: 250px;
+  margin: 10px;
+  padding: 8px 16px;
+  background-color: #000000;
+  color: #fff;
+  border: 1;
+  border-radius: 30px;
+}
+
+
+.cardV2 {
+  position: relative;
+  padding-top: 20px;
+  margin-top: 10px;
+}
+  
+
