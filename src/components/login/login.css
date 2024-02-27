@@ -7,11 +7,15 @@
 }
 
 .fondoLogin {
-  background-color: var(--colorFour);
+  /* background-color: var(--colorFour); */
+  background-image: url(https://cdn.pixabay.com/photo/2017/10/12/13/45/beer-2844659_960_720.jpg);
+  background-position: center;
   justify-content: center;
+  align-items: center;
   width: auto;
   margin: 10px 0;
   border-radius: 15px;
+  height: 500px;
 }
 
 .btnLogin {
@@ -33,3 +37,6 @@
 .btnReg:hover {
   color: var(--colorFive);
 }
+
+
+
