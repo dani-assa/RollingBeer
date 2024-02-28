@@ -50,7 +50,7 @@ background-image: url(https://i.ibb.co/16672sh/Dise-o-sin-t-tulo-13.png);
 }
 
 #email::placeholder, #password::placeholder {
-  color: var(--colorFour);
+  color: var(--colorThree);
 }
 
 
