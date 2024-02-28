@@ -15,8 +15,8 @@ background-image: url(https://i.ibb.co/16672sh/Dise-o-sin-t-tulo-13.png);
   background-repeat: no-repeat;
   justify-content: center;
   align-items: center;
-  width: auto;
-  margin: 10px 0;
+  /* width: 100%; */
+  margin: 100px 2.5px 0 2.5px !important;
   border-radius: 15px;
   height: 550px;
 }

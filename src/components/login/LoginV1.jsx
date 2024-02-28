@@ -32,7 +32,7 @@ const LoginV1 = () => {
               {error}
             </Alert>
           ))} */}
-          <h3 className="text-white mb-5 ">Iniciar sesión</h3>
+          <h3 className="text-white mb-5">Iniciar sesión</h3>
           <Form onSubmit={onSubmit}>
             <Form.Group className="">
               <Form.Label htmlFor="email"></Form.Label>
