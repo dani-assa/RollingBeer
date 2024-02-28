@@ -8,14 +8,17 @@
 
 .fondoLogin {
   /* background-color: var(--colorFour); */
-  background-image: url(https://cdn.pixabay.com/photo/2017/10/12/13/45/beer-2844659_960_720.jpg);
+  /* background-image: url(https://th.bing.com/th/id/OIG3.V6mpiGRiZRXZl4gVmyzf?pid=ImgGn); */
+  /* background-image: url(https://th.bing.com/th/id/OIG2.4O0R3q62WRcZ_pJ.1VIf?pid=ImgGn); */
+background-image: url(https://i.ibb.co/16672sh/Dise-o-sin-t-tulo-13.png);
   background-position: center;
+  background-repeat: no-repeat;
   justify-content: center;
   align-items: center;
   width: auto;
   margin: 10px 0;
   border-radius: 15px;
-  height: 500px;
+  height: 550px;
 }
 
 .btnLogin {
@@ -30,12 +33,24 @@
 
 .btnReg {
   text-decoration: none;
-  color: var(--colorOne);
+  color: var(--colorFive);
   transition: all 0.3s;
 }
 
 .btnReg:hover {
   color: var(--colorFive);
+}
+
+#email, #password {
+  background-color: transparent;
+  color: var(--colorFour);
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+}
+
+#email::placeholder, #password::placeholder {
+  color: var(--colorFour);
 }
 
 

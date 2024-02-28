@@ -32,7 +32,7 @@ const LoginV1 = () => {
               {error}
             </Alert>
           ))} */}
-          <h3 className="text-white">Login</h3>
+          <h3 className="text-white mb-5 ">Iniciar sesión</h3>
           <Form onSubmit={onSubmit}>
             <Form.Group className="">
               <Form.Label htmlFor="email"></Form.Label>
@@ -78,11 +78,11 @@ const LoginV1 = () => {
                 label="Mostrar contraseña"
               />
             </Form.Group>
-            <Button variant="primary" type="submit" className="btnLogin">
+            <Button variant="primary" type="submit" className="btnLogin mt-4">
               Iniciar sesión
             </Button>
           </Form>
-          <p className="mt-2 d-flex justify-content-between">
+          <p className="mt-5 d-flex justify-content-between text-white">
             Todavia no tienes cuenta?
             <Link to="/register" className="btnReg">
               Registrate
