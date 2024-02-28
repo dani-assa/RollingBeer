@@ -8,7 +8,7 @@ import {
   emailRegex,
   nameRegex,
 } from "../../validation/registerValidation";
-import { formbg, btnRegister } from "./RegisterUser.module.css";
+import "./RegisterUser.css";
 
 
 const RegisterUser = () => {
@@ -32,18 +32,19 @@ const RegisterUser = () => {
   return (
     <Container className="mt-5">
       <Row className="justify-content-center">
-        <Col sm={6} className={formbg}>
+        <Col sm={6} className="imgFondo rounded">
           {registerErrors.map((error, i) => (
             <Alert key={i} variant="danger">
               {error}
             </Alert>
           ))}
-          <h3>Formulario de Registro</h3>
+          <h3 className="text-white mt-3 pt-3">Formulario de Registro</h3>
           <Form onSubmit={onSubmit}>
-            <Form.Group className="" controlId="formBasicName">
-              <Form.Label></Form.Label>
+            <Form.Group>
+              <Form.Label htmlFor="name"></Form.Label>
               <Form.Control
                 type="text"
+                id="name"
                 placeholder="Nombre y Apellido"
                 className={errors.name?.message ? "is-invalid" : ""}
                 {...register("name", {
@@ -51,10 +52,10 @@ const RegisterUser = () => {
                     value: true,
                     message: "El nombre y apellido es requerido",
                   },
-                  // pattern: {
-                  //   value: nameRegex,
-                  //   message: "El nombre es invalido",
-                  // },
+                  pattern: {
+                    value: nameRegex,
+                    message: "El nombre es invalido",
+                  },
                   maxLenght: {
                     value: 40,
                     message: "El nombre no puede tener más de 40 caracteres",
@@ -65,9 +66,10 @@ const RegisterUser = () => {
                 {errors.name?.message}
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group className="" controlId="formBasicUserName">
-              <Form.Label></Form.Label>
+            <Form.Group>
+              <Form.Label htmlFor="userName"></Form.Label>
               <Form.Control
+                id="userName"
                 type="text"
                 placeholder="Nombre de usuario"
                 className={errors.userName?.message ? "is-invalid" : ""}
@@ -82,9 +84,10 @@ const RegisterUser = () => {
                 {errors.userName?.message}
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group className="" controlId="formBasicEmail">
-              <Form.Label></Form.Label>
+            <Form.Group>
+              <Form.Label htmlFor="email"></Form.Label>
               <Form.Control
+                id="email"
                 type="email"
                 placeholder="Correo"
                 className={errors.email?.message ? "is-invalid" : ""}
@@ -103,9 +106,10 @@ const RegisterUser = () => {
                 {errors.email?.message}
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group className="" controlId="formBasicDni">
-              <Form.Label></Form.Label>
+            <Form.Group >
+              <Form.Label htmlFor="dni"></Form.Label>
               <Form.Control
+                id="dni"
                 type="text"
                 placeholder="DNI (sin puntos)"
                 className={errors.dni?.message ? "is-invalid" : ""}
@@ -124,9 +128,10 @@ const RegisterUser = () => {
                 {errors.dni?.message}
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group className="" controlId="formBasicPassword">
-              <Form.Label></Form.Label>
+            <Form.Group >
+              <Form.Label htmlFor="password"></Form.Label>
               <Form.Control
+                id="password"
                 type="password"
                 placeholder="Contraseña"
                 className={errors.password?.message ? "is-invalid" : ""}
@@ -146,9 +151,10 @@ const RegisterUser = () => {
                 {errors.password?.message}
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicPasswordCheck">
-              <Form.Label></Form.Label>
+            <Form.Group>
+              <Form.Label htmlFor="passwordCheck"></Form.Label>
               <Form.Control
+                id="passwordCheck"
                 type="password"
                 placeholder="Repite la Contraseña"
                 className={errors.passwordCheck?.message ? "is-invalid" : ""}
@@ -171,6 +177,7 @@ const RegisterUser = () => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Check
+                className="text-white mt-3"
                 type="checkbox"
                 label="Acepto los términos y codiciones"
                 {...register("checkbox", {
@@ -184,13 +191,13 @@ const RegisterUser = () => {
                 <span className="text-danger">{errors.checkbox.message}</span>
               )}
             </Form.Group>
-            <Button variant="primary" type="submit" className={btnRegister}>
+            <Button variant="primary" type="submit" className="btnRegister mt-3">
               Registrarse
             </Button>
           </Form>
-          <p className="mt-2 d-flex justify-content-between">
+          <p className="mt-2 d-flex justify-content-between text-white mt-5">
             Ya tienes una cuenta?
-            <Link to="/login" className="text-decoration-none">
+            <Link to="/login" className="text-decoration-none iniciarSesion">
               Iniciar sesión
             </Link>
           </p>
