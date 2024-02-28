@@ -30,8 +30,8 @@ const RegisterUser = () => {
   });
 
   return (
-    <Container className="mt-5">
-      <Row className="justify-content-center">
+    <Container>
+      <Row className="formRegister">
         <Col sm={6} className="imgFondo rounded">
           {registerErrors.map((error, i) => (
             <Alert key={i} variant="danger">
