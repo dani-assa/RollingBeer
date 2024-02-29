@@ -31,7 +31,7 @@ const CardV2 = ({ setPedidos }) => {
                 }}>+</Button>
                 <h1>{count}</h1>
                 <Button variant="warning" className="rounded-pill" onClick={restar}  >-</Button>
-                
+                <Button></Button>
         </div>
         <div className="d-flex justify-content-center">
         <Button className='mt-3 rounded-pill' variant="warning">Más detalles</Button>
