@@ -8,7 +8,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 
 const NavigationBar = () => {
   return (
-    <Container className="navigationBar">
+    <Container fluid className="navigationBar">
       <Link to="./" >
         <SettingsIcon fontSize="large" baseClassName="icono"/>
       </Link>
