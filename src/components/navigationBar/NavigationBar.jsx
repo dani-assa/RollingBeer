@@ -10,7 +10,7 @@ const NavigationBar = () => {
   return (
     <Container fluid className="navigationBar">
       <Link to="./" >
-        <SettingsIcon fontSize="large" baseClassName="icono"/>
+        <SettingsIcon fontSize="large"/>
       </Link>
       <Link to="./">
         <HomeIcon fontSize="large"/>
