@@ -27,7 +27,7 @@ const NavbarV2 = () => {
   const navigate = useNavigate();
   const cerrarSesion = () => {
     logout();
-    navigate("/");
+    navigate("/login");
   };
   return (
     <>

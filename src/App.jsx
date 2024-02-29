@@ -12,13 +12,14 @@ import ListadoDeProd from "./pages/ListadoDeProd";
 import Admin from "./pages/Admin";
 import ProtectedRouteAdmin from "./protectedRoute/ProtectedRouteAdmin";
 import NavigationBar from "./components/navigationBar/NavigationBar";
+import Profile from "./pages/Profile";
 
 const App = () => {
   return (
     <UserProvider>
       <BrowserRouter>
         {/* <NavbarV1 /> */}
-        <NavbarV2 />
+        {/* <NavbarV2 /> */}
         <main>
           <Routes>
             <Route path="/login" element={<Login />} />
@@ -26,6 +27,7 @@ const App = () => {
             <Route path="*" element={<ErrorPage />} />
             <Route path="/register" element={<Register />} />
             <Route path="/listado" element={<ListadoDeProd />} />
+            <Route path="/profile" element={<Profile />} />
             <Route element={<ProtectedRouteAdmin />}>
               <Route path="/admin" element={<Admin />} />
             </Route>
