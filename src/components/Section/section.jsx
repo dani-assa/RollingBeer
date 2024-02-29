@@ -19,8 +19,6 @@ function Section() {
           </div>
           
           <div className="d-flex flex-column justify-content-center align-items-center vh-100" id="section2">
-            <h2>Sección 2</h2>
-            <p></p>
             <CardV1 />
           </div>
           <div className="d-flex justify-content-center align-items-center vh-100" id="section3">
