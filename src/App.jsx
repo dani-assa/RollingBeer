@@ -11,6 +11,7 @@ import NavbarV2 from "./components/navbar/NavbarV2";
 import ListadoDeProd from "./pages/ListadoDeProd";
 import Admin from "./pages/Admin";
 import ProtectedRouteAdmin from "./protectedRoute/ProtectedRouteAdmin";
+import NavigationBar from "./components/navigationBar/NavigationBar";
 
 const App = () => {
   return (
@@ -30,7 +31,8 @@ const App = () => {
             </Route>
           </Routes>
         </main>
-        <Footer />
+        <NavigationBar />
+        {/* <Footer /> */}
       </BrowserRouter>
     </UserProvider>
   );

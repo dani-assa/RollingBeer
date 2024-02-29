@@ -1,5 +1,4 @@
 
-
 const ShowPassword = () => {
   const pass = document.getElementById("password");
   if (pass.type === "password") {

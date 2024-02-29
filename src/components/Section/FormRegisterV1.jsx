@@ -1,45 +1,45 @@
-import React, { useState } from 'react';
-import { Form, Button, Col, Container, Row  } from 'react-bootstrap';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import '../../styles/Section.css'
-
+import React, { useState } from "react";
+import { Form, Button, Col, Container, Row } from "react-bootstrap";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import "../../styles/Section.css";
 
 const FormRegisterV1 = () => {
-    const [startDate, setStartDate] = useState(new Date()); 
-    const [selectedDateTime, setSelectedDateTime] = useState(); 
-    const [numComensales, setNumComensales] = useState(1);
-    const [telefono, setTelefono] = useState('');
+  const [startDate, setStartDate] = useState(new Date());
+  const [selectedDateTime, setSelectedDateTime] = useState();
+  const [numComensales, setNumComensales] = useState(1);
+  const [telefono, setTelefono] = useState("");
 
-    const isPastDate = (date) => {
-        return new Date(date).getTime() < new Date().getTime();
-    };
+  const isPastDate = (date) => {
+    return new Date(date).getTime() < new Date().getTime();
+  };
 
-    const handleSubmit = (event) => {
-        event.preventDefault(); 
-        if (!isPastDate(startDate)) {
-            setSelectedDateTime(startDate);
-            // Para enviar a la base de datos
-            console.log(startDate);
-        } else {
-            alert('Por favor, elige una fecha y hora futuras.');
-        }
-    };
-
-    if(numComensales < 1) {
-        alert('El número de comensales no puede ser menor que 1.');
-        return;
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (!isPastDate(startDate)) {
+      setSelectedDateTime(startDate);
+      // Para enviar a la base de datos
+      console.log(startDate);
+    } else {
+      alert("Por favor, elige una fecha y hora futuras.");
     }
+  };
 
-    const formData = {
-        fechaHora: startDate,
-        numComensales: numComensales,
-        telefono: telefono
-    };
+  if (numComensales < 1) {
+    alert("El número de comensales no puede ser menor que 1.");
+    return;
+  }
 
-    console.log(formData);
+  const formData = {
+    fechaHora: startDate,
+    numComensales: numComensales,
+    telefono: telefono,
+  };
+
+  console.log(formData);
   return (
     <Container>
+
         <Row className='box1'>
                 <Col md={6} className="text-center text-md-start p-sm-2 d-none d-lg-block">
                     <div className="text-white p-4">
@@ -111,4 +111,5 @@ const FormRegisterV1 = () => {
   )
 }
 
-export default FormRegisterV1
+
+export default FormRegisterV1;

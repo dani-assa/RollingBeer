@@ -1,0 +1,50 @@
+:root {
+  --colorOne: #004e98;
+  --colorTwo: #3a6ea5;
+  --colorThree: #c0c0c0;
+  --colorFour: #ebebeb;
+  --colorFive: #ff6700;
+}
+
+.imgFondo {
+  background-image: url(https://i.ibb.co/2ZD5w7f/Fondos-form.png);
+  /* background-image: url(https://i.ibb.co/72bqYsp/2.png); */
+  background-position: center;
+  object-fit: cover;
+}
+
+.formRegister {
+  margin: 100px 2.5px 0 2.5px!important;
+
+}
+
+/* .formbg {
+  background-color: #ebebeb;
+  border-radius: 3%;
+} */
+
+.btnRegister {
+  background-color: var(--colorOne) !important;
+}
+
+#name,
+#userName,
+#dni,
+#passwordCheck {
+  background-color: transparent;
+  border-top: transparent;
+  border-left: transparent;
+  border-right: transparent;
+  color: var(--colorFour);
+}
+
+#name::placeholder,
+#userName::placeholder,
+#dni::placeholder,
+#passwordCheck::placeholder {
+  color: var(--colorThree);
+}
+
+.iniciarSesion {
+  color: var(--colorFive);
+}

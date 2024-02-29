@@ -1,0 +1,40 @@
+:root {
+  --colorOne: #004e98;
+  --colorTwo: #3a6ea5;
+  --colorThree: #c0c0c0;
+  --colorFour: #ebebeb;
+  --colorFive: #ff6700;
+}
+
+.navigationBar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--colorThree); 
+  padding: 10px 0;
+}
+
+.navigationBar a {
+  color: var(--colorOne);
+  text-decoration: none;
+}
+
+.navigationBar:active a:active {
+  color: var(--colorFive);
+}
+
+.icono{
+  color: var(--colorFour);
+}
+
+.icono:focus {
+  color: var(--colorFive);
+}
+
+.icono:active {
+  color: var(--colorFive);
+  width: 50px;
+}
+
