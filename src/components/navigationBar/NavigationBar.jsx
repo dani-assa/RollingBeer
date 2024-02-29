@@ -12,10 +12,10 @@ const NavigationBar = () => {
       <Link to="./" >
         <SettingsIcon fontSize="large"/>
       </Link>
-      <Link to="./">
+      <Link to="./" className="iconoHome">
         <HomeIcon fontSize="large"/>
       </Link>
-      <Link to="./login">
+      <Link to="./profile">
         <PersonIcon fontSize="large"/>
       </Link>
     </Container>

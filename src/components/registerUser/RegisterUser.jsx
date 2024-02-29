@@ -8,8 +8,8 @@ import {
   emailRegex,
   nameRegex,
 } from "../../validation/registerValidation";
-import { formbg, btnRegister } from "./RegisterUser.module.css";
-import { replace } from "formik";
+//import { formbg, btnRegister } from "./RegisterUser.module.css";
+//import { replace } from "formik";
 
 const RegisterUser = () => {
   const {
