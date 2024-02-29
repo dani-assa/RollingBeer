@@ -3,18 +3,19 @@ import { Card, Button } from 'react-bootstrap';
 import '../../styles/Section.css'
 
 
-const CardV2 = () => {
+const CardV2 = ({ setPedidos }) => {
     const [count, setCount] = useState(0)
-    const [guardarInfo , setGuardarInfo] = useState(0)
-    const guardarPedido = () => {
-        setGuardarInfo(count)
-        handleClose()
+
+    const guardarInfo = () => {
+        setPedidos(count)
     }
+
     const restar = () => {
         if (count > 0) {
             setCount (count -1)
         }
     }
+
   return (
     
     <Card >
@@ -29,8 +30,8 @@ const CardV2 = () => {
                     setCount(count + 1)
                 }}>+</Button>
                 <h1>{count}</h1>
-                <Button variant="warning" className="rounded-pill" onClick={restar} >-</Button>
-                <Button variant="warning" className="rounded-pill" onClick={guardarPedido}>🛒</Button>
+                <Button variant="warning" className="rounded-pill" onClick={restar}  >-</Button>
+                
         </div>
         <div className="d-flex justify-content-center">
         <Button className='mt-3 rounded-pill' variant="warning">Más detalles</Button>
