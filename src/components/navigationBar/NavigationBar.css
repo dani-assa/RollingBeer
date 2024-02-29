@@ -25,8 +25,11 @@
   color: var(--colorFive);
 }
 
-.icono{
-  color: var(--colorFour);
+.iconoHome{
+  background-color: var(--colorFive);
+  border-radius: 50%;
+  
+  color: var(--colorFour) !important;
 }
 
 .icono:focus {
@@ -37,4 +40,5 @@
   color: var(--colorFive);
   width: 50px;
 }
+
 
