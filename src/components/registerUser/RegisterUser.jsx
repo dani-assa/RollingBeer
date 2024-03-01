@@ -10,7 +10,6 @@ import {
 } from "../../validation/registerValidation";
 import "./RegisterUser.css";
 
-
 const RegisterUser = () => {
   const {
     register,
@@ -106,7 +105,7 @@ const RegisterUser = () => {
                 {errors.email?.message}
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group >
+            <Form.Group>
               <Form.Label htmlFor="dni"></Form.Label>
               <Form.Control
                 id="dni"
@@ -128,7 +127,26 @@ const RegisterUser = () => {
                 {errors.dni?.message}
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group >
+            <Form.Group>
+              <Form.Label htmlFor="date"></Form.Label>
+              <Form.Control
+                id="date"
+                type="date"
+                placeholder="Fecha de nacimiento"
+                className={errors.date?.message ? "is-invalid" : ""}
+                {...register("date", {
+                  required: {
+                    value: true,
+                    message: "La fecha de nacimiento es requerida",
+                  },
+                })}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.date?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+            
+            <Form.Group>
               <Form.Label htmlFor="password"></Form.Label>
               <Form.Control
                 id="password"
@@ -191,7 +209,11 @@ const RegisterUser = () => {
                 <span className="text-danger">{errors.checkbox.message}</span>
               )}
             </Form.Group>
-            <Button variant="primary" type="submit" className="btnRegister mt-3">
+            <Button
+              variant="primary"
+              type="submit"
+              className="btnRegister mt-3"
+            >
               Registrarse
             </Button>
           </Form>

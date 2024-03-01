@@ -24,7 +24,7 @@ const LoginV1 = () => {
   });
 
   return (
-    <Container>
+    <Container className="fondoLog">
       <Row className="fondoLogin">
         <Col sm={6}>
           {/* {signinErrors.map((error, i) => (

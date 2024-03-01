@@ -5,12 +5,12 @@
   --colorFour: #ebebeb;
   --colorFive: #ff6700;
 }
-
+/* 
+html {
+  background-color: var(--colorFour);
+} */
 .fondoLogin {
-  /* background-color: var(--colorFour); */
-  /* background-image: url(https://th.bing.com/th/id/OIG3.V6mpiGRiZRXZl4gVmyzf?pid=ImgGn); */
-  /* background-image: url(https://th.bing.com/th/id/OIG2.4O0R3q62WRcZ_pJ.1VIf?pid=ImgGn); */
-background-image: url(https://i.ibb.co/16672sh/Dise-o-sin-t-tulo-13.png);
+  background-image: url(https://i.ibb.co/16672sh/Dise-o-sin-t-tulo-13.png);
   background-position: center;
   background-repeat: no-repeat;
   justify-content: center;
@@ -41,7 +41,8 @@ background-image: url(https://i.ibb.co/16672sh/Dise-o-sin-t-tulo-13.png);
   color: var(--colorFive);
 }
 
-#email, #password {
+#email,
+#password {
   background-color: transparent;
   color: var(--colorFour);
   border-top: transparent;
@@ -49,9 +50,7 @@ background-image: url(https://i.ibb.co/16672sh/Dise-o-sin-t-tulo-13.png);
   border-right: transparent;
 }
 
-#email::placeholder, #password::placeholder {
+#email::placeholder,
+#password::placeholder {
   color: var(--colorThree);
 }
-
-
-
