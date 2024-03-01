@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Button, Modal, Form } from 'react-bootstrap';
 
-const CardV1 = () => {
+const CardV1 = ({ onAddCard, onCloseModal }) => {
 
       const [show, setShow] = useState(false);
       const [burgerOptions, setBurgerOptions] = useState({
@@ -73,6 +73,10 @@ const CardV1 = () => {
             </div>
         </div>
     );
+    const handleAddCard = () => {
+        onAddCard(...burgerOptions, cantidad, Number(burgerOptions.cantidad))
+        handleClose()
+    }
 
     return (
         <>
@@ -144,7 +148,7 @@ const CardV1 = () => {
 
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" onClick={handleClose}>
+                    <Button variant="primary" onClick={handleAddCard}>
                         Agregar al carrito
                     </Button>
                 </Modal.Footer>
