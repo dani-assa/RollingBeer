@@ -1,7 +1,8 @@
 import React from "react";
-import { Button } from "react-bootstrap";
+import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { useAuth } from "../../context/UserContext";
 import { Link, useNavigate } from "react-router-dom";
+import LoginV1 from "../login/LoginV1";
 
 const ProfileV1 = () => {
   const navigate = useNavigate();
@@ -14,18 +15,33 @@ const ProfileV1 = () => {
     <div className="mt-5">
       {user ? (
         <>
-          <h3>Bienvenid@ {user.name}</h3>
-          <Button onClick={cerrarSesion}>Cerrar sesion</Button>
+          <h3 className="ms-3">Bienvenid@ {user.name}</h3>
+          <Container>
+            <Row>
+              <Col>
+                <Card className="mt-4 mb-5">
+                  <Card.Body>
+                    <Card.Title>{user.name}</Card.Title>
+                  </Card.Body>
+                  <ListGroup className="list-group-flush">
+                    <ListGroup.Item>
+                      Nombre de usuario: {user.userName}
+                    </ListGroup.Item>
+                    <ListGroup.Item>Correo: {user.email}</ListGroup.Item>
+                    <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+                  </ListGroup>
+                  <Card.Body>
+                    <Card.Link href="#">Editar nombre</Card.Link>
+                  </Card.Body>
+                </Card>
+              </Col>
+            </Row>
+          </Container>
+          <Button className="ms-3" onClick={cerrarSesion}>Cerrar sesion</Button>
         </>
       ) : (
         <>
-          <Button
-            size="sm"
-            onClick={() => navigate("/login")}
-            className=""
-          >
-            Iniciar sesión
-          </Button>
+          <LoginV1 />
         </>
       )}
       {user?.role === "admin" ? (
