@@ -14,7 +14,7 @@ const NavigationBar = () => {
       <Link to="./">
         <SettingsIcon fontSize="large" />
       </Link>
-      <Link to="./profile">
+      <Link to="./listado">
         <FavoriteIcon fontSize="large" />
       </Link>
       <Link to="./" className="fondoIconoHome">
