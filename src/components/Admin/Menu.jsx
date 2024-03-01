@@ -30,7 +30,7 @@ const Menu = () => {
                 type="text"
                 placeholder="Nombre"
                 autoFocus
-                {...register("nombre", {
+                {...register("name", {
                   required: "Este campo es obligatorio",
                   pattern: {
                     value: nameMenu,
@@ -47,7 +47,7 @@ const Menu = () => {
                 rows={3}
                 placeholder="Ingresa una descripción breve"
                 maxLength={100}
-                {...register("descripcion", { 
+                {...register("description", { 
                   required: "Este campo es obligatorio",
                   pattern: {
                     value: descriptionRegex,
@@ -59,11 +59,13 @@ const Menu = () => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formCategoria">
               <Form.Label>Categoría</Form.Label>
-              <Form.Select {...register("categoria", { required: "Selecciona una categoría" })} className="form-select">
+              <Form.Select {...register("category", { required: "Selecciona una categoría" })} className="form-select">
                 <option value="">Selecciona una categoría</option>
-                <option value="hamburguesa">Hamburguesa</option>
-                <option value="papas-fritas">Papas Fritas</option>
-                <option value="bebida">Bebida</option>
+                <option value="Hamburguesa">Hamburguesa</option>
+                <option value="Sandwich">Papas Fritas</option>
+                <option value="Para Picar">Para Picar</option>
+                <option value="Wrap">Wrap</option>
+                <option value="Bebidas">Bebidas</option>
               </Form.Select>
               {errors.categoria && <span className="text-danger">{errors.categoria.message}</span>}
             </Form.Group>
@@ -71,7 +73,7 @@ const Menu = () => {
               <Form.Control
                 type="text"
                 placeholder="URL de la imagen"
-                {...register("imagen", {
+                {...register("image", {
                   required: "Este campo es obligatorio",
                   pattern: {
                     value: imageMenu,
@@ -83,10 +85,10 @@ const Menu = () => {
             </Form.Group>
             <Form.Group className="mb-3" controlId="formEstado">
               <Form.Label>Estado</Form.Label>
-              <Form.Select {...register("estado", { required: "Selecciona un estado" })} className="form-select">
+              <Form.Select {...register("visible", { required: "Selecciona un estado" })} className="form-select">
                 <option value="">Selecciona un estado</option>
-                <option value="disponible">Disponible</option>
-                <option value="no-disponible">No disponible</option>
+                <option value="Disponible">Disponible</option>
+                <option value="No-Disponible">No disponible</option>
               </Form.Select>
               {errors.estado && <span className="text-danger">{errors.estado.message}</span>}
             </Form.Group>
@@ -94,7 +96,7 @@ const Menu = () => {
               <Form.Control
                 type="text"
                 placeholder="Precio"
-                {...register("precio", {
+                {...register("price", {
                   required: "Este campo es obligatorio",
                   pattern: {
                     value: priceMenu,
