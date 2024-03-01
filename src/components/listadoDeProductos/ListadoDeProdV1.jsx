@@ -3,10 +3,6 @@ import { Button, Col, Container, Modal, Row } from 'react-bootstrap'
 import '../listadoDeProductos/listado.css'
 import CardV1 from '../Section/CardV1'
 
-
-
-
-
 const ListadoDeProdV1 = () => {
   const [showModal, setShowModal] = useState(false)
   const handleClose = () => setShowModal(false)
@@ -46,63 +42,40 @@ const ListadoDeProdV1 = () => {
         <h1 className='text-center pt-4'>Nuestras ofertas pensadas para vos</h1>
         <Button id='boton1' onClick={handleShow}>🛒Ver mi pedido</Button>
         <Modal show={showModal} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Tu pedido</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
+        <Modal.Header closeButton>
+          <Modal.Title>Tu pedido</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
             {cartItems.map((item, index) => (
-              <p key={index}>
-
+              <div key={index}>
                 <p>Producto: {item.nombre}</p>
-                <p>Extras:
-                  {item.extras.length > 0 ? (
-                    <ul>
-                      {item.extras.map((extra, index) => (
-                        <li key={index}>{extra}</li>
-                      ))}
-                    </ul>
-                  ) : (
-                    <span>Sin extras</span>
-                  )}
-                </p>
+                <p>Extras:</p>
+                {Object.keys(item.extras).length > 0 ? (
+                  <ul>
+                    {Object.keys(item.extras).map((extra, index) => (
+                      <li key={index}>{extra}: {item.extras[extra]}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <span>Sin extras</span>
+                )}
                 <p>Cantidad: {item.cantidad}</p>
-
-              </p>
+              </div>
             ))}
-          </Modal.Body>
+        </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Cerrar
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <Button variant="secondary" onClick={handleClose}>
+          Cerrar
+        </Button>
+      </Modal.Footer>
+    </Modal>
         <Col>
-
           <CardV1 onAddCard={handleAddCard} onCloseModal={handleClose} />
         </Col>
         <Col>
 
           <CardV1 onAddCard={handleAddToCart} onCloseModal={handleClose} />
         </Col>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       </Row>
     </Container>
   )
