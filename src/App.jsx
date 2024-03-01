@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { UserProvider } from "./context/UserContext";
+import { ProductProvider } from "./context/ProductContext"; // Importar ProductProvider
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
@@ -13,29 +14,33 @@ import Admin from "./pages/Admin";
 import ProtectedRouteAdmin from "./protectedRoute/ProtectedRouteAdmin";
 import NavigationBar from "./components/navigationBar/NavigationBar";
 import Profile from "./pages/Profile";
+import Menu from "./components/Admin/Menu"; // Asegúrate de importar Menu correctamente
 
 const App = () => {
   return (
     <UserProvider>
-      <BrowserRouter>
-        {/* <NavbarV1 /> */}
-        {/* <NavbarV2 /> */}
-        <main>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Home />} />
-            <Route path="*" element={<ErrorPage />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/listado" element={<ListadoDeProd />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route element={<ProtectedRouteAdmin />}>
-              <Route path="/admin" element={<Admin />} />
-            </Route>
-          </Routes>
-        </main>
-        <NavigationBar />
-        {/* <Footer /> */}
-      </BrowserRouter>
+      <ProductProvider> {/* Envolver en ProductProvider */}
+        <BrowserRouter>
+          {/* <NavbarV1 /> */}
+          {/* <NavbarV2 /> */}
+          <main>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/" element={<Home />} />
+              <Route path="*" element={<ErrorPage />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/listado" element={<ListadoDeProd />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route element={<ProtectedRouteAdmin />}>
+                <Route path="/admin" element={<Admin />} />
+              </Route>
+            </Routes>
+          </main>
+          <Menu /> 
+          <NavigationBar />
+          {/* <Footer /> */}
+        </BrowserRouter>
+      </ProductProvider>
     </UserProvider>
   );
 };

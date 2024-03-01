@@ -2,21 +2,29 @@ import React, { useState } from 'react';
 import { Form, Modal, Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { nameMenu, imageMenu, priceMenu, cantidadMenu, descriptionRegex } from "../../validation/adminPanelValidations";
+import { useProductAuth } from "../../context/ProductContext";
 
 const Menu = ({show, handleCloseModal }) => {
+  const { signin } = useProductAuth();
   const { register, handleSubmit, formState: { errors }, setValue} = useForm();
 
 
-  const onSubmit = (value) => {
+  const onSubmit = async (value) => {
     console.log(value);
-    handleCloseModal();
-    setValue("name", "");
-    setValue("description", "");
-    setValue("category", "");
-    setValue("image", "");
-    setValue("visible", "");
-    setValue("price", "");
-    setValue("cantidad", "");
+    try { 
+      await signin(value)
+    
+      handleCloseModal();
+      setValue("name", "");
+      setValue("description", "");
+      setValue("category", "");
+      setValue("image", "");
+      setValue("visible", "");
+      setValue("price", "");
+      setValue("cantidad", "");
+  } catch (error) {
+    console.error("Error al crear producto:", error);
+    }
   };
   
 
