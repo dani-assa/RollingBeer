@@ -89,7 +89,7 @@ const CardV1 = ({ onAddCard, onCloseModal }) => {
     </div>
   );
   const handleAddCard = () => {
-    onAddCard(...burgerOptions, cantidad, Number(burgerOptions.cantidad));
+    onAddCard(burgerOptions);
     handleClose();
   };
 

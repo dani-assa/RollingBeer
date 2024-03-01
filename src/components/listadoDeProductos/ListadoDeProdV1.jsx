@@ -12,12 +12,28 @@ const ListadoDeProdV1 = () => {
   const handleClose = () => setShowModal(false)
   const handleShow = () => setShowModal(true)
   const [burgerOrder, setBurgerOrder] = useState({});
+  const [cartItems, setCartItems] = useState([]);
+  
+  const handleAddCard = (burgerOptions) => {
+    setCartItems([...cartItems, burgerOptions])
+  }
 
-  const handleAddCard = () => {
-    onAddCard({ ...burgerOptions, cantidad: Number(burgerOptions.cantidad) });
-    handleClose();
-};
-
+  const handleAddToCart = (product) => {
+    const index = cartItems.findIndex((item) => item.nombre === product.nombre);
+    if (index === -1) {
+      // Si el producto no existe en el carrito, agregarlo
+      setCartItems([...cartItems, product]);
+    } else {
+      // Si el producto ya existe en el carrito, actualizar la cantidad
+      setCartItems(
+        cartItems.map((item) =>
+          item.nombre === product.nombre
+            ? { ...item, cantidad: product.cantidad }
+            : item
+        )
+      );
+    }
+  };
 
 
   return (
@@ -34,9 +50,25 @@ const ListadoDeProdV1 = () => {
             <Modal.Title>Tu pedido</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          {Object.values(burgerOrder).map((order, index) =>(
-            <p key={index}>{order.name}: {order.quantity}</p>
-          ))}
+            {cartItems.map((item, index) => (
+              <p key={index}>
+
+                <p>Producto: {item.nombre}</p>
+                <p>Extras:
+                  {item.extras.length > 0 ? (
+                    <ul>
+                      {item.extras.map((extra, index) => (
+                        <li key={index}>{extra}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <span>Sin extras</span>
+                  )}
+                </p>
+                <p>Cantidad: {item.cantidad}</p>
+
+              </p>
+            ))}
           </Modal.Body>
           <Modal.Footer>
             <Button variant="secondary" onClick={handleClose}>
@@ -45,14 +77,20 @@ const ListadoDeProdV1 = () => {
           </Modal.Footer>
         </Modal>
         <Col>
-        
-        <CardV1 onAddCard={handleAddCard} onCloseModal={handleClose}/>
+
+          <CardV1 onAddCard={handleAddCard} onCloseModal={handleClose} />
         </Col>
-      
-          
+        <Col>
+
+          <CardV1 onAddCard={handleAddToCart} onCloseModal={handleClose} />
+        </Col>
 
 
-        
+
+
+
+
+
 
 
 
