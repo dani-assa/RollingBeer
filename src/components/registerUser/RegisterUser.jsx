@@ -8,7 +8,9 @@ import {
   emailRegex,
   nameRegex,
 } from "../../validation/registerValidation";
+
 import "./RegisterUser.css";
+
 
 const RegisterUser = () => {
   const {
