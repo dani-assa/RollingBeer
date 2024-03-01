@@ -18,11 +18,6 @@
 
 }
 
-/* .formbg {
-  background-color: #ebebeb;
-  border-radius: 3%;
-} */
-
 .btnRegister {
   background-color: var(--colorOne) !important;
 }
@@ -30,7 +25,8 @@
 #name,
 #userName,
 #dni,
-#passwordCheck {
+#passwordCheck,
+#date {
   background-color: transparent;
   border-top: transparent;
   border-left: transparent;
@@ -41,7 +37,8 @@
 #name::placeholder,
 #userName::placeholder,
 #dni::placeholder,
-#passwordCheck::placeholder {
+#passwordCheck::placeholder,
+#date::placeholder {
   color: var(--colorThree);
 }
 

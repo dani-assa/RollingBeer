@@ -12,7 +12,7 @@
   width: 100%;
   display: flex;
   justify-content: space-around;
-  background-color: var(--colorThree); 
+  background-color: var(--colorFour); 
   padding: 10px 0;
 }
 
@@ -27,12 +27,13 @@
 
 .iconoHome{
   position: relative;
-  bottom: 20px;
+  bottom: 35px;
   background: var(--colorFive);
   width: auto;
   border-radius: 50%;
-  padding: 4px;
-  
+  padding: 10px;
+  border: 7px solid var(--colorFour);
+  color: var(--colorFour);
 }
 
 
