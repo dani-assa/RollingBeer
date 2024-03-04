@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import { nameMenu, imageMenu, priceMenu, cantidadMenu, descriptionRegex } from "../../validation/adminPanelValidations";
 import { useProductAuth } from "../../context/ProductContext";
 
+
+
 const Menu = ({show, handleCloseModal }) => {
   const { signin } = useProductAuth();
   const { register, handleSubmit, formState: { errors }, setValue} = useForm();
