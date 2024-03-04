@@ -1,21 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { useAuth } from "../../context/UserContext";
 import { Link, useNavigate } from "react-router-dom";
 import LoginV1 from "../login/LoginV1";
 import "./profileV1.css";
 import ModalEditUser from "./ModalEditUser";
+import axios from "axios";
+const URL_BASE = import.meta.env.VITE_URL_BASE;
 
 const ProfileV1 = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [changeFlag, setChangeFlag] = useState(false);
+  const [user1, setUser1] = useState("");
 
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+
+  const getById = async () => {
+    try {
+      setIsLoading(true); 
+      const { data } = await axios.get(`${URL_BASE}/user/getById/${user.id}`);
+      console.log(data);
+      setUser1(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   const cerrarSesion = () => {
     logout();
     navigate("/login");
   };
+
+  useEffect(() => {
+    getById();
+  }, [changeFlag]);
+
   return (
     <div className="mt-5">
       {user ? (
@@ -38,7 +59,11 @@ const ProfileV1 = () => {
                       {user.email}
                     </li>
                   </ListGroup>
-                  <ModalEditUser />
+                  <ModalEditUser
+                    user={user}
+                    setIsLoading={setIsLoading}
+                    setChangeFlag={setChangeFlag}
+                  />
                 </Card>
               </Col>
             </Row>
