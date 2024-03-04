@@ -14,17 +14,19 @@ import Admin from "./pages/Admin";
 import ProtectedRouteAdmin from "./protectedRoute/ProtectedRouteAdmin";
 import NavigationBar from "./components/navigationBar/NavigationBar";
 import Profile from "./pages/Profile";
-import Menu from "./components/Admin/Menu"; // Asegúrate de importar Menu correctamente
+import Menu from "./components/Admin/Menu"; 
+import ProductAdmin from "./components/Admin/ProductAdmin";
 
 const App = () => {
   return (
     <UserProvider>
-      <ProductProvider> {/* Envolver en ProductProvider */}
+      <ProductProvider> 
         <BrowserRouter>
           {/* <NavbarV1 /> */}
           {/* <NavbarV2 /> */}
           <main>
             <Routes>
+              <Route path="/products" element={<ProductAdmin/>} />
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Home />} />
               <Route path="*" element={<ErrorPage />} />
