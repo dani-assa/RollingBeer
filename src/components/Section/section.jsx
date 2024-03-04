@@ -7,7 +7,7 @@ import FormRegisterV1 from './FormRegisterV1';
 function Section() {
   return (
 
-    <Container fluid className='cont pt-5'>
+    <Container fluid className='cont'>
       <Row>
           
           <div className="d-flex flex-column justify-content-center align-items-center vh-100" id="section1"> 

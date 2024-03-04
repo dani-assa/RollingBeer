@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { useAuth } from "../../context/UserContext";
 import { Link, useNavigate } from "react-router-dom";
 import LoginV1 from "../login/LoginV1";
+import "./profileV1.css";
+import ModalEditUser from "./ModalEditUser";
 
 const ProfileV1 = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [changeFlag, setChangeFlag] = useState(false);
+
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const cerrarSesion = () => {
@@ -19,25 +24,28 @@ const ProfileV1 = () => {
           <Container>
             <Row>
               <Col>
-                <Card className="mt-4 mb-5">
+                <Card className="mt-4 mb-5 fondoProfile list-unstyled">
                   <Card.Body>
-                    <Card.Title>{user.name}</Card.Title>
+                    <Card.Title>Nombre: {user.name}</Card.Title>
                   </Card.Body>
                   <ListGroup className="list-group-flush">
-                    <ListGroup.Item>
-                      Nombre de usuario: {user.userName}
-                    </ListGroup.Item>
-                    <ListGroup.Item>Correo: {user.email}</ListGroup.Item>
-                    <ListGroup.Item>Vestibulum at eros</ListGroup.Item>
+                    <li className="ps-3">
+                      <span className="fw-bold">Nombre de usuario: </span>
+                      {user.userName}
+                    </li>
+                    <li className="ps-3">
+                      <span className="fw-bold">Correo: </span>
+                      {user.email}
+                    </li>
                   </ListGroup>
-                  <Card.Body>
-                    <Card.Link href="#">Editar nombre</Card.Link>
-                  </Card.Body>
+                  <ModalEditUser />
                 </Card>
               </Col>
             </Row>
           </Container>
-          <Button className="ms-3" onClick={cerrarSesion}>Cerrar sesion</Button>
+          <Button className="ms-3" onClick={cerrarSesion}>
+            Cerrar sesion
+          </Button>
         </>
       ) : (
         <>

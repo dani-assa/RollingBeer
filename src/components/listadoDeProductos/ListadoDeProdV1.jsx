@@ -74,7 +74,7 @@ const ListadoDeProdV1 = () => {
         </Col>
         <Col>
 
-          <CardV1 onAddCard={handleAddToCart} onCloseModal={handleClose} />
+          <CardV1 onAddCard={handleAddToCart} onCloseModal={handleClose} /> 
         </Col>
       </Row>
     </Container>
