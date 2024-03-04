@@ -4,13 +4,10 @@ import { Button, Form, Modal } from "react-bootstrap";
 import { useAuth } from "../../context/UserContext";
 const URL_BASE = import.meta.env.VITE_URL_BASE;
 
-
-
-const ModalEditUser = () => {
+const ModalEditUser = ({ setIsLoading, setChangeFlag }) => {
   const { user } = useAuth();
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [selectedUser, setSelectedUser] = useState(user);
-  console.log(user);
 
   const handleEdit = () => {
     setShowModalEdit(true);
@@ -26,6 +23,8 @@ const ModalEditUser = () => {
         `${URL_BASE}/user/editById/${selectedUser.id}`,
         selectedUser
       );
+      console.log(selectedUser);
+      setChangeFlag((prev) => !prev);
     } catch (error) {
       console.log(error);
     } finally {
