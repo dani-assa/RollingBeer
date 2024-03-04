@@ -1,6 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { productRequest } from "../api/product";
-import axios from "../api/axios.js";
 
 export const ProductContext = createContext();
 

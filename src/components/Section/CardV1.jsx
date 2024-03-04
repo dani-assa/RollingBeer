@@ -16,7 +16,7 @@ const CardV1 = ({ onAddCard, onCloseModal }) => {
   const handleShow = () => setShow(true);
 
   const handleCheckboxChange = (category, item) => {
-    // Asegura que solo un tipo de hamburguesa puede ser seleccionado a la vez
+    
     if (category === "tipo") {
       setBurgerOptions((prevState) => ({
         ...prevState,
