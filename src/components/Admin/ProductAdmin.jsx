@@ -1,49 +1,51 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import LoadingScreen from '../loadingScreen/LoadingScreen.jsx'
-const URL_BASE = import.meta.env.VITE_URL_BASE;
+import LoadingScreen from '../loadingScreen/LoadingScreen.jsx';
 import axios from 'axios';
 
-const ProductAdmin = () => {
+const URL_BASE = import.meta.env.VITE_URL_BASE;
 
+const ProductAdmin = () => {
   const [products, setProducts] = useState([]);
   const [loadings, setLoadings] = useState(false);
-  
+  const [errors, setErrors] = useState([]);
+
   const productsAll = async () => {
-    
     try {
       setLoadings(true);
-
-      const products = await axios.get(`${URL_BASE}/products`);
-      console.log(products);
-      setProducts(products);
+      const response = await axios.get(`${URL_BASE}/product/getAll`);
+      console.log(response.data);
+      setProducts(response.data);
     } catch (error) {
-      setErrors(error.response.products);
-    } finally{
+      setErrors(error.response.data);
+    } finally {
       setLoadings(false);
-    };
+    }
   };
+
+  useEffect(() => {
+    productsAll();
+  }, []);
 
   return (
     <>
-    <Container>
-      <Row>
-        <Col>
-          {
-            loadings ? <LoadingScreen/> : (
+      <Container>
+        <Row>
+          <Col>
+            {loadings ? (
+              <LoadingScreen />
+            ) : (
               <ul>
-                {
-                products && products.map((product, i) => (
-                  <li>{product.name}</li>
+                {products.map((product, i) => (
+                  <li key={i}>{product.name}</li>
                 ))}
               </ul>
-            )
-          } 
-        </Col>
-      </Row>
-    </Container>
+            )}
+          </Col>
+        </Row>
+      </Container>
     </>
-  )
-}
+  );
+};
 
-export default ProductAdmin ;
+export default ProductAdmin;
