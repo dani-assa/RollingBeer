@@ -36,7 +36,7 @@ const ProductAdmin = () => {
     try {
       setLoadings(true);
       const response = await axios.get(`${URL_BASE}/product/getAll`);
-      console.log(response.data);
+      //console.log(response.data);
       setProducts(response.data);
     } catch (error) {
       setErrors(error.response.data);
