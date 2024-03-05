@@ -26,7 +26,7 @@ const App = () => {
           {/* <NavbarV2 /> */}
           <main>
             <Routes>
-              <Route path="/products" element={<ProductAdmin/>} />
+              <Route path="/admin/products" element={<ProductAdmin/>} />
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Home />} />
               <Route path="*" element={<ErrorPage />} />
