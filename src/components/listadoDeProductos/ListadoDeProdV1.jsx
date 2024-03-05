@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button, Col, Container, Modal, Row } from 'react-bootstrap'
 import '../listadoDeProductos/listado.css'
 import CardV1 from '../Section/CardV1'
+import CardV2 from './CardV2'
 
 const ListadoDeProdV1 = () => {
   const [showModal, setShowModal] = useState(false)
@@ -32,11 +33,12 @@ const ListadoDeProdV1 = () => {
   return (
     <Container fluid>
       <Row>
+        {/*
         <div className="d-flex flex-column justify-content-center align-items-center vh-100" id="img1">
           <img src="src/assets/logoRollingBer2.-removebg-preview.png" alt="logo_RollingBeer" id='logo1' />
           <h1 className='letra1' >Nuestras cervezas</h1>
-        </div>
-        <h1 className='text-center pt-4'>Nuestras ofertas pensadas para vos</h1>
+  </div>*/}
+        <h1 className='text-center pt-4'>¡Descubre Nuestro Delicioso Menú!</h1>
         <Button id='boton1' onClick={handleShow}>🛒Ver mi pedido</Button>
         <Modal show={showModal} onHide={handleClose}>
         <Modal.Header closeButton>
@@ -45,7 +47,7 @@ const ListadoDeProdV1 = () => {
         <Modal.Body>
             {cartItems.map((item, index) => (
               <div key={index}>
-                <p>Producto: {item.nombre}</p>
+                <p>Producto: {product.name}</p>
                 <p>Opciones: 
                   {Object.keys(item.tipo).length > 0 ? (
                   <ul>
@@ -80,8 +82,17 @@ const ListadoDeProdV1 = () => {
       </Modal.Footer>
     </Modal>
         <Col>
+        <h2 className='pt-4 text-center'>Productos destacados</h2>
           <CardV1 onAddCard={handleAddCard} onCloseModal={handleClose} />
         </Col>
+        <div>
+        <h2 className='pt-4 text-center'>Productos</h2>
+        <CardV2 />
+        </div>
+
+
+        
+
 
       </Row>
     </Container>

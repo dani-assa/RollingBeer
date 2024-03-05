@@ -42,11 +42,15 @@
  
 }
 
-
-.cardV2 {
-  position: relative;
-  padding-top: 20px;
-  margin-top: 10px;
+.imgCard {
+  padding-right: 60%;
+  width: 300%;
 }
+
+.cardv2 {
+box-shadow: 0 1px 1px rgba(0, 0, 0, 1.0);
+}
+
+
   
 
