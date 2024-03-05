@@ -1,0 +1,18 @@
+:root {
+  --colorOne: #004e98;
+  --colorTwo: #3a6ea5;
+  --colorThree: #c0c0c0;
+  --colorFour: #ebebeb;
+  --colorFive: #ff6700;
+}
+
+body {
+  background: var(--colorThree);
+}
+
+.fondoProfile {
+  min-height: 40vh;
+  background: transparent;
+  backdrop-filter: blur(20px);
+  box-shadow: 1px 1px 15px 5px rgba(0,0,0,0.75);
+}

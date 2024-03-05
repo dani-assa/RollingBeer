@@ -7,7 +7,6 @@ const ListadoDeProdV1 = () => {
   const [showModal, setShowModal] = useState(false)
   const handleClose = () => setShowModal(false)
   const handleShow = () => setShowModal(true)
-  const [burgerOrder, setBurgerOrder] = useState({});
   const [cartItems, setCartItems] = useState([]);
   
   const handleAddCard = (burgerOptions) => {
@@ -17,10 +16,8 @@ const ListadoDeProdV1 = () => {
   const handleAddToCart = (product) => {
     const index = cartItems.findIndex((item) => item.nombre === product.nombre);
     if (index === -1) {
-      // Si el producto no existe en el carrito, agregarlo
       setCartItems([...cartItems, product]);
     } else {
-      // Si el producto ya existe en el carrito, actualizar la cantidad
       setCartItems(
         cartItems.map((item) =>
           item.nombre === product.nombre
@@ -85,10 +82,7 @@ const ListadoDeProdV1 = () => {
         <Col>
           <CardV1 onAddCard={handleAddCard} onCloseModal={handleClose} />
         </Col>
-        <Col>
 
-          <CardV1 onAddCard={handleAddToCart} onCloseModal={handleClose} />
-        </Col>
       </Row>
     </Container>
   )

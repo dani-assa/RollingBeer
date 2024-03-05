@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import { Card, Button, Modal, Form } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Card, Button, Modal, Form, Carousel  } from "react-bootstrap";
+import axios from "../../api/axios.js"
+const URL_BASE = import.meta.env.VITE_URL_BASE;
 
-const CardV1 = ({ onAddCard, onCloseModal }) => {
-  const [show, setShow] = useState(false);
+const CardV1 = ({ onAddCard }) => {
+  const [products, setProducts] = useState([]); 
+  const [selectedProductId, setSelectedProductId] = useState(null);
   const [burgerOptions, setBurgerOptions] = useState({
     tipo: { simple: false, doble: false, triple: false },
     extras: { Pepino: 0, Cheddar: 0, Medallon: 0, Bacon: 0, SalsaRolling: 0 },
@@ -12,11 +15,27 @@ const CardV1 = ({ onAddCard, onCloseModal }) => {
     cantidad: 1,
   });
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(`${URL_BASE}/product/getAll`);
+        setProducts(response.data);
+        
+      } catch (error) {
+        console.error('Hubo un error al cargar los productos:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const handleClose = () => setSelectedProductId(null);
+  const handleShow = (productId) => setSelectedProductId(productId);
+
 
   const handleCheckboxChange = (category, item) => {
-    // Asegura que solo un tipo de hamburguesa puede ser seleccionado a la vez
+    
     if (category === "tipo") {
       setBurgerOptions((prevState) => ({
         ...prevState,
@@ -78,39 +97,61 @@ const CardV1 = ({ onAddCard, onCloseModal }) => {
     <div className="d-flex justify-content-between align-items-center my-2">
       <span>{item.charAt(0).toUpperCase() + item.slice(1)}</span>
       <div>
-        <Button size="sm" onClick={() => handleDecrement(category, item)}>
-          -
-        </Button>
+        <Button size="sm" onClick={() => handleDecrement(category, item)}>-</Button>
         <span className="mx-2">{burgerOptions[category][item]}</span>
-        <Button size="sm" onClick={() => handleIncrement(category, item)}>
-          +
-        </Button>
+        <Button size="sm" onClick={() => handleIncrement(category, item)}>+</Button>
       </div>
     </div>
   );
+
   const handleAddCard = () => {
     onAddCard(burgerOptions);
     handleClose();
   };
 
+  const selectedProduct = products.find(product => product.id === selectedProductId);
+
+  const chunkArray = (array, size) => {
+    const chunkedArr = [];
+    for (let i = 0; i < array.length; i += size) {
+      chunkedArr.push(array.slice(i, i + size));
+    }
+    return chunkedArr;
+  };
+  
+ 
+  const productGroups = chunkArray(products, 3);
+
+
   return (
     <>
-      <Card onClick={handleShow} style={{ cursor: "pointer", width: "18rem" }}>
-        <Card.Img variant="top" src="src\assets\hamburguesa.PNG" />
-        <Card.Body>
-          <Card.Title>Nombre de la hamburguesa</Card.Title>
-        </Card.Body>
-      </Card>
+      <Carousel>
+          {productGroups.map((group, index) => (
+            <Carousel.Item key={index}>
+              <div className="d-flex justify-content-around">
+                {group.map((product) => (
+                  <Card key={product.id} onClick={() => handleShow(product.id)} style={{ cursor: "pointer", flex: "0 0 30%" }}>
+                    <Card.Img variant="top" src={product.image || ""} style={{ maxHeight: '200px', objectFit: 'cover' }} />
+                    <Card.Body>
+                      <Card.Title>{product.name}</Card.Title>
+                    </Card.Body>
+                  </Card>
+                ))}
+              </div>
+            </Carousel.Item>
+          ))}
+        </Carousel>
 
-      <Modal
-        show={show}
-        onHide={handleClose}
-        backdrop="static"
-        keyboard={false}
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>Personaliza tu hamburguesa</Modal.Title>
-        </Modal.Header>
+      {selectedProduct && (
+        <Modal
+          show={!!selectedProductId}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+          >
+          <Modal.Header closeButton>
+            <Modal.Title>Personaliza tu hamburguesa - {selectedProduct.name}</Modal.Title>
+          </Modal.Header>
         <Modal.Body>
           <h5>Opciones</h5>
           {Object.keys(burgerOptions.tipo).map((item) => (
@@ -178,11 +219,12 @@ const CardV1 = ({ onAddCard, onCloseModal }) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary" onClick={handleAddCard}>
-            Agregar al carrito
-          </Button>
-        </Modal.Footer>
-      </Modal>
+            <Button variant="primary" onClick={handleAddCard}>
+              Agregar al carrito
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
     </>
   );
 };

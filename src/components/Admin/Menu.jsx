@@ -1,24 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Modal, Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { nameMenu, imageMenu, priceMenu, cantidadMenu, descriptionRegex } from "../../validation/adminPanelValidations";
+import { useProductAuth } from "../../context/ProductContext";
 
-const Menu = ({show, handleCloseModal }) => {
-  const { register, handleSubmit, formState: { errors }, setValue} = useForm();
+const Menu = ({ show, handleCloseModal }) => {
+  const { signin, errors } = useProductAuth();
+  const { register, handleSubmit, setValue } = useForm();
 
-
-  const onSubmit = (value) => {
-    console.log(value);
-    handleCloseModal();
-    setValue("name", "");
-    setValue("description", "");
-    setValue("category", "");
-    setValue("image", "");
-    setValue("visible", "");
-    setValue("price", "");
-    setValue("cantidad", "");
+  const onSubmit = async (formData) => {
+    try {
+      await signin(formData); // Envía los datos del formulario para crear un producto
+      handleCloseModal();
+      // Limpia los valores del formulario después de enviar la solicitud
+      setValue("name", "");
+      setValue("description", "");
+      setValue("category", "");
+      setValue("image", "");
+      setValue("visible", "");
+      setValue("price", "");
+      setValue("cantidad", "");
+    } catch (error) {
+      console.error("Error al crear producto:", error);
+    }
   };
-  
 
   return (
     <Modal show={show} onHide={handleCloseModal} backdrop="static" keyboard={true}>
@@ -29,7 +34,6 @@ const Menu = ({show, handleCloseModal }) => {
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group className="mb-3">
             <Form.Control
-              id="name"
               type="text"
               placeholder="Nombre"
               autoFocus
@@ -46,7 +50,6 @@ const Menu = ({show, handleCloseModal }) => {
           <Form.Group className="mb-3">
             <Form.Label>Descripción</Form.Label>
             <Form.Control
-              id="description"
               as="textarea"
               rows={3}
               placeholder="Ingresa una descripción breve"
@@ -63,7 +66,7 @@ const Menu = ({show, handleCloseModal }) => {
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Categoría</Form.Label>
-            <Form.Select {...register("category", { required: "Selecciona una categoría" })} id="category" className="form-select">
+            <Form.Select {...register("category", { required: "Selecciona una categoría" })}>
               <option value="">Selecciona una categoría</option>
               <option value="Hamburguesa">Hamburguesa</option>
               <option value="Sandwich">Papas Fritas</option>
@@ -75,7 +78,6 @@ const Menu = ({show, handleCloseModal }) => {
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Control
-              id="image"
               type="text"
               placeholder="URL de la imagen"
               {...register("image", {
@@ -90,7 +92,7 @@ const Menu = ({show, handleCloseModal }) => {
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Estado</Form.Label>
-            <Form.Select {...register("visible", { required: "Selecciona un estado" })} id="visible" className="form-select">
+            <Form.Select {...register("visible", { required: "Selecciona un estado" })}>
               <option value="">Selecciona un estado</option>
               <option value="Disponible">Disponible</option>
               <option value="No-Disponible">No disponible</option>
@@ -99,7 +101,6 @@ const Menu = ({show, handleCloseModal }) => {
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Control
-              id="price"
               type="text"
               placeholder="Precio"
               {...register("price", {
@@ -114,7 +115,6 @@ const Menu = ({show, handleCloseModal }) => {
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Control
-              id="cantidad"
               type="text"
               placeholder="Cantidad disponible"
               {...register("cantidad", {
@@ -127,14 +127,14 @@ const Menu = ({show, handleCloseModal }) => {
             />
             {errors.cantidad && <span className="text-danger">{errors.cantidad.message}</span>}
           </Form.Group>
-            <div className="d-flex justify-content-between">
-              <Button variant="secondary" onClick={handleCloseModal}>
-                Cancelar
-              </Button>
-              <Button variant="primary" type="submit">
-                Guardar
-              </Button>
-            </div>
+          <div className="d-flex justify-content-between">
+            <Button variant="secondary" onClick={handleCloseModal}>
+              Cancelar
+            </Button>
+            <Button variant="primary" type="submit">
+              Guardar
+            </Button>
+          </div>
         </Form>
       </Modal.Body>
     </Modal>

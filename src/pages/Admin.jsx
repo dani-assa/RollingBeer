@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import Menu from "../components/Admin/Menu";
 import Users from "../components/Admin/Users";
+import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
   const [showMenuModal, setShowMenuModal] = useState(false);
@@ -24,12 +25,14 @@ const Admin = () => {
     setShowUsersModal(false);
   };
 
+  const navigateProducts = useNavigate()
+
   return (
     <>
       <Container>
         <Row className="justify-content-center">
           <Col xs={12} md={6} lg={4} className="text-center">
-            <Button variant="link" onClick={handleShowMenuModal} className="m-2">
+            <Button variant="link" onClick={() => navigateProducts("./products")} className="m-2">
               <img src="https://i.postimg.cc/HjDxQTbj/menu.png" alt="Menu" className="img-fluid" style={{ maxWidth: "100%" }} />
             </Button>
           </Col>

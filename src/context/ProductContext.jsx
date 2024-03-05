@@ -1,6 +1,6 @@
+// ProductProvider.js
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { productRequest } from "../api/product";
-import axios from "../api/axios.js";
 
 export const ProductContext = createContext();
 
@@ -13,32 +13,33 @@ export const useProductAuth = () => {
 };
 
 export const ProductProvider = ({ children }) => {
-  const [product, setProduct] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState("");
 
   const signin = async (product) => {
     try {
+      // Aquí debes enviar la solicitud al servidor con los datos del producto
+      // y manejar la respuesta según corresponda
       const res = await productRequest(product);
-      setProduct(res.data);
+      console.log(res.data); // Verifica la respuesta en la consola
     } catch (error) {
-      setErrors(error.response.data);
+      // Aquí puedes manejar los errores de la solicitud
+      console.error("Error al crear producto:", error);
+      setErrors(error.response.data.message || "Error al crear producto");
     }
   };
 
   useEffect(() => {
-    if (errors.length > 0) {
-      const timer = setTimeout(() => {
-        setErrors([]);
-      }, 3500);
-      return () => clearTimeout(timer);
-    }
+    // Limpia los errores después de un tiempo determinado
+    const timer = setTimeout(() => {
+      setErrors("");
+    }, 3500);
+    return () => clearTimeout(timer);
   }, [errors]);
 
   return (
     <ProductContext.Provider
       value={{
         signin,
-        product,
         errors,
       }}
     >
