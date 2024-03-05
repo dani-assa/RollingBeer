@@ -49,13 +49,26 @@ const ListadoDeProdV1 = () => {
             {cartItems.map((item, index) => (
               <div key={index}>
                 <p>Producto: {item.nombre}</p>
-                <p>Extras:</p>
+                <p>Opciones: 
+                  {Object.keys(item.tipo).length > 0 ? (
+                  <ul>
+                    {Object.keys(item.tipo).map((tipo, index) => (
+                      <li key={index}>{tipo}: </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <span>Sin extras</span>
+                )} </p>
                 {Object.keys(item.extras).length > 0 ? (
+                <>
+                <p>Extras:</p>
                   <ul>
                     {Object.keys(item.extras).map((extra, index) => (
                       <li key={index}>{extra}: {item.extras[extra]}</li>
                     ))}
                   </ul>
+
+                </>
                 ) : (
                   <span>Sin extras</span>
                 )}
