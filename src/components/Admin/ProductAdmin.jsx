@@ -28,7 +28,7 @@ const ProductAdmin = () => {
   }, []);
 
   return (
-    <>
+    <> 
       <Container>
         <Row>
           <Col>
@@ -38,7 +38,7 @@ const ProductAdmin = () => {
               <ul>
                 {products.map((product, i) => (
                   <li key={i}>{product.name}</li>
-                ))}
+                )) }
               </ul>
             )}
           </Col>
