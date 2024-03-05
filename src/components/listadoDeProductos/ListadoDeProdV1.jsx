@@ -7,7 +7,6 @@ const ListadoDeProdV1 = () => {
   const [showModal, setShowModal] = useState(false)
   const handleClose = () => setShowModal(false)
   const handleShow = () => setShowModal(true)
-  const [burgerOrder, setBurgerOrder] = useState({});
   const [cartItems, setCartItems] = useState([]);
   
   const handleAddCard = (burgerOptions) => {
@@ -17,10 +16,8 @@ const ListadoDeProdV1 = () => {
   const handleAddToCart = (product) => {
     const index = cartItems.findIndex((item) => item.nombre === product.nombre);
     if (index === -1) {
-      // Si el producto no existe en el carrito, agregarlo
       setCartItems([...cartItems, product]);
     } else {
-      // Si el producto ya existe en el carrito, actualizar la cantidad
       setCartItems(
         cartItems.map((item) =>
           item.nombre === product.nombre
@@ -49,13 +46,26 @@ const ListadoDeProdV1 = () => {
             {cartItems.map((item, index) => (
               <div key={index}>
                 <p>Producto: {item.nombre}</p>
-                <p>Extras:</p>
+                <p>Opciones: 
+                  {Object.keys(item.tipo).length > 0 ? (
+                  <ul>
+                    {Object.keys(item.tipo).map((tipo, index) => (
+                      <li key={index}>{tipo}: </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <span>Sin extras</span>
+                )} </p>
                 {Object.keys(item.extras).length > 0 ? (
+                <>
+                <p>Extras:</p>
                   <ul>
                     {Object.keys(item.extras).map((extra, index) => (
                       <li key={index}>{extra}: {item.extras[extra]}</li>
                     ))}
                   </ul>
+
+                </>
                 ) : (
                   <span>Sin extras</span>
                 )}
@@ -72,10 +82,7 @@ const ListadoDeProdV1 = () => {
         <Col>
           <CardV1 onAddCard={handleAddCard} onCloseModal={handleClose} />
         </Col>
-        <Col>
 
-          <CardV1 onAddCard={handleAddToCart} onCloseModal={handleClose} /> 
-        </Col>
       </Row>
     </Container>
   )

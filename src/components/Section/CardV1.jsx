@@ -8,7 +8,7 @@ const CardV1 = ({ onAddCard }) => {
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [burgerOptions, setBurgerOptions] = useState({
     tipo: { simple: false, doble: false, triple: false },
-    extras: { pepino: 0, cheddar: 0, medallon: 0, bacon: 0, salsaRolling: 0 },
+    extras: { Pepino: 0, Cheddar: 0, Medallon: 0, Bacon: 0, SalsaRolling: 0 },
     quitar: { cheddar: false, bacon: false },
     sinTacc: false,
     aclaraciones: "",
