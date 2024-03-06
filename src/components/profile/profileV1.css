@@ -6,10 +6,7 @@
   --colorFive: #ff6700;
 }
 
-
-
 .fondoProfile {
-  /* min-height: 40vh; */
   background: transparent !important;
   backdrop-filter: blur(8px) !important;
   border: 1px solid var(--colorThree) !important;
@@ -23,6 +20,7 @@
 
 .btnEditar {
   background: var(--colorTwo) !important;
+  border: 1px solid var(--colorTwo) !important;
 }
 
 .btnCerrarSesion {
