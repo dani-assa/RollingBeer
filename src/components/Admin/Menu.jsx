@@ -10,9 +10,8 @@ const Menu = ({ show, handleCloseModal }) => {
 
   const onSubmit = async (formData) => {
     try {
-      await signin(formData); // Envía los datos del formulario para crear un producto
+      await signin(formData);
       handleCloseModal();
-      // Limpia los valores del formulario después de enviar la solicitud
       setValue("name", "");
       setValue("description", "");
       setValue("category", "");
