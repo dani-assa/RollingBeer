@@ -1,10 +1,9 @@
-// ProductAdmin.jsx
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import axios from 'axios';
 import ProductList from './ProductList';
 import Pagination from './Pagination';
-import Menu from './Menu'; 
+import ProductModal from './ProductModalEdit';
 
 const itemsPerPage = 9;
 const URL_BASE = import.meta.env.VITE_URL_BASE;
@@ -14,14 +13,16 @@ const ProductAdmin = () => {
   const [loadings, setLoadings] = useState(false);
   const [errors, setErrors] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [showModal, setShowModal] = useState(false); 
+  const [showModal, setShowModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null); // Estado para el producto seleccionado
 
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
   };
 
   const handleVerMas = (product) => {
-    console.log("Ver más", product);
+    setSelectedProduct(product); // Establecer el producto seleccionado
+    setShowModal(true); // Mostrar el modal
   };
 
   const handleShowModal = () => {
@@ -36,7 +37,6 @@ const ProductAdmin = () => {
     try {
       setLoadings(true);
       const response = await axios.get(`${URL_BASE}/product/getAll`);
-      //console.log(response.data);
       setProducts(response.data);
     } catch (error) {
       setErrors(error.response.data);
@@ -73,7 +73,11 @@ const ProductAdmin = () => {
           handlePageChange={handlePageChange}
         />
       </Row>
-      <Menu show={showModal} handleCloseModal={handleCloseModal} />
+      <ProductModal
+        show={showModal}
+        handleCloseModal={handleCloseModal}
+        product={selectedProduct} // Pasa el producto seleccionado al modal
+      />
     </Container>
   );
 };
