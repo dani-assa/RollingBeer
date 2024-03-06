@@ -12,7 +12,7 @@ const URL_BASE = import.meta.env.VITE_URL_BASE;
 const ProfileV1 = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [changeFlag, setChangeFlag] = useState(false);
-  const [user1, setUser1] = useState("");
+  const [users, setUsers] = useState([]);
 
   const navigate = useNavigate();
   const { user, logout } = useAuth();
@@ -21,15 +21,16 @@ const ProfileV1 = () => {
     try {
       setIsLoading(true);
       const { data } = await axios.get(`${URL_BASE}/user/getById/${user.id}`);
+      setUsers(data);
       console.log(data);
-      setUser1(data);
+      console.log(user);
     } catch (error) {
       console.log(error);
     } finally {
       setIsLoading(false);
     }
   };
-  
+
   const cerrarSesion = () => {
     logout();
     navigate("/login");
@@ -53,7 +54,9 @@ const ProfileV1 = () => {
                   <Col className="cardProfile">
                     <Card className="mt-4 mb-5 fondoProfile list-unstyled text-white">
                       <Card.Body className="">
-                        <Card.Title className="mt-3">Nombre: {user.name}</Card.Title>
+                        <Card.Title className="mt-3">
+                          Nombre: {user.name}
+                        </Card.Title>
                         <li className="ps-3">
                           <span className="fw-bold">Nombre de usuario: </span>
                           {user.userName}
@@ -72,7 +75,11 @@ const ProfileV1 = () => {
                   </Col>
                 </Row>
               </Container>
-              <Button size="sm" className="ms-3 me-3 btnCerrarSesion" onClick={cerrarSesion}>
+              <Button
+                size=""
+                className="ms-3 me-3 btnCerrarSesion"
+                onClick={cerrarSesion}
+              >
                 Cerrar sesion
               </Button>
             </>
