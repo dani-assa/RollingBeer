@@ -1,15 +1,16 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useAuth } from "../../context/UserContext";
 const URL_BASE = import.meta.env.VITE_URL_BASE;
+import "./profileV1.css"
 
 const ModalEditUser = ({ setIsLoading, setChangeFlag }) => {
   const { user } = useAuth();
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [selectedUser, setSelectedUser] = useState(user);
 
-  const handleEdit = () => {
+  const handleEdit = (user) => {
     setShowModalEdit(true);
   };
 
@@ -19,6 +20,7 @@ const ModalEditUser = ({ setIsLoading, setChangeFlag }) => {
 
   const handleSaveEdit = async () => {
     try {
+      setIsLoading(true);
       await axios.patch(
         `${URL_BASE}/user/editById/${selectedUser.id}`,
         selectedUser
@@ -29,22 +31,25 @@ const ModalEditUser = ({ setIsLoading, setChangeFlag }) => {
       console.log(error);
     } finally {
       handleEditClose();
+      setIsLoading(false);
     }
   };
+
+  
 
   return (
     <>
       <Button
         variant="success"
         size="sm"
-        className="mx-2"
+        className="mx-2 mb-3 btnEditar"
         onClick={() => handleEdit(user)}
       >
         Editar
       </Button>
       <Modal show={showModalEdit} onHide={handleEditClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Editar datos</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form>
@@ -65,10 +70,10 @@ const ModalEditUser = ({ setIsLoading, setChangeFlag }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleEditClose}>
-            Close
+            Cerrar
           </Button>
-          <Button variant="primary" onClick={handleSaveEdit}>
-            Save Changes
+          <Button className="btnCerrarSesion" onClick={handleSaveEdit}>
+            Guardar cambios
           </Button>
         </Modal.Footer>
       </Modal>
