@@ -15,15 +15,17 @@ const ProfileV1 = () => {
   const [users, setUsers] = useState([]);
 
   const navigate = useNavigate();
-  const { user, logout } = useAuth();
+  const { user, logout, triggerUserUpdate, userChangeFlag  } = useAuth();
 
   const getById = async () => {
     try {
       setIsLoading(true);
       const { data } = await axios.get(`${URL_BASE}/user/getById/${user.id}`);
+      console.log(user.id);
       setUsers(data);
       console.log(data);
       console.log(user);
+
     } catch (error) {
       console.log(error);
     } finally {
@@ -38,7 +40,7 @@ const ProfileV1 = () => {
 
   useEffect(() => {
     getById();
-  }, []);
+  }, [userChangeFlag]);
 
   return (
     <div className="mt-5">
