@@ -6,13 +6,26 @@
   --colorFive: #ff6700;
 }
 
-body {
-  background: var(--colorThree);
-}
+
 
 .fondoProfile {
-  min-height: 40vh;
-  background: transparent;
-  backdrop-filter: blur(20px);
-  box-shadow: 1px 1px 15px 5px rgba(0,0,0,0.75);
+  /* min-height: 40vh; */
+  background: transparent !important;
+  backdrop-filter: blur(8px) !important;
+  border: 1px solid var(--colorThree) !important;
+  border-radius: 10px !important;
+  box-shadow: 1px 1px 15px 5px rgba(235, 235, 235, 0.6) !important;
+}
+
+.cardProfile {
+  margin-top: 100px !important;
+}
+
+.btnEditar {
+  background: var(--colorTwo) !important;
+}
+
+.btnCerrarSesion {
+  background: var(--colorOne) !important;
+  border: 1px solid var(--colorOne) !important;
 }
