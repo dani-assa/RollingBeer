@@ -5,12 +5,13 @@ import { useAuth } from "../../context/UserContext";
 const URL_BASE = import.meta.env.VITE_URL_BASE;
 import "./profileV1.css"
 
-const ModalEditUser = ({user, setIsLoading, setChangeFlag }) => {
-  // const { user } = useAuth();
+const ModalEditUser = ({ setIsLoading, setChangeFlag }) => {
+  const { user, triggerUserUpdate } = useAuth();
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [selectedUser, setSelectedUser] = useState(user);
+  
 
-  const handleEdit = (user) => {
+  const handleEdit = () => {
     setShowModalEdit(true);
   };
 
@@ -27,6 +28,7 @@ const ModalEditUser = ({user, setIsLoading, setChangeFlag }) => {
       );
       console.log(selectedUser);
       setChangeFlag((prev) => !prev);
+      triggerUserUpdate();
     } catch (error) {
       console.log(error);
     } finally {

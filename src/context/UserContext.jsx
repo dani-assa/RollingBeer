@@ -20,6 +20,12 @@ export const UserProvider = ({ children }) => {
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [userChangeFlag, setUserChangeFlag] = useState(false);
+
+  const triggerUserUpdate = () => {
+    setUserChangeFlag(prevFlag => !prevFlag); 
+  };
+
   const signup = async (user) => {
     try {
       const res = await registerRequest(user);
@@ -92,6 +98,7 @@ export const UserProvider = ({ children }) => {
         isAuthenticated,
         errors,
         logout,
+        triggerUserUpdate,
       }}
     >
       {children}
