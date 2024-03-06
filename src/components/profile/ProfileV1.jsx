@@ -38,7 +38,7 @@ const ProfileV1 = () => {
 
   useEffect(() => {
     getById();
-  }, []);
+  }, [changeFlag]);
 
   return (
     <div className="mt-5">
