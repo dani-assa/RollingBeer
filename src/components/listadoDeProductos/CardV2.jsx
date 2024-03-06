@@ -126,8 +126,8 @@ const CardV2 = ({ onAddCard }) => {
   return (
     <>
       <CardGroup>
-        {products.map((product) => (
-          <Card className="cardv2" key={product.id} onClick={() => handleShow(product.id)} >
+        {products.map((product, i) => (
+          <Card className="cardv2" key={i} onClick={() => handleShow(product.id)} >
             <Card.Img  className="imgCard" variant="top" src={product.image || ""} />
             {/*<Card.Body className="cardBody">
               <Card.Title>{product.name}</Card.Title>
