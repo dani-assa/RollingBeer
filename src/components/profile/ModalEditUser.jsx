@@ -5,6 +5,7 @@ import { useAuth } from "../../context/UserContext";
 const URL_BASE = import.meta.env.VITE_URL_BASE;
 import "./profileV1.css"
 
+
 const ModalEditUser = ({ setIsLoading, setChangeFlag }) => {
   const { user, triggerUserUpdate } = useAuth();
   const [showModalEdit, setShowModalEdit] = useState(false);
