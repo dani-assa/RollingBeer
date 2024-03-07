@@ -15,7 +15,7 @@ const ProfileV1 = () => {
   const [users, setUsers] = useState([]);
 
   const navigate = useNavigate();
-  const { user, logout, triggerUserUpdate, userChangeFlag  } = useAuth();
+  const { user, logout, triggerUserUpdate, userChangeFlag } = useAuth();
 
   const getById = async () => {
     try {
@@ -25,7 +25,6 @@ const ProfileV1 = () => {
       setUsers(data);
       console.log(data);
       console.log(user);
-
     } catch (error) {
       console.log(error);
     } finally {
