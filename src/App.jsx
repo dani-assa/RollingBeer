@@ -15,7 +15,9 @@ import ProtectedRouteAdmin from "./protectedRoute/ProtectedRouteAdmin";
 import NavigationBar from "./components/navigationBar/NavigationBar";
 import Profile from "./pages/Profile";
 import Menu from "./components/Admin/Menu"; 
-import ProductAdmin from "./components/Admin/ProductAdmin";
+import ProductAdminV2 from "./components/Admin/ProductAdminV2";
+
+import AdminV2 from "./pages/AdminV2";
 
 const App = () => {
   return (
@@ -26,7 +28,7 @@ const App = () => {
           {/* <NavbarV2 /> */}
           <main>
             <Routes>
-              <Route path="/admin/products" element={<ProductAdmin/>} />
+              <Route path="/adminv2/products" element={<ProductAdminV2/>} />
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Home />} />
               <Route path="*" element={<ErrorPage />} />
@@ -36,6 +38,7 @@ const App = () => {
               <Route element={<ProtectedRouteAdmin />}>
                 <Route path="/admin" element={<Admin />} />
               </Route>
+              <Route path="/adminv2" element={<AdminV2/>} />
             </Routes>
           </main>
           <Menu /> 

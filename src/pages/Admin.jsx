@@ -32,13 +32,13 @@ const Admin = () => {
       <Container>
         <Row className="justify-content-center">
           <Col xs={12} md={6} lg={4} className="text-center">
-            <Button variant="link" onClick={() => navigateProducts("./products")} className="m-2">
-              <img src="https://i.postimg.cc/HjDxQTbj/menu.png" alt="Menu" className="img-fluid" style={{ maxWidth: "100%" }} />
+            <Button variant="link" onClick={() => navigateProducts("./adminv2")} className="m-2">
+              <img src="https://i.postimg.cc/HjDxQTbj/menu.png" alt="Menu" className="img-fluid" style={{ maxWidth: "100%" , filter: "invert(100%)" }} />
             </Button>
           </Col>
           <Col xs={12} md={6} lg={4} className="text-center">
             <Button variant="link" onClick={handleShowUsersModal} className="m-2">
-              <img src="https://i.postimg.cc/7YmMMcfX/user.png" alt="User" className="img-fluid" style={{ maxWidth: "100%" }} />
+              <img src="https://i.postimg.cc/7YmMMcfX/user.png" alt="User" className="img-fluid" style={{ maxWidth: "100%" , filter: "invert(100%)" }} />
             </Button>
           </Col>
         </Row>
