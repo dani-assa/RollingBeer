@@ -32,7 +32,7 @@ const Admin = () => {
       <Container>
         <Row className="justify-content-center">
           <Col xs={12} md={6} lg={4} className="text-center">
-            <Button variant="link" onClick={() => navigateProducts("./adminv2")} className="m-2">
+            <Button variant="link" onClick={() => navigateProducts("./")} className="m-2">
               <img src="https://i.postimg.cc/HjDxQTbj/menu.png" alt="Menu" className="img-fluid" style={{ maxWidth: "100%" , filter: "invert(100%)" }} />
             </Button>
           </Col>

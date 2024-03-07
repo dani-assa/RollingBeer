@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 const URL_BASE = import.meta.env.VITE_URL_BASE;
 
@@ -31,7 +32,7 @@ const ModalEditUser = ({product, setIsLoading, setChangeFlag}) => {
 
   return (
     <>
-      <Button variant='success' size='sm' className='mx-2' onClick={() => handleEdit(product)}>Editar</Button>
+      <Button variant='success' size='sm' className='mx-2' onClick={() => handleEdit(product)}><ModeEditIcon fontSize='small'/></Button>
       <Modal show={showModalEdit} onHide={handleEditClose}>
         <Modal.Header closeButton>
           <Modal.Title>Modal heading</Modal.Title>

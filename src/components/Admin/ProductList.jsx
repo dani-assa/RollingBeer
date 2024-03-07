@@ -16,9 +16,6 @@ const ProductList = ({ products, loadings, paginatedProducts, handleVerMas }) =>
                   <img src={product.image} alt={product.name} style={{ width: '50px', height: '50px', marginRight: '10px' }} />
                   {product.name}
                 </div>
-                <div>
-                  <Button variant="primary" onClick={() => handleVerMas(product)}>Ver más</Button>
-                </div>
               </div>
             ))}
           </ul>
