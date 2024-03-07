@@ -28,22 +28,23 @@ const ProductAdminV2= () => {
     }
   }
 
-  const deleteUser = async (id) => {
+  const deleteProduct = async (_id) => {
     try {
       setIsLoading(true);
-      await axios.delete(`${URL_BASE}/delet/${id}`);
+      await axios.delete(`${URL_BASE}/product/delete/${_id}`);
       getAllProduct();
     } catch (error) {
       // alertCustom('Upps', 'Ha ocurrido un error.', 'error');
+      console.log(error);
     } finally {
       setIsLoading(false);
     }
   };
 
-  const disabledProduct = async ({target}, id) => {
+  const disabledProduct = async ({target}, _id) => {
     try {
       setIsLoading(true);
-      await axios.patch(`${URL_BASE}/product/${id}`, {disabled: !target.checked});
+      await axios.patch(`${URL_BASE}/product/visible/${_id}`, {visible: !target.checked});
       getAllProduct();
     } catch (error) {
       alertCustom('Upps', 'Ha ocurrido un error.', 'error');
@@ -79,13 +80,13 @@ const ProductAdminV2= () => {
                   { products &&
                     products.map((product, i) => (
                       <tr key={i}>
-                        <td className="text-center">{product._id}</td>
+                        <td className="text-center"><img src={product.image} alt="Producto" style={{ width: '50px', height: '50px' }} /></td>
                         <td className="text-center">{product.name}</td>
                         <td className="text-center">{product.price}</td>
-                        {/* <td className="text-center"><Form.Check checked={!product.disabled} onChange={(e) => disabledUser(e, user.id)}/> </td> */}
+                        <td className="text-center"><Form.Check checked={!product.visible} onChange={(e) => disabledProduct(e, product._id)}/> </td>
                         <td className="text-center">
                           <Col>
-                            <Button variant='danger' size='sm' onClick={() => deleteUser(product._id)}>Eliminar</Button>
+                            <Button variant='danger' size='sm' onClick={() => deleteProduct(product._id)}>Eliminar</Button>
                             <ProductModalV2
                             product={product} 
                             setIsLoading={setIsLoading} 

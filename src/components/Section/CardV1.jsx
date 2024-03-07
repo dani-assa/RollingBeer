@@ -119,7 +119,7 @@ const CardV1 = ({ onAddCard }) => {
     return chunkedArr;
   };
   
- 
+
   const productGroups = chunkArray(products, 3);
 
 
@@ -129,14 +129,25 @@ const CardV1 = ({ onAddCard }) => {
           {productGroups.map((group, index) => (
             <Carousel.Item key={index}>
               <div className="d-flex justify-content-around">
-                {group.map((product, i) => (
-                  <Card key={i} onClick={() => handleShow(product.id)} style={{ cursor: "pointer", flex: "0 0 30%" }}>
-                    <Card.Img variant="top" src={product.image || ""} style={{ maxHeight: '200px', objectFit: 'cover' }} />
-                    <Card.Body>
-                      <Card.Title>{product.name}</Card.Title>
-                    </Card.Body>
-                  </Card>
-                ))}
+              {group.map(
+                (product, i) =>
+                  product.visible && (
+                    <Card
+                      key={i}
+                      onClick={() => handleShow(product.id)}
+                      style={{ cursor: "pointer", flex: "0 0 30%" }}
+                    >
+                      <Card.Img
+                        variant="top"
+                        src={product.image || ""}
+                        style={{ maxHeight: "200px", objectFit: "cover" }}
+                      />
+                      <Card.Body>
+                        <Card.Title>{product.name}</Card.Title>
+                      </Card.Body>
+                    </Card>
+                  )
+              )}
               </div>
             </Carousel.Item>
           ))}
