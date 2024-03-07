@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Modal, Form, Carousel  } from "react-bootstrap";
-import axios from "../../api/axios.js"
+import { Card, Button, Modal, Form, Carousel } from "react-bootstrap";
+import axios from "../../api/axios.js";
 const URL_BASE = import.meta.env.VITE_URL_BASE;
 
 const CardV1 = ({ onAddCard }) => {
-  const [products, setProducts] = useState([]); 
+  const [products, setProducts] = useState([]);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [burgerOptions, setBurgerOptions] = useState({
     tipo: { simple: false, doble: false, triple: false },
@@ -15,13 +15,11 @@ const CardV1 = ({ onAddCard }) => {
     cantidad: 1,
   });
 
-
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`${URL_BASE}/product/getAll`);
         setProducts(response.data);
-        
       } catch (error) {
         console.error('Hubo un error al cargar los productos:', error);
       }
@@ -31,28 +29,21 @@ const CardV1 = ({ onAddCard }) => {
   }, []);
 
   const handleClose = () => setSelectedProductId(null);
-  const handleShow = (productId) => setSelectedProductId(productId);
-
+  const handleShow = (_id) => setSelectedProductId(_id);
 
   const handleCheckboxChange = (category, item) => {
-    
-    if (category === "tipo") {
-      setBurgerOptions((prevState) => ({
-        ...prevState,
-        tipo: {
-          simple: false,
-          doble: false,
-          triple: false,
-          [item]: !prevState.tipo[item],
-        },
-      }));
-    } else {
+    if (category === "tipo" || category === "quitar") {   
       setBurgerOptions((prevState) => ({
         ...prevState,
         [category]: {
           ...prevState[category],
           [item]: !prevState[category][item],
         },
+      }));
+    } else if (category === "sinTacc") {
+      setBurgerOptions((prevState) => ({
+        ...prevState,
+        sinTacc: !prevState.sinTacc,
       }));
     }
   };
@@ -67,10 +58,7 @@ const CardV1 = ({ onAddCard }) => {
   const handleIncrement = (category, item) => {
     setBurgerOptions((prevState) => ({
       ...prevState,
-      [category]: {
-        ...prevState[category],
-        [item]: prevState[category][item] + 1,
-      },
+      [category]: { ...prevState[category], [item]: prevState[category][item] + 1 },
     }));
   };
 
@@ -78,10 +66,7 @@ const CardV1 = ({ onAddCard }) => {
     if (burgerOptions[category][item] > 0) {
       setBurgerOptions((prevState) => ({
         ...prevState,
-        [category]: {
-          ...prevState[category],
-          [item]: prevState[category][item] - 1,
-        },
+        [category]: { ...prevState[category], [item]: prevState[category][item] - 1 },
       }));
     }
   };
@@ -93,7 +78,12 @@ const CardV1 = ({ onAddCard }) => {
     }));
   };
 
-  const RenderOptions = ({ category, item }) => (
+  const handleAddCard = () => {
+    onAddCard(burgerOptions);
+    handleClose();
+  };
+
+  const RenderOptions = ({ category, item, handleIncrement, handleDecrement, burgerOptions }) => (
     <div className="d-flex justify-content-between align-items-center my-2">
       <span>{item.charAt(0).toUpperCase() + item.slice(1)}</span>
       <div>
@@ -104,12 +94,7 @@ const CardV1 = ({ onAddCard }) => {
     </div>
   );
 
-  const handleAddCard = () => {
-    onAddCard(burgerOptions);
-    handleClose();
-  };
-
-  const selectedProduct = products.find(product => product.id === selectedProductId);
+  const selectedProduct = products.find((product) => product._id === selectedProductId);
 
   const chunkArray = (array, size) => {
     const chunkedArr = [];
@@ -118,90 +103,93 @@ const CardV1 = ({ onAddCard }) => {
     }
     return chunkedArr;
   };
-  
 
   const productGroups = chunkArray(products, 3);
-
 
   return (
     <>
       <Carousel>
-          {productGroups.map((group, index) => (
-            <Carousel.Item key={index}>
-              <div className="d-flex justify-content-around">
-              {group.map(
-                (product, i) =>
-                  product.visible && (
-                    <Card
-                      key={i}
-                      onClick={() => handleShow(product.id)}
-                      style={{ cursor: "pointer", flex: "0 0 30%" }}
-                    >
-                      <Card.Img
-                        variant="top"
-                        src={product.image || ""}
-                        style={{ maxHeight: "200px", objectFit: "cover" }}
-                      />
-                      <Card.Body>
-                        <Card.Title>{product.name}</Card.Title>
-                      </Card.Body>
-                    </Card>
-                  )
+        {productGroups.map((group, index) => (
+          <Carousel.Item key={index}>
+            <div className="d-flex justify-content-around">
+              {group.map((product, i) =>
+                product.visible ? (
+                  <Card
+                    key={i}
+                    onClick={() => handleShow(product._id)}
+                    style={{ cursor: "pointer", flex: "0 0 30%" }}
+                  >
+                    <Card.Img variant="top" src={product.image || ""} style={{ maxHeight: "200px", objectFit: "cover" }} />
+                    <Card.Body>
+                      <Card.Title>{product.name}</Card.Title>
+                    </Card.Body>
+                  </Card>
+                ) : null
               )}
-              </div>
-            </Carousel.Item>
-          ))}
-        </Carousel>
+            </div>
+          </Carousel.Item>
+        ))}
+      </Carousel>
 
       {selectedProduct && (
-        <Modal
-          show={!!selectedProductId}
-          onHide={handleClose}
-          backdrop="static"
-          keyboard={false}
-          >
+        <Modal show={!!selectedProductId} onHide={handleClose} backdrop="static" keyboard={false}>
           <Modal.Header closeButton>
             <Modal.Title>Personaliza tu hamburguesa - {selectedProduct.name}</Modal.Title>
           </Modal.Header>
-        <Modal.Body>
-          <h5>Opciones</h5>
-          {Object.keys(burgerOptions.tipo).map((item) => (
-            <Form.Check
-              key={item}
-              type="checkbox"
-              label={item.charAt(0).toUpperCase() + item.slice(1)}
-              name="tipo"
-              id={`tipo-${item}`}
-              checked={burgerOptions.tipo[item]}
-              onChange={() => handleCheckboxChange("tipo", item)}
-            />
-          ))}
+          <Modal.Body>
+          <h5>Opciones</h5>    
+            {Object.keys(burgerOptions.tipo).map((item) => (
+              <div className="d-flex justify-content-between" key={item}>
+                <label htmlFor={`tipo-${item}`} className="form-check-label">
+                  {item.charAt(0).toUpperCase() + item.slice(1)}
+                </label>
+                <Form.Check
+                  type="checkbox"
+                  id={`tipo-${item}`}
+                  checked={burgerOptions.tipo[item]}
+                  onChange={() => handleCheckboxChange("tipo", item)}
+                  className="ms-auto"
+                />
+              </div>
+            ))}
 
-          <h5>Extras</h5>
-          {Object.keys(burgerOptions.extras).map((item) => (
-            <RenderOptions key={item} category="extras" item={item} />
-          ))}
+            <h5>Extras</h5>
+            {Object.keys(burgerOptions.extras).map((item) => (
+              <RenderOptions
+                key={item}
+                category="extras"
+                item={item}
+                handleIncrement={handleIncrement}
+                handleDecrement={handleDecrement}
+                burgerOptions={burgerOptions}
+              />
+            ))}
 
-          <h5>Quitar</h5>
-          {Object.keys(burgerOptions.quitar).map((item) => (
-            <Form.Check
-              type="checkbox"
-              id={`check-${item}`}
-              label={`Sin ${item}`}
-              checked={burgerOptions.quitar[item]}
-              onChange={() => handleCheckboxChange("quitar", item)}
-              key={item}
-            />
-          ))}
+              <h5>Quitar</h5>
+              {Object.keys(burgerOptions.quitar).map((item) => (
+                <div className="d-flex justify-content-between align-items-center mb-2" key={item}>
+                  <label htmlFor={`check-${item}`} className="mb-0">{`Sin ${item}`}</label>
+                  <Form.Check
+                    type="checkbox"
+                    id={`check-${item}`}
+                    checked={burgerOptions.quitar[item]}
+                    onChange={() => handleCheckboxChange("quitar", item)}
+                    className="ms-auto"
+                  />
+                </div>
+              ))}
 
-          <h5>Celiacos</h5>
-          <Form.Check
-            type="checkbox"
-            id="sinTacc"
-            label="Sin TACC"
-            checked={burgerOptions.sinTacc}
-            onChange={() => handleCheckboxChange("sinTacc", "sinTacc")}
-          />
+              <h5>Celiacos</h5>
+              <div className="d-flex justify-content-between align-items-center mb-2">
+                <label htmlFor="sinTacc" className="mb-0">Sin TACC</label>
+                <Form.Check
+                  type="checkbox"
+                  id="sinTacc"
+                  checked={burgerOptions.sinTacc}
+                  onChange={() => handleCheckboxChange("sinTacc", "sinTacc")}
+                  className="ms-auto"
+                />
+              </div>
 
           <h5>Aclaraciones</h5>
           <Form.Control
@@ -229,7 +217,7 @@ const CardV1 = ({ onAddCard }) => {
             </Button>
           </div>
         </Modal.Body>
-        <Modal.Footer>
+          <Modal.Footer>
             <Button variant="primary" onClick={handleAddCard}>
               Agregar al carrito
             </Button>
