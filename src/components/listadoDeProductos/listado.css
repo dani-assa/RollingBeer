@@ -6,6 +6,7 @@
     --colorFive: #ff6700;
   }
 
+
 #img1 {
   background-image: url('https://i.ibb.co/J2PpZpt/cerveza3.png');
   background-size: cover;
@@ -39,6 +40,7 @@
   background-color: #000000;
   color: #fff;
   border: 1;
+  border-color: var(--colorThree);
  
 }
 
@@ -50,7 +52,4 @@
 .cardv2 {
 box-shadow: 0 1px 1px rgba(0, 0, 0, 1.0);
 }
-
-
-  
 
