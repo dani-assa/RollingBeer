@@ -3,9 +3,11 @@ import { Container, Row, Col, Button } from 'react-bootstrap';
 import axios from 'axios';
 import ProductList from './ProductList';
 import Pagination from './Pagination';
-import ProductModal from './ProductModalEdit';
+// import ProductModalEdit from './ProductModalEdit';
+import ProductModalV2 from './ProductModalV2';
+import MenuModal from './Menu';
 
-const itemsPerPage = 9;
+const itemsPerPage = 6;
 const URL_BASE = import.meta.env.VITE_URL_BASE;
 
 const ProductAdmin = () => {
@@ -13,31 +15,32 @@ const ProductAdmin = () => {
   const [loadings, setLoadings] = useState(false);
   const [errors, setErrors] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [showModal, setShowModal] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null); // Estado para el producto seleccionado
+  const [currentModal, setCurrentModal] = useState(null);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [changeFlag, setChangeFlag] = useState(false);
 
   const handlePageChange = ({ selected }) => {
     setCurrentPage(selected);
   };
 
   const handleVerMas = (product) => {
-    setSelectedProduct(product); // Establecer el producto seleccionado
-    setShowModal(true); // Mostrar el modal
+    setSelectedProduct(product);
+    setCurrentModal('editProduct');
   };
 
   const handleShowModal = () => {
-    setShowModal(true);
+    setCurrentModal('addProduct');
   };
 
   const handleCloseModal = () => {
-    setShowModal(false);
+    setCurrentModal(null);
   };
 
   const productsAll = async () => {
     try {
       setLoadings(true);
-      const response = await axios.get(`${URL_BASE}/product/getAll`);
-      setProducts(response.data);
+      const {data} = await axios.get(`${URL_BASE}/product/getAll`);
+      setProducts(data);
     } catch (error) {
       setErrors(error.response.data);
     } finally {
@@ -47,7 +50,7 @@ const ProductAdmin = () => {
 
   useEffect(() => {
     productsAll();
-  }, []);
+  }, [changeFlag]);
 
   const offset = currentPage * itemsPerPage;
   const paginatedProducts = products.slice(offset, offset + itemsPerPage);
@@ -73,13 +76,24 @@ const ProductAdmin = () => {
           handlePageChange={handlePageChange}
         />
       </Row>
-      <ProductModal
-        show={showModal}
-        handleCloseModal={handleCloseModal}
-        product={selectedProduct} // Pasa el producto seleccionado al modal
-      />
+      {currentModal === 'editProduct' && (
+        <ProductModalV2
+          product={products}
+          show={true}
+          handleCloseModal={handleCloseModal}
+          setLoadings={setLoadings}
+          setChangeFlag={setChangeFlag}
+        />
+      )}
+      {currentModal === 'addProduct' && (
+        <MenuModal
+          show={true}
+          handleCloseModal={handleCloseModal}
+        />
+      )}
     </Container>
   );
 };
 
 export default ProductAdmin;
+
