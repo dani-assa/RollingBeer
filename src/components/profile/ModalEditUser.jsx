@@ -3,14 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useAuth } from "../../context/UserContext";
 const URL_BASE = import.meta.env.VITE_URL_BASE;
-import "./profileV1.css"
+import "./profileV1.css";
 
-
-const ModalEditUser = ({ setIsLoading, setChangeFlag }) => {
+const ModalEditUser = ({ users, setIsLoading, setChangeFlag }) => {
   const { user, triggerUserUpdate } = useAuth();
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [selectedUser, setSelectedUser] = useState(user);
-  
 
   const handleEdit = () => {
     setShowModalEdit(true);
@@ -38,15 +36,13 @@ const ModalEditUser = ({ setIsLoading, setChangeFlag }) => {
     }
   };
 
-  
-
   return (
     <>
       <Button
         variant="success"
         size="sm"
         className="mx-2 mb-3 btnEditar"
-        onClick={() => handleEdit(user)}
+        onClick={() => handleEdit(users)}
       >
         Editar
       </Button>
