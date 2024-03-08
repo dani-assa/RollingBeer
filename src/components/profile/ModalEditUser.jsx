@@ -6,7 +6,7 @@ const URL_BASE = import.meta.env.VITE_URL_BASE;
 import "./profileV1.css";
 
 const ModalEditUser = ({ users, setIsLoading, setChangeFlag }) => {
-  const { user, triggerUserUpdate } = useAuth();
+  const { user, setUser, triggerUserUpdate } = useAuth();
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [selectedUser, setSelectedUser] = useState(user);
 
@@ -21,11 +21,11 @@ const ModalEditUser = ({ users, setIsLoading, setChangeFlag }) => {
   const handleSaveEdit = async () => {
     try {
       setIsLoading(true);
-      await axios.patch(
-        `${URL_BASE}/user/editById/${selectedUser.id}`,
+      const {data} = await axios.patch(
+        `${URL_BASE}/user/editById/${user._id}`,
         selectedUser
       );
-      console.log(selectedUser);
+      setUser(data.userUpdated)
       setChangeFlag((prev) => !prev);
       triggerUserUpdate();
     } catch (error) {
