@@ -39,7 +39,7 @@ const ProfileV1 = () => {
 
   useEffect(() => {
     getById();
-  }, [userChangeFlag]);
+  }, [changeFlag, userChangeFlag]);
 
   return (
     <div className="mt-5">
@@ -47,28 +47,28 @@ const ProfileV1 = () => {
         <LoadingScreen />
       ) : (
         <>
-          {user ? (
+          {users ? (
             <>
-              <h3 className="ms-3 text-white">Bienvenid@ {user.name}</h3>
+              <h3 className="ms-3 text-white">Bienvenid@ {users.name}</h3>
               <Container>
                 <Row>
                   <Col className="cardProfile">
                     <Card className="mt-4 mb-5 fondoProfile list-unstyled text-white">
                       <Card.Body className="">
                         <Card.Title className="mt-3">
-                          Nombre: {user.name}
+                          Nombre: {users.name}
                         </Card.Title>
                         <li className="ps-3">
                           <span className="fw-bold">Nombre de usuario: </span>
-                          {user.userName}
+                          {users.userName}
                         </li>
                         <li className="ps-3">
                           <span className="fw-bold">Correo: </span>
-                          {user.email}
+                          {users.email}
                         </li>
                       </Card.Body>
                       <ModalEditUser
-                        user={user}
+                        user={users}
                         setIsLoading={setIsLoading}
                         setChangeFlag={setChangeFlag}
                       />
