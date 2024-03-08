@@ -90,15 +90,6 @@ const Menu = ({ show, handleCloseModal }) => {
             {errors.image && <span className="text-danger">{errors.image.message}</span>}
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Estado</Form.Label>
-            <Form.Select {...register("visible", { required: "Selecciona un estado" })}>
-              <option value="">Selecciona un estado</option>
-              <option value="Disponible">Disponible</option>
-              <option value="No-Disponible">No disponible</option>
-            </Form.Select>
-            {errors.visible && <span className="text-danger">{errors.visible.message}</span>}
-          </Form.Group>
-          <Form.Group className="mb-3">
             <Form.Control
               type="text"
               placeholder="Precio"
