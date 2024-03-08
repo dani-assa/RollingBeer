@@ -25,6 +25,7 @@ const ProfileV1 = () => {
       setUsers(data);
       console.log(data);
       console.log(user);
+      console.log(users);
     } catch (error) {
       console.log(error);
     } finally {
