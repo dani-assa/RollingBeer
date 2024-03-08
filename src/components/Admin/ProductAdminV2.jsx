@@ -9,8 +9,8 @@ import { alertCustom, alertConfirm } from '../../components/alertCustom/alertCus
 import Pagination from '../pagination/Pagination';
 import Menu from './Menu';
 
-const URL_BASE = import.meta.env.VITE_URL_BASE;
-const itemsPerPage = 5;
+const URL_BASE = import.meta.env.VITE_URL_BASE
+const itemsPerPage = 4;
 
 const ProductAdminV2 = () => {
   const [products, setProducts] = useState([]);
@@ -25,7 +25,7 @@ const ProductAdminV2 = () => {
       const { data } = await axios.get(`${URL_BASE}/product/getAll`);
       setProducts(data);
     } catch (error) {
-      alertCustom('Upps', 'Ha ocurrido un error al traer los usuarios', 'error');
+      alertCustom('Upps', 'Ha ocurrido un error al traer los productos', 'error');
     } finally {
       setIsLoading(false);
     }
