@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { productRequest } from "../api/product";
-import { alertCustom } from '../components/alertCustom/alertCustom';
+import { alertCustom } from '../utils/alertCustom/alertCustom';
 
 export const ProductContext = createContext();
 

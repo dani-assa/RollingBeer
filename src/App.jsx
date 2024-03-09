@@ -13,15 +13,6 @@ import NavigationBar from "./components/navigationBar/NavigationBar";
 import Profile from "./pages/Profile";
 import Menu from "./components/Admin/Menu";
 import ProductAdminV2 from "./components/Admin/ProductAdminV2";
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
-import AdminV2 from "./pages/AdminV2";
->>>>>>> d7ecbaf9607c2ac7497508d01db21cab26901f5f
-=======
-
->>>>>>> b793d11c0512d0a10621f332e241943f390a8866
 
 const App = () => {
   return (
@@ -30,14 +21,6 @@ const App = () => {
         <ProductProvider>
           <main>
             <Routes>
-<<<<<<< HEAD
-<<<<<<< HEAD
-              
-=======
-              <Route path="/adminv2/products" element={<ProductAdminV2 />} />
->>>>>>> d7ecbaf9607c2ac7497508d01db21cab26901f5f
-=======
->>>>>>> b793d11c0512d0a10621f332e241943f390a8866
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Home />} />
               <Route path="*" element={<ErrorPage />} />
@@ -48,13 +31,6 @@ const App = () => {
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/admin/productos" element={<ProductAdminV2/>} />
               </Route>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-              <Route path="/adminv2" element={<AdminV2 />} />
->>>>>>> d7ecbaf9607c2ac7497508d01db21cab26901f5f
-=======
->>>>>>> b793d11c0512d0a10621f332e241943f390a8866
             </Routes>
           </main>
           <Menu />
