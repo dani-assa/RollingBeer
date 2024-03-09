@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import { Form, Modal, Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { nameMenu, imageMenu, priceMenu, cantidadMenu, descriptionRegex } from "../../validation/adminPanelValidations";
@@ -32,6 +32,7 @@ const Menu = ({ show, handleCloseModal }) => {
       <Modal.Body>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group className="mb-3">
+            <Form.Label>Nombre</Form.Label>
             <Form.Control
               type="text"
               placeholder="Nombre"
@@ -76,6 +77,7 @@ const Menu = ({ show, handleCloseModal }) => {
             {errors.category && <span className="text-danger">{errors.category.message}</span>}
           </Form.Group>
           <Form.Group className="mb-3">
+            <Form.Label>Imagen URL</Form.Label>
             <Form.Control
               type="text"
               placeholder="URL de la imagen"
@@ -90,6 +92,7 @@ const Menu = ({ show, handleCloseModal }) => {
             {errors.image && <span className="text-danger">{errors.image.message}</span>}
           </Form.Group>
           <Form.Group className="mb-3">
+            <Form.Label>Precio</Form.Label>
             <Form.Control
               type="text"
               placeholder="Precio"
@@ -104,6 +107,7 @@ const Menu = ({ show, handleCloseModal }) => {
             {errors.price && <span className="text-danger">{errors.price.message}</span>}
           </Form.Group>
           <Form.Group className="mb-3">
+            <Form.Label>Cantidad</Form.Label>
             <Form.Control
               type="text"
               placeholder="Cantidad disponible"

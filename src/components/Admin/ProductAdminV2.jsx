@@ -25,7 +25,7 @@ const ProductAdminV2 = () => {
       const { data } = await axios.get(`${URL_BASE}/product/getAll`);
       setProducts(data);
     } catch (error) {
-      alertCustom('Upps', 'Ha ocurrido un error al traer los productos', 'error');
+      alertCustom('Upps', 'Ha ocurrido un error al traer los productos.', 'error');
     } finally {
       setIsLoading(false);
     }
@@ -34,7 +34,7 @@ const ProductAdminV2 = () => {
   const deleteProduct = async (_id) => {
     try {
       setIsLoading(true);
-      alertConfirm('Estas seguro?', 'Estas por eliminar el producto de manera definitiva', 'warning', 'Eliminar', async () => {
+      alertConfirm('¿Estas seguro?', 'Estas por eliminar el producto de manera definitiva', 'warning', 'Eliminar', async () => {
         await axios.delete(`${URL_BASE}/product/delete/${_id}`);
         getAllProduct();
       });
@@ -127,7 +127,6 @@ const ProductAdminV2 = () => {
           handlePageChange={handlePageChange}
         />
       </Row>
-      {/* Modal de Menu */}
       <Menu show={showMenuModal} handleCloseModal={handleCloseMenuModal} />
     </Container>
   )
