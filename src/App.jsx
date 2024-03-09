@@ -14,7 +14,6 @@ import Profile from "./pages/Profile";
 import Menu from "./components/Admin/Menu";
 import ProductAdminV2 from "./components/Admin/ProductAdminV2";
 
-
 const App = () => {
   return (
     <BrowserRouter>
