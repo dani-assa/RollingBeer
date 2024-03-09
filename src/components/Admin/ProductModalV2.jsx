@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import { alertCustom, alertConfirm } from '../../utils/alertCustom/alertCustom';
+import { alertCustom } from '../../components/alertCustom/alertCustom';
+
 
 const URL_BASE = import.meta.env.VITE_URL_BASE;
 
