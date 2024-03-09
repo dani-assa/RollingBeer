@@ -6,28 +6,31 @@ import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import ErrorPage from "./pages/ErrorPage";
-import Footer from "./components/footer/Footer";
-import NavbarV1 from "./components/navbar/NavbarV1";
-import NavbarV2 from "./components/navbar/NavbarV2";
 import ListadoDeProd from "./pages/ListadoDeProd";
 import Admin from "./pages/Admin";
 import ProtectedRouteAdmin from "./protectedRoute/ProtectedRouteAdmin";
 import NavigationBar from "./components/navigationBar/NavigationBar";
 import Profile from "./pages/Profile";
-import Menu from "./components/Admin/Menu"; 
+import Menu from "./components/Admin/Menu";
 import ProductAdminV2 from "./components/Admin/ProductAdminV2";
+<<<<<<< HEAD
 
+=======
+import AdminV2 from "./pages/AdminV2";
+>>>>>>> d7ecbaf9607c2ac7497508d01db21cab26901f5f
 
 const App = () => {
   return (
-    <UserProvider>
-      <ProductProvider> 
-        <BrowserRouter>
-          {/* <NavbarV1 /> */}
-          {/* <NavbarV2 /> */}
+    <BrowserRouter>
+      <UserProvider>
+        <ProductProvider>
           <main>
             <Routes>
+<<<<<<< HEAD
               
+=======
+              <Route path="/adminv2/products" element={<ProductAdminV2 />} />
+>>>>>>> d7ecbaf9607c2ac7497508d01db21cab26901f5f
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Home />} />
               <Route path="*" element={<ErrorPage />} />
@@ -38,14 +41,17 @@ const App = () => {
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/admin/productos" element={<ProductAdminV2/>} />
               </Route>
+<<<<<<< HEAD
+=======
+              <Route path="/adminv2" element={<AdminV2 />} />
+>>>>>>> d7ecbaf9607c2ac7497508d01db21cab26901f5f
             </Routes>
           </main>
-          <Menu /> 
+          <Menu />
           <NavigationBar />
-          {/* <Footer /> */}
-        </BrowserRouter>
-      </ProductProvider>
-    </UserProvider>
+        </ProductProvider>
+      </UserProvider>
+    </BrowserRouter>
   );
 };
 

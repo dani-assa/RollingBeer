@@ -5,7 +5,7 @@ import axios from 'axios';
 import ProductModalV2 from './ProductModalV2';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
-import { alertCustom, alertConfirm } from '../../components/alertCustom/alertCustom';
+import { alertCustom, alertConfirm } from '../../utils/alertCustom/alertCustom';
 import Pagination from '../pagination/Pagination';
 import Menu from './Menu';
 

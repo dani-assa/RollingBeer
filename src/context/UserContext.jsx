@@ -1,7 +1,8 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import { registerRequest,
-  // loginRequest,
-  verifyTokenRequest } from "../api/user";
+import {
+  registerRequest,
+  verifyTokenRequest,
+} from "../api/user";
 import Cookies from "js-cookie";
 import axios from "../api/axios";
 export const UserContext = createContext();
@@ -23,7 +24,7 @@ export const UserProvider = ({ children }) => {
   const [userChangeFlag, setUserChangeFlag] = useState(false);
 
   const triggerUserUpdate = () => {
-    setUserChangeFlag(prevFlag => !prevFlag); 
+    setUserChangeFlag((prevFlag) => !prevFlag);
   };
 
   const signup = async (user) => {
@@ -38,9 +39,9 @@ export const UserProvider = ({ children }) => {
 
   const signin = async (user) => {
     try {
-      // const res = await loginRequest(user);
       const res = await axios.post("user/login", user);
       setUser(res.data);
+      console.log(res.data);
       setIsAuthenticated(true);
     } catch (error) {
       setErrors(error.response.data);
@@ -99,10 +100,10 @@ export const UserProvider = ({ children }) => {
         errors,
         logout,
         triggerUserUpdate,
+        setUser,
       }}
     >
       {children}
     </UserContext.Provider>
   );
 };
-
