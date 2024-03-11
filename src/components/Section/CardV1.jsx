@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Modal, Form, Carousel } from "react-bootstrap";
-import axios from "../../api/axios.js";
+import { Card, Button, Modal, Form, Carousel, Toast } from "react-bootstrap";
+import axios from "../../api/axios.js"
 const URL_BASE = import.meta.env.VITE_URL_BASE;
+
 
 const CardV1 = ({ onAddCard }) => {
   const [products, setProducts] = useState([]);
@@ -29,10 +30,20 @@ const CardV1 = ({ onAddCard }) => {
   }, []);
 
   const handleClose = () => setSelectedProductId(null);
-  const handleShow = (_id) => setSelectedProductId(_id);
+  const handleShow = (_id) => {
+    setSelectedProductId(_id);
+    setBurgerOptions({
+      tipo: { simple: false, doble: false, triple: false },
+      extras: { Pepino: 0, Cheddar: 0, Medallon: 0, Bacon: 0, SalsaRolling: 0 },
+      quitar: { cheddar: false, bacon: false },
+      sinTacc: false,
+      aclaraciones: "",
+      cantidad: 1,
+    });
+  };
 
   const handleCheckboxChange = (category, item) => {
-    if (category === "tipo" || category === "quitar") {   
+    if (category === "tipo" || category === "quitar") {
       setBurgerOptions((prevState) => ({
         ...prevState,
         [category]: {
@@ -78,10 +89,20 @@ const CardV1 = ({ onAddCard }) => {
     }));
   };
 
+  const [showToast, setShowToast] = useState(false);
+
   const handleAddCard = () => {
+    const selectedTipo = Object.values(burgerOptions.tipo).some(option => option === true);
+    if (!selectedTipo) {
+      setShowToast(true);
+      return;
+    }
+
     onAddCard(burgerOptions);
     handleClose();
   };
+
+
 
   const RenderOptions = ({ category, item, handleIncrement, handleDecrement, burgerOptions }) => (
     <div className="d-flex justify-content-between align-items-center my-2">
@@ -108,6 +129,7 @@ const CardV1 = ({ onAddCard }) => {
 
   return (
     <>
+
       <Carousel>
         {productGroups.map((group, index) => (
           <Carousel.Item key={index}>
@@ -137,7 +159,14 @@ const CardV1 = ({ onAddCard }) => {
             <Modal.Title>Personaliza tu hamburguesa - {selectedProduct.name}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          <h5>Opciones</h5>    
+            <Toast show={showToast} onClose={() => setShowToast(false)} bg="danger" text="white">
+              <Toast.Header>
+                <strong className="mr-auto">Mensaje</strong>
+              </Toast.Header>
+              <Toast.Body>Por favor selecciona al menos una opción (simple, doble o triple) antes de agregar al carrito.</Toast.Body>
+            </Toast>
+
+            <h5>Opciones</h5>
             {Object.keys(burgerOptions.tipo).map((item) => (
               <div className="d-flex justify-content-between" key={item}>
                 <label htmlFor={`tipo-${item}`} className="form-check-label">
@@ -165,58 +194,58 @@ const CardV1 = ({ onAddCard }) => {
               />
             ))}
 
-              <h5>Quitar</h5>
-              {Object.keys(burgerOptions.quitar).map((item) => (
-                <div className="d-flex justify-content-between align-items-center mb-2" key={item}>
-                  <label htmlFor={`check-${item}`} className="mb-0">{`Sin ${item}`}</label>
-                  <Form.Check
-                    type="checkbox"
-                    id={`check-${item}`}
-                    checked={burgerOptions.quitar[item]}
-                    onChange={() => handleCheckboxChange("quitar", item)}
-                    className="ms-auto"
-                  />
-                </div>
-              ))}
-
-              <h5>Celiacos</h5>
-              <div className="d-flex justify-content-between align-items-center mb-2">
-                <label htmlFor="sinTacc" className="mb-0">Sin TACC</label>
+            <h5>Quitar</h5>
+            {Object.keys(burgerOptions.quitar).map((item) => (
+              <div className="d-flex justify-content-between align-items-center mb-2" key={item}>
+                <label htmlFor={`check-${item}`} className="mb-0">{`Sin ${item}`}</label>
                 <Form.Check
                   type="checkbox"
-                  id="sinTacc"
-                  checked={burgerOptions.sinTacc}
-                  onChange={() => handleCheckboxChange("sinTacc", "sinTacc")}
+                  id={`check-${item}`}
+                  checked={burgerOptions.quitar[item]}
+                  onChange={() => handleCheckboxChange("quitar", item)}
                   className="ms-auto"
                 />
               </div>
+            ))}
 
-          <h5>Aclaraciones</h5>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            value={burgerOptions.aclaraciones}
-            onChange={handleAclaracionesChange}
-          />
-          <h5>Cantidad</h5>
-          <div className="d-flex justify-content-center align-items-center">
-            <Button
-              className="mx-3"
-              variant="outline-secondary"
-              onClick={() => handleCantidadChange(-1)}
-            >
-              -
-            </Button>
-            <span>{burgerOptions.cantidad}</span>
-            <Button
-              className="mx-3"
-              variant="outline-secondary"
-              onClick={() => handleCantidadChange(1)}
-            >
-              +
-            </Button>
-          </div>
-        </Modal.Body>
+            <h5>Celiacos</h5>
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <label htmlFor="sinTacc" className="mb-0">Sin TACC</label>
+              <Form.Check
+                type="checkbox"
+                id="sinTacc"
+                checked={burgerOptions.sinTacc}
+                onChange={() => handleCheckboxChange("sinTacc", "sinTacc")}
+                className="ms-auto"
+              />
+            </div>
+
+            <h5>Aclaraciones</h5>
+            <Form.Control
+              as="textarea"
+              rows={3}
+              value={burgerOptions.aclaraciones}
+              onChange={handleAclaracionesChange}
+            />
+            <h5>Cantidad</h5>
+            <div className="d-flex justify-content-center align-items-center">
+              <Button
+                className="mx-3"
+                variant="outline-secondary"
+                onClick={() => handleCantidadChange(-1)}
+              >
+                -
+              </Button>
+              <span>{burgerOptions.cantidad}</span>
+              <Button
+                className="mx-3"
+                variant="outline-secondary"
+                onClick={() => handleCantidadChange(1)}
+              >
+                +
+              </Button>
+            </div>
+          </Modal.Body>
           <Modal.Footer>
             <Button variant="primary" onClick={handleAddCard}>
               Agregar al carrito
