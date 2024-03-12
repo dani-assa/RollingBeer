@@ -77,11 +77,11 @@ const ProductAdminV2 = () => {
   };
 
   return (
-    <Container>
+    <Container fluid className="justify-content-center">
       <Button variant="primary" size="sm" onClick={handleShowMenuModal} className="float-end">
         <AddIcon/>
       </Button>
-      <h3 className="mt-5 mb-4 text-center">Administrar menú</h3>
+      <h3 className="mt-5 mb-4 text-center">Administración de Menú</h3>
       <Row className="justify-content-center">
         <Col>
           {isLoading

@@ -13,6 +13,7 @@ import NavigationBar from "./components/navigationBar/NavigationBar";
 import Profile from "./pages/Profile";
 import Menu from "./components/Admin/Menu";
 import ProductAdminV2 from "./components/Admin/ProductAdminV2";
+import Users from "./components/Admin/Users"
 
 const App = () => {
   return (
@@ -29,7 +30,8 @@ const App = () => {
               <Route path="/profile" element={<Profile />} />
               <Route element={<ProtectedRouteAdmin />}>
                 <Route path="/admin" element={<Admin />} />
-                <Route path="/admin/productos" element={<ProductAdminV2/>} />
+                <Route path="/admin/productos" element={<ProductAdminV2/>}/>
+                <Route path="/admin/usuarios" element={<Users/>}/>
               </Route>
             </Routes>
           </main>
