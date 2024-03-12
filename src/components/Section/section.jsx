@@ -18,9 +18,9 @@ function Section() {
               </div>
           </div>
           
-          <div className="d-flex flex-column justify-content-center align-items-center vh-100" id="section2">
-            <CardV1 />
-          </div>
+            <div className="vh-100" id="section2">
+              <CardV1 />
+            </div>
           <div className="d-flex justify-content-center align-items-center vh-100" id="section3">
               <Col lg={6} className="d-none d-xl-block" >
                     <div className='text-center text1'>
