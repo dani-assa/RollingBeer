@@ -89,7 +89,7 @@ const ModalEditUser = ({product, setIsLoading, setChangeFlag}) => {
               </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3">
-            <Form.Label>Imagen URL</Form.Label>
+            <Form.Label>Imagen</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="URL de la imagen"
