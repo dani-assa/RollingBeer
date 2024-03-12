@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Modal, Form, Carousel, Toast } from "react-bootstrap";
+import { Card, Button, Modal, Form, Carousel, Toast, Container } from "react-bootstrap";
+import Slider from "react-slick";
 import axios from "../../api/axios.js"
 const URL_BASE = import.meta.env.VITE_URL_BASE;
 
@@ -103,6 +104,37 @@ const CardV1 = ({ onAddCard }) => {
   };
 
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: { 
+          slidesToShow: 3,
+          slidesToScroll: 3  
+        }
+      },
+      {
+        breakpoint: 830,
+        settings: { 
+          slidesToShow: 2,
+          slidesToScroll: 1 
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: { 
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  };
+
 
   const RenderOptions = ({ category, item, handleIncrement, handleDecrement, burgerOptions }) => (
     <div className="d-flex justify-content-between align-items-center my-2">
@@ -117,46 +149,32 @@ const CardV1 = ({ onAddCard }) => {
 
   const selectedProduct = products.find((product) => product._id === selectedProductId);
 
-  const chunkArray = (array, size) => {
-    const chunkedArr = [];
-    for (let i = 0; i < array.length; i += size) {
-      chunkedArr.push(array.slice(i, i + size));
-    }
-    return chunkedArr;
-  };
-
-  const productGroups = chunkArray(products, 3);
-
   return (
     <>
-
-      <Carousel>
-        {productGroups.map((group, index) => (
-          <Carousel.Item key={index}>
-            <div className="d-flex justify-content-around">
-              {group.map((product, i) =>
-                product.visible ? (
-                  <Card
-                    key={i}
-                    onClick={() => handleShow(product._id)}
-                    style={{ cursor: "pointer", flex: "0 0 30%" }}
-                  >
-                    <Card.Img variant="top" src={product.image || ""} style={{ maxHeight: "200px", objectFit: "cover" }} />
-                    <Card.Body>
-                      <Card.Title>{product.name}</Card.Title>
-                    </Card.Body>
-                  </Card>
-                ) : null
-              )}
+      <div className="slider-container"> 
+      <Slider {...settings}>
+        {products.map((product, i) => (
+          product.visible && (
+            <div key={product._id} className="mx-3 card-1">
+              <Card key={i} onClick={() => handleShow(product._id)} className="text-white card-1" >
+                <Card.Img variant="top" src={product.image || ""} className="card-img"/>
+                <div className="titulo">
+                  <Card.Title className="text-center">{product.name}</Card.Title>
+                  <div className="card-footer">
+                    <small>${product.price}</small>
+                  </div>
+                </div>
+              </Card>
             </div>
-          </Carousel.Item>
+          )
         ))}
-      </Carousel>
+      </Slider>
+    </div>
 
       {selectedProduct && (
         <Modal show={!!selectedProductId} onHide={handleClose} backdrop="static" keyboard={false}>
           <Modal.Header closeButton>
-            <Modal.Title>Personaliza tu hamburguesa - {selectedProduct.name}</Modal.Title>
+            <Modal.Title>Personaliza tu pedido - {selectedProduct.name}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Toast show={showToast} onClose={() => setShowToast(false)} bg="danger" text="white">
