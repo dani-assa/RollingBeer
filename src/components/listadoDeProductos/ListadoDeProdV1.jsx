@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
-import { Button, Col, Container, Modal, Row } from 'react-bootstrap'
-import '../listadoDeProductos/listado.css'
-import CardV1 from '../Section/CardV1'
-import CardV2 from './CardV2'
+import React, { useState } from 'react';
+import { Button, Col, Container, Modal, Row } from 'react-bootstrap';
+import '../listadoDeProductos/listado.css';
+import CardV1 from '../Section/CardV1';
+import CardV2 from './CardV2';
 
 const ListadoDeProdV1 = () => {
-  const [showModal, setShowModal] = useState(false)
-  const handleClose = () => setShowModal(false)
-  const handleShow = () => setShowModal(true)
+  const [showModal, setShowModal] = useState(false);
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
   const [cartItems, setCartItems] = useState([]);
+  const [quitar, setQuitar] = useState({ cheddar: false, bacon: false });
 
   const handleAddCard = (burgerOptions) => {
     const { tipo, sinTacc, ...rest } = burgerOptions;
@@ -17,6 +18,13 @@ const ListadoDeProdV1 = () => {
     const totalCantidad = burgerOptions.cantidad;
     setCartItems([...cartItems, { ...rest, tipo: tipoString, sinTACC: sinTaccString, totalCantidad }]);
   }
+
+  const handleQuitarChange = (item) => {
+    setQuitar((prevState) => ({
+      ...prevState,
+      [item]: !prevState[item],
+    }));
+  };
 
   const handleCloseForm = () => {
     setShowEditForm(false);
@@ -41,7 +49,7 @@ const ListadoDeProdV1 = () => {
               ) : (
                 cartItems.map((item, index) => (
                   <div key={index}>
-                    <p className='text-center'>Producto: {item.name}</p>
+                    <h5 className='text-center'>Producto: {item.name}</h5>
                     {Object.keys(item.tipo).length > 0 ? (
                       <>
                         <p>Opción: {Object.keys(item.tipo).find(key => item.tipo[key]) || 'Ninguna'}</p>
@@ -67,67 +75,15 @@ const ListadoDeProdV1 = () => {
 
 
                     {item.sinTACC && <p>{item.sinTACC}</p>}
-                    <p>Cantidad: {item.cantidad}</p>
+                    {Object.entries(item.quitar).map(([ingrediente, seleccionado]) => (
+                      seleccionado && <p key={ingrediente}>{`Quitar: ${ingrediente}`}</p>
+                    ))}
+
                     {item.aclaraciones && (
                       <p>Aclaraciones: {item.aclaraciones}</p>
-                    )}
-
-
-                    {/*<Button onClick={handleShowEditform}>Editar pedido</Button>
-                      <Modal> 
-                        <Modal.Body>
-                        <label>
-                          Cantidad:
-                          <input
-                            type="number"
-                            onChange={(e) => setQuantity(e.target.value)}
-                            />
-                        </label>
-                        <label>
-                          Opciones:
-                          <select value={options} onChange={(e) => setOptions(e.target.value)}>
-                            <option value="">Sin opciones</option>
-                          </select>
-                        </label>
-                        <label>
-                          Extras:
-                          {extrasList.map((extra, index) => (
-                            <div key={index}>
-                              <input
-                                type="text"
-                                value={extras[extra] || ''}
-                                onChange={(e) => {
-                                  const newExtras = { ...extra };
-                                  newExtras[extra] = e.target.value;
-                                  setExtras(newExtras);
-                                }}
-                                />
-                              <button type="button" onClick={() => handleRemoveExtra(index)}>
-                                Eliminar extra
-                              </button>
-                            </div>
-                          ))}
-                          <button type="button" onClick={handleAddExtra}>
-                            Agregar extra
-                          </button>
-                        </label>
-                        <label>
-                          Sin TACC:
-                          <input
-                            type="checkbox"
-                            checked={tacc}
-                            onChange={(e) => setTACC(e.target.checked)}
-                            />
-                        </label>
-                        <label>
-                          Aclaraciones:
-                          <textarea value={notes} onChange={(e) => setNotes(e.target.value)} />
-                        </label>
-                        <button type="submit" onClick={handleSubmit}>
-                          Guardar
-                              </button>
-                            </Modal.Body>
-                              </Modal>*/}
+                      )}
+                      <p>Cantidad: {item.cantidad}</p>
+                      <p>Precio: ${item.price}</p>
                   </div>
                 ))
               )}
@@ -135,9 +91,7 @@ const ListadoDeProdV1 = () => {
           </Modal.Body>
           <h6>Total de productos seleccionados: </h6>
           <Modal.Footer>
-            <Button variant="warning text-ligth">
-              Confirmar pedido
-            </Button>
+            {cartItems.length > 0 && (<Button variant="warning text-ligth"> Confirmar pedido </Button>)}
             <Button variant="secondary" onClick={handleClose}>
               Cerrar
             </Button>
@@ -145,8 +99,12 @@ const ListadoDeProdV1 = () => {
         </Modal>
         <Col>
           <h2 className='pt-4 text-center'>Productos destacados</h2>
-          <CardV1 onAddCard={handleAddCard}
-            onCloseModal={handleClose} />
+          <CardV1
+            onAddCard={handleAddCard}
+            quitar={quitar}
+            setQuitar={handleQuitarChange}
+            onCloseModal={handleClose}
+          />
         </Col>
         <div>
           <h2 className='pt-4 text-center'>Productos</h2>
