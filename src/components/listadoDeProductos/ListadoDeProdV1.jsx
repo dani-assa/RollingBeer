@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Col, Container, Modal, Row } from 'react-bootstrap';
 import '../listadoDeProductos/listado.css';
+import axios from 'axios';
 import CardV1 from '../Section/CardV1';
 import CardV2 from './CardV2';
+/*import ModalDeEntradaV1 from './ModalDeEntradaV1';*/
+const URL_BASE = import.meta.env.VITE_URL_BASE;
 
 const ListadoDeProdV1 = () => {
   const [showModal, setShowModal] = useState(false);
@@ -10,6 +13,24 @@ const ListadoDeProdV1 = () => {
   const handleShow = () => setShowModal(true);
   const [cartItems, setCartItems] = useState([]);
   const [quitar, setQuitar] = useState({ cheddar: false, bacon: false });
+  const [products, setProducts] = useState([]);
+  const [showTableNumberModal, setShowTableNumberModal] = useState(true);
+  const [tableNumber, setTableNumber] = useState(null);
+
+
+  {/*useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(`${URL_BASE}/product/getAll`);
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Hubo un error al cargar los productos:', error);
+      }
+    };
+
+    fetchProducts();
+  }, []);*/}
+
 
   const handleAddCard = (burgerOptions) => {
     const { tipo, sinTacc, ...rest } = burgerOptions;
@@ -26,9 +47,16 @@ const ListadoDeProdV1 = () => {
     }));
   };
 
-  const handleCloseForm = () => {
-    setShowEditForm(false);
-  }
+  const handleDeleteItem = (index) => {
+    const updatedCartItems = [...cartItems];
+    updatedCartItems.splice(index, 1); 
+    setCartItems(updatedCartItems);
+  };
+
+  const handleTableNumberSubmit = (number) => {
+    setTableNumber(number);
+    setShowTableNumberModal(false);
+  };
 
 
 
@@ -36,6 +64,9 @@ const ListadoDeProdV1 = () => {
   return (
     <Container fluid>
       <Row>
+      {/*<div>
+      {showTableNumberModal && <ModalDeEntradaV1 onSubmit={handleTableNumberSubmit} />}
+  </div>*/}
         <h1 className='text-center pt-4'>¡Descubre Nuestro Delicioso Menú!</h1>
         <Button id='boton1' onClick={handleShow} >🛒Ver mi pedido</Button>
         <Modal show={showModal} onHide={handleClose}>
@@ -61,7 +92,7 @@ const ListadoDeProdV1 = () => {
 
                     {Object.keys(item.extras).length > 0 && Object.values(item.extras).some(count => count > 0) && (
                       <>
-                        <p>Extras seleccionados:</p>
+                        <p>Extras:</p>
                         <ul>
                           {Object.keys(item.extras).map((extra, index) => (
                             item.extras[extra] > 0 && (
@@ -69,7 +100,7 @@ const ListadoDeProdV1 = () => {
                             )
                           ))}
                         </ul>
-                        <p>Total de extras seleccionados: {Object.values(item.extras).reduce((total, count) => total + count, 0)}</p>
+                        <p>Total de extras: {Object.values(item.extras).reduce((total, count) => total + count, 0)}</p>
                       </>
                     )}
 
@@ -84,6 +115,7 @@ const ListadoDeProdV1 = () => {
                       )}
                       <p>Cantidad: {item.cantidad}</p>
                       <p>Precio: ${item.price}</p>
+                      <Button id='boton1' onClick={() => handleDeleteItem(index)}>Eliminar</Button>
                   </div>
                 ))
               )}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Modal, Form, Carousel, Toast, Container, ModalBody, Alert } from "react-bootstrap";
+import { Card, Button, Modal, Form, Carousel, Toast, Container, ModalBody } from "react-bootstrap";
 import Slider from "react-slick";
 import axios from "../../api/axios.js"
 const URL_BASE = import.meta.env.VITE_URL_BASE;
@@ -53,23 +53,48 @@ const CardV1 = ({ onAddCard }) => {
         ...prevState,
         tipo: updatedOptions
       }));
-  
+
       if (Object.values(updatedOptions).filter(value => value).length > 1) {
         setShowAlert(true);
       } else {
         setShowAlert(false);
       }
     } else {
-      setBurgerOptions(prevState => ({
-        ...prevState,
-        [category]: {
-          ...prevState[category],
-          [item]: !prevState[category][item]
+      if (category === "quitar" && (item === "bacon" || item === "cheddar")) {
+        if (!burgerOptions.quitar[item]) {
+          setBurgerOptions(prevState => ({
+            ...prevState,
+            extras: {
+              ...prevState.extras,
+              [item.charAt(0).toUpperCase() + item.slice(1)]: 0
+            },
+            [category]: {
+              ...prevState[category],
+              [item]: !prevState[category][item]
+            }
+          }));
+        } else {
+          setBurgerOptions(prevState => ({
+            ...prevState,
+            [category]: {
+              ...prevState[category],
+              [item]: !prevState[category][item]
+            }
+          }));
         }
-      }));
+      } else {
+        setBurgerOptions(prevState => ({
+          ...prevState,
+          [category]: {
+            ...prevState[category],
+            [item]: !prevState[category][item]
+          }
+        }));
+      }
     }
   };
-  
+
+
   const handleCantidadChange = (change) => {
     setBurgerOptions((prevState) => ({
       ...prevState,
@@ -241,10 +266,6 @@ const CardV1 = ({ onAddCard }) => {
                   checked={burgerOptions.quitar[item]}
                   onChange={() => {
                     handleCheckboxChange("quitar", item);
-                    setQuitar((prevState) => ({
-                      ...prevState,
-                      [item]: !prevState[item],
-                    }));
                   }}
                   className="ms-auto"
                 />
@@ -270,6 +291,7 @@ const CardV1 = ({ onAddCard }) => {
               value={burgerOptions.aclaraciones}
               onChange={handleAclaracionesChange}
             />
+            
             <h5>Cantidad</h5>
             <div className="d-flex justify-content-center align-items-center">
               <Button
