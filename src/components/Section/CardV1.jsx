@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Modal, Form, Carousel, Toast, Container } from "react-bootstrap";
+import { Card, Button, Modal, Form, Carousel, Toast, Container, ModalBody, Alert } from "react-bootstrap";
 import Slider from "react-slick";
 import axios from "../../api/axios.js"
 const URL_BASE = import.meta.env.VITE_URL_BASE;
@@ -44,22 +44,32 @@ const CardV1 = ({ onAddCard }) => {
   };
 
   const handleCheckboxChange = (category, item) => {
-    if (category === "tipo" || category === "quitar") {
-      setBurgerOptions((prevState) => ({
+    if (category === "tipo") {
+      const updatedOptions = Object.keys(burgerOptions.tipo).reduce((acc, key) => {
+        acc[key] = key === item;
+        return acc;
+      }, {});
+      setBurgerOptions(prevState => ({
+        ...prevState,
+        tipo: updatedOptions
+      }));
+  
+      if (Object.values(updatedOptions).filter(value => value).length > 1) {
+        setShowAlert(true);
+      } else {
+        setShowAlert(false);
+      }
+    } else {
+      setBurgerOptions(prevState => ({
         ...prevState,
         [category]: {
           ...prevState[category],
-          [item]: !prevState[category][item],
-        },
-      }));
-    } else if (category === "sinTacc") {
-      setBurgerOptions((prevState) => ({
-        ...prevState,
-        sinTacc: !prevState.sinTacc,
+          [item]: !prevState[category][item]
+        }
       }));
     }
   };
-
+  
   const handleCantidadChange = (change) => {
     setBurgerOptions((prevState) => ({
       ...prevState,
@@ -91,6 +101,15 @@ const CardV1 = ({ onAddCard }) => {
   };
 
   const [showToast, setShowToast] = useState(false);
+  useEffect(() => {
+    let timeout;
+    if (showToast) {
+      timeout = setTimeout(() => {
+        setShowToast(false);
+      }, 4000);
+    }
+    return () => clearTimeout(timeout);
+  }, [showToast]);
 
   const handleAddCard = () => {
     const selectedTipo = Object.values(burgerOptions.tipo).some(option => option === true);
@@ -113,21 +132,21 @@ const CardV1 = ({ onAddCard }) => {
     responsive: [
       {
         breakpoint: 1024,
-        settings: { 
+        settings: {
           slidesToShow: 3,
-          slidesToScroll: 3  
+          slidesToScroll: 3
         }
       },
       {
         breakpoint: 830,
-        settings: { 
+        settings: {
           slidesToShow: 2,
-          slidesToScroll: 1 
+          slidesToScroll: 1
         }
       },
       {
         breakpoint: 480,
-        settings: { 
+        settings: {
           slidesToShow: 1,
           slidesToScroll: 1
         }
@@ -151,25 +170,25 @@ const CardV1 = ({ onAddCard }) => {
 
   return (
     <>
-      <div className="slider-container"> 
-      <Slider {...settings}>
-        {products.map((product, i) => (
-          product.visible && (
-            <div key={product._id} className="mx-3 card-1">
-              <Card key={i} onClick={() => handleShow(product._id)} className="text-white card-1" >
-                <Card.Img variant="top" src={product.image || ""} className="card-img"/>
-                <div className="titulo">
-                  <Card.Title className="text-center">{product.name}</Card.Title>
-                  <div className="card-footer">
-                    <small>${product.price}</small>
+      <div className="slider-container">
+        <Slider {...settings}>
+          {products.map((product, i) => (
+            product.visible && (
+              <div key={product._id} className="mx-3 card-1">
+                <Card key={i} onClick={() => handleShow(product._id)} className="text-white card-1" >
+                  <Card.Img variant="top" src={product.image || ""} className="card-img" />
+                  <div className="titulo">
+                    <Card.Title className="text-center">{product.name}</Card.Title>
+                    <div className="card-footer">
+                      <small>${product.price}</small>
+                    </div>
                   </div>
-                </div>
-              </Card>
-            </div>
-          )
-        ))}
-      </Slider>
-    </div>
+                </Card>
+              </div>
+            )
+          ))}
+        </Slider>
+      </div>
 
       {selectedProduct && (
         <Modal show={!!selectedProductId} onHide={handleClose} backdrop="static" keyboard={false}>
@@ -220,7 +239,13 @@ const CardV1 = ({ onAddCard }) => {
                   type="checkbox"
                   id={`check-${item}`}
                   checked={burgerOptions.quitar[item]}
-                  onChange={() => handleCheckboxChange("quitar", item)}
+                  onChange={() => {
+                    handleCheckboxChange("quitar", item);
+                    setQuitar((prevState) => ({
+                      ...prevState,
+                      [item]: !prevState[item],
+                    }));
+                  }}
                   className="ms-auto"
                 />
               </div>
