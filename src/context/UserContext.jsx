@@ -41,7 +41,7 @@ export const UserProvider = ({ children }) => {
     try {
       const res = await axios.post("user/login", user);
       setUser(res.data);
-      console.log(res.data);
+      // console.log(res.data);
       setIsAuthenticated(true);
     } catch (error) {
       setErrors(error.response.data);
