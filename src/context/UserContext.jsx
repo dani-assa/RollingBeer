@@ -1,8 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
-import {
-  registerRequest,
-  verifyTokenRequest,
-} from "../api/user";
+import { registerRequest, verifyTokenRequest } from "../api/user";
 import Cookies from "js-cookie";
 import axios from "../api/axios";
 export const UserContext = createContext();
@@ -13,6 +10,14 @@ export const useAuth = () => {
     throw new Error("useAuth must be used within an AuhtProvider");
   }
   return context;
+};
+
+const normalizarUsuario = (usuario) => {
+  if ("id" in usuario && !("_id" in usuario)) {
+    usuario._id = usuario.id;
+    delete usuario.id;
+  }
+  return usuario;
 };
 
 export const UserProvider = ({ children }) => {
@@ -30,7 +35,8 @@ export const UserProvider = ({ children }) => {
   const signup = async (user) => {
     try {
       const res = await registerRequest(user);
-      setUser(res.data);
+      const usuarioNormalizado = normalizarUsuario(res.data);
+      setUser(usuarioNormalizado);
       setIsAuthenticated(true);
     } catch (error) {
       setErrors(error.response.data);
@@ -40,8 +46,8 @@ export const UserProvider = ({ children }) => {
   const signin = async (user) => {
     try {
       const res = await axios.post("user/login", user);
-      setUser(res.data);
-      console.log(res.data);
+      const usuarioNormalizado = normalizarUsuario(res.data);
+      console.log(usuarioNormalizado);
       setIsAuthenticated(true);
     } catch (error) {
       setErrors(error.response.data);
@@ -78,8 +84,9 @@ export const UserProvider = ({ children }) => {
           setLoading(false);
           return;
         }
+        const usuarioNormalizado = normalizarUsuario(res.data);
         setIsAuthenticated(true);
-        setUser(res.data);
+        setUser(usuarioNormalizado);
         setLoading(false);
       } catch (error) {
         setIsAuthenticated(false);
