@@ -4,7 +4,7 @@ import '../listadoDeProductos/listado.css';
 import axios from 'axios';
 import CardV1 from '../Section/CardV1';
 import CardV2 from './CardV2';
-/*import ModalDeEntradaV1 from './ModalDeEntradaV1';*/
+import ModalDeEntradaV1 from './ModalDeEntradaV1';
 const URL_BASE = import.meta.env.VITE_URL_BASE;
 
 const ListadoDeProdV1 = () => {
@@ -49,7 +49,7 @@ const ListadoDeProdV1 = () => {
 
   const handleDeleteItem = (index) => {
     const updatedCartItems = [...cartItems];
-    updatedCartItems.splice(index, 1); 
+    updatedCartItems.splice(index, 1);
     setCartItems(updatedCartItems);
   };
 
@@ -58,15 +58,12 @@ const ListadoDeProdV1 = () => {
     setShowTableNumberModal(false);
   };
 
-
-
-
   return (
     <Container fluid>
       <Row>
-      {/*<div>
-      {showTableNumberModal && <ModalDeEntradaV1 onSubmit={handleTableNumberSubmit} />}
-  </div>*/}
+        <div>
+          {showTableNumberModal && <ModalDeEntradaV1 onSubmit={handleTableNumberSubmit} />}
+        </div>
         <h1 className='text-center pt-4'>¡Descubre Nuestro Delicioso Menú!</h1>
         <Button id='boton1' onClick={handleShow} >🛒Ver mi pedido</Button>
         <Modal show={showModal} onHide={handleClose}>
@@ -74,52 +71,51 @@ const ListadoDeProdV1 = () => {
             <Modal.Title>Tu pedido</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Modal.Body>
-              {cartItems.length === 0 ? (
-                <p className='text-center'>No se ha realizado ningún pedido</p>
-              ) : (
-                cartItems.map((item, index) => (
-                  <div key={index}>
-                    <h5 className='text-center'>Producto: {item.name}</h5>
-                    {Object.keys(item.tipo).length > 0 ? (
-                      <>
-                        <p>Opción: {Object.keys(item.tipo).find(key => item.tipo[key]) || 'Ninguna'}</p>
-                      </>
-                    ) : (
-                      <span>No seleccionó ninguna opción</span>
-                    )}
+            <h5 className='text-end m-2'>Mesa {tableNumber}</h5>
+            {cartItems.length === 0 ? (
+              <p className='text-center'>No se ha realizado ningún pedido</p>
+            ) : (
+              cartItems.map((item, index) => (
+                <div key={index}>
+                  <h5 className='text-center'>Producto: {item.name}</h5>
+                  {Object.keys(item.tipo).length > 0 ? (
+                    <>
+                      <p>Opción: {Object.keys(item.tipo).find(key => item.tipo[key]) || 'Ninguna'}</p>
+                    </>
+                  ) : (
+                    <span>No seleccionó ninguna opción</span>
+                  )}
 
 
-                    {Object.keys(item.extras).length > 0 && Object.values(item.extras).some(count => count > 0) && (
-                      <>
-                        <p>Extras:</p>
-                        <ul>
-                          {Object.keys(item.extras).map((extra, index) => (
-                            item.extras[extra] > 0 && (
-                              <li key={index}>{extra}: {item.extras[extra]}</li>
-                            )
-                          ))}
-                        </ul>
-                        <p>Total de extras: {Object.values(item.extras).reduce((total, count) => total + count, 0)}</p>
-                      </>
-                    )}
+                  {Object.keys(item.extras).length > 0 && Object.values(item.extras).some(count => count > 0) && (
+                    <>
+                      <p>Extras:</p>
+                      <ul>
+                        {Object.keys(item.extras).map((extra, index) => (
+                          item.extras[extra] > 0 && (
+                            <li key={index}>{extra}: {item.extras[extra]}</li>
+                          )
+                        ))}
+                      </ul>
+                      <p>Total de extras: {Object.values(item.extras).reduce((total, count) => total + count, 0)}</p>
+                    </>
+                  )}
 
 
-                    {item.sinTACC && <p>{item.sinTACC}</p>}
-                    {Object.entries(item.quitar).map(([ingrediente, seleccionado]) => (
-                      seleccionado && <p key={ingrediente}>{`Quitar: ${ingrediente}`}</p>
-                    ))}
+                  {item.sinTACC && <p>{item.sinTACC}</p>}
+                  {Object.entries(item.quitar).map(([ingrediente, seleccionado]) => (
+                    seleccionado && <p key={ingrediente}>{`Quitar: ${ingrediente}`}</p>
+                  ))}
 
-                    {item.aclaraciones && (
-                      <p>Aclaraciones: {item.aclaraciones}</p>
-                      )}
-                      <p>Cantidad: {item.cantidad}</p>
-                      <p>Precio: ${item.price}</p>
-                      <Button id='boton1' onClick={() => handleDeleteItem(index)}>Eliminar</Button>
-                  </div>
-                ))
-              )}
-            </Modal.Body>
+                  {item.aclaraciones && (
+                    <p>Aclaraciones: {item.aclaraciones}</p>
+                  )}
+                  <p>Cantidad: {item.cantidad}</p>
+                  <p>Precio: ${item.price}</p>
+                  <Button id='boton1' onClick={() => handleDeleteItem(index)}>Eliminar</Button>
+                </div>
+              ))
+            )}
           </Modal.Body>
           <h6>Total de productos seleccionados: </h6>
           <Modal.Footer>
@@ -140,8 +136,12 @@ const ListadoDeProdV1 = () => {
         </Col>
         <div>
           <h2 className='pt-4 text-center'>Productos</h2>
-          <CardV2 />
+          <CardV2 onAddCard={handleAddCard}
+            quitar={quitar}
+            setQuitar={handleQuitarChange}
+            onCloseModal={handleClose} />
         </div>
+
 
 
 

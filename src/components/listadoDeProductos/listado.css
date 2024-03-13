@@ -44,12 +44,15 @@
  
 }
 
-.imgCard {
-  padding-right: 60%;
-  width: 300%;
+.card2 {
+  display: flex;
+  width: 100%;
 }
 
-.cardv2 {
-box-shadow: 0 1px 1px rgba(0, 0, 0, 1.0);
+.cardBody {
+  width: 50%;
 }
 
+.cardImg {
+  width: 200%;
+}
