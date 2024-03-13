@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Modal, Form, Carousel, Toast, Container, ModalBody } from "react-bootstrap";
+import { Card, Button, Modal, Form, Carousel, Toast, Container } from "react-bootstrap";
 import Slider from "react-slick";
 import axios from "../../api/axios.js"
 const URL_BASE = import.meta.env.VITE_URL_BASE;

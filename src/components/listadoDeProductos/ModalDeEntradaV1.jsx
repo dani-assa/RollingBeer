@@ -1,35 +1,56 @@
 import React, { useState } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form, Alert } from 'react-bootstrap';
 
 const ModalDeEntradaV1 = ({ onSubmit }) => {
-  const [tableNumber, setTableNumber] = useState('');
+  const [showModal, setShowModal] = useState(true);
+  const [mesa, setMesa] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+
+  const handleChange = (event) => {
+    const newValue = event.target.value.replace(/\D/g, ''); 
+    if (newValue !== '') { 
+      setMesa(newValue);
+      setShowAlert(false);
+    } else {
+      setShowAlert(true); 
+    }
+  };
 
   const handleSubmit = () => {
-    if (tableNumber.trim() !== '') {
-      onSubmit(tableNumber);
+    if (parseInt(mesa) > 0 && parseInt(mesa) <= 50) {
+      onSubmit(mesa);
+      setShowModal(false);
     } else {
-      // falta agregar un tope de mesas
+      setShowAlert(true); 
     }
   };
 
   return (
-    <Modal show={true} backdrop="static" keyboard={false}>
+    <Modal show={showModal} backdrop="static" keyboard={false}>
       <Modal.Header>
-        <Modal.Title>Ingresa el número de mesa</Modal.Title>
+        <Modal.Title>Ingrese el número de mesa</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form.Group>
-          <Form.Label>Número de mesa:</Form.Label>
+        <Form.Group controlId="formMesa">
           <Form.Control
             type="text"
-            value={tableNumber}
-            onChange={(e) => setTableNumber(e.target.value)}
+            placeholder="Número de mesa"
+            value={mesa}
+            onChange={handleChange}
           />
         </Form.Group>
+        {showAlert && (
+          <Alert variant="danger">
+            {parseInt(mesa) <= 0 ? 'Por favor ingrese un número de mesa válido.' : 'No tenemos esa cantidad de mesas. Por favor, ingresa un número de mesa válido.'}
+          </Alert>
+        )}
       </Modal.Body>
       <Modal.Footer>
+        <Button variant="secondary" onClick={() => setShowModal(false)}>
+          Cancelar
+        </Button>
         <Button variant="primary" onClick={handleSubmit}>
-          Enviar
+          Guardar
         </Button>
       </Modal.Footer>
     </Modal>

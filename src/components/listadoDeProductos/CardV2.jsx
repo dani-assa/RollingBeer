@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Modal, Form, CardGroup } from "react-bootstrap";
+import { Card, Button, Modal, Form, Carousel, Toast, Container, Col, Row } from "react-bootstrap";
+import Slider from "react-slick";
 import axios from "../../api/axios.js"
+import '../listadoDeProductos/listado.css'
 const URL_BASE = import.meta.env.VITE_URL_BASE;
+
 
 const CardV2 = ({ onAddCard }) => {
   const [products, setProducts] = useState([]);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [burgerOptions, setBurgerOptions] = useState({
-    tipo: { Simple: false, Doble: false, Triple: false },
+    tipo: { simple: false, doble: false, triple: false },
     extras: { Pepino: 0, Cheddar: 0, Medallon: 0, Bacon: 0, SalsaRolling: 0 },
     quitar: { cheddar: false, bacon: false },
     sinTacc: false,
@@ -15,13 +18,11 @@ const CardV2 = ({ onAddCard }) => {
     cantidad: 1,
   });
 
-
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(`${URL_BASE}/product/getAll`);
         setProducts(response.data);
-
       } catch (error) {
         console.error('Hubo un error al cargar los productos:', error);
       }
@@ -43,23 +44,52 @@ const CardV2 = ({ onAddCard }) => {
     });
   };
 
-
   const handleCheckboxChange = (category, item) => {
-    if (category === "tipo" || category === "quitar") {
-      setBurgerOptions((prevState) => ({
+    if (category === "tipo") {
+      const updatedOptions = Object.keys(burgerOptions.tipo).reduce((acc, key) => {
+        acc[key] = key === item;
+        return acc;
+      }, {});
+      setBurgerOptions(prevState => ({
         ...prevState,
-        [category]: {
-          ...prevState[category],
-          [item]: !prevState[category][item],
-        },
+        tipo: updatedOptions
       }));
-    } else if (category === "sinTacc") {
-      setBurgerOptions((prevState) => ({
-        ...prevState,
-        sinTacc: !prevState.sinTacc,
-      }));
+
+    } else {
+      if (category === "quitar" && (item === "bacon" || item === "cheddar")) {
+        if (!burgerOptions.quitar[item]) {
+          setBurgerOptions(prevState => ({
+            ...prevState,
+            extras: {
+              ...prevState.extras,
+              [item.charAt(0).toUpperCase() + item.slice(1)]: 0
+            },
+            [category]: {
+              ...prevState[category],
+              [item]: !prevState[category][item]
+            }
+          }));
+        } else {
+          setBurgerOptions(prevState => ({
+            ...prevState,
+            [category]: {
+              ...prevState[category],
+              [item]: !prevState[category][item]
+            }
+          }));
+        }
+      } else {
+        setBurgerOptions(prevState => ({
+          ...prevState,
+          [category]: {
+            ...prevState[category],
+            [item]: !prevState[category][item]
+          }
+        }));
+      }
     }
   };
+
 
   const handleCantidadChange = (change) => {
     setBurgerOptions((prevState) => ({
@@ -71,10 +101,7 @@ const CardV2 = ({ onAddCard }) => {
   const handleIncrement = (category, item) => {
     setBurgerOptions((prevState) => ({
       ...prevState,
-      [category]: {
-        ...prevState[category],
-        [item]: prevState[category][item] + 1,
-      },
+      [category]: { ...prevState[category], [item]: prevState[category][item] + 1 },
     }));
   };
 
@@ -82,10 +109,7 @@ const CardV2 = ({ onAddCard }) => {
     if (burgerOptions[category][item] > 0) {
       setBurgerOptions((prevState) => ({
         ...prevState,
-        [category]: {
-          ...prevState[category],
-          [item]: prevState[category][item] - 1,
-        },
+        [category]: { ...prevState[category], [item]: prevState[category][item] - 1 },
       }));
     }
   };
@@ -97,7 +121,65 @@ const CardV2 = ({ onAddCard }) => {
     }));
   };
 
-  const RenderOptions = ({ category, item }) => (
+  const [showToast, setShowToast] = useState(false);
+  useEffect(() => {
+    let timeout;
+    if (showToast) {
+      timeout = setTimeout(() => {
+        setShowToast(false);
+      }, 4000);
+    }
+    return () => clearTimeout(timeout);
+  }, [showToast]);
+
+  const handleAddCard = () => {
+    const selectedTipo = Object.values(burgerOptions.tipo).some(option => option === true);
+    if (!selectedTipo) {
+      setShowToast(true);
+      return;
+    }
+
+    onAddCard(burgerOptions);
+    handleClose();
+  };
+
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay: true,
+    speed: 4000,
+    autoplaySpeed: 2000,
+    cssEase: "linear",
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3
+        }
+      },
+      {
+        breakpoint: 830,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  };
+
+
+  const RenderOptions = ({ category, item, handleIncrement, handleDecrement, burgerOptions }) => (
     <div className="d-flex justify-content-between align-items-center my-2">
       <span>{item.charAt(0).toUpperCase() + item.slice(1)}</span>
       <div>
@@ -108,87 +190,105 @@ const CardV2 = ({ onAddCard }) => {
     </div>
   );
 
-  const handleAddCard = () => {
-    onAddCard(burgerOptions);
-    handleClose();
-  };
-
-  const selectedProduct = products.find(product => product.id === selectedProductId);
-
-  const chunkArray = (array, size) => {
-    const chunkedArr = [];
-    for (let i = 0; i < array.length; i += size) {
-      chunkedArr.push(array.slice(i, i + size));
-    }
-    return chunkedArr;
-  };
-
-
-  const productGroups = chunkArray(products, 3);
-
+  const selectedProduct = products.find((product) => product._id === selectedProductId);
 
   return (
     <>
-      <CardGroup>
-        {products.map((product, i) => (
-          <Card className="cardv2" key={i} onClick={() => handleShow(product.id)} >
-            <Card.Img className="imgCard" variant="top" src={product.image || ""} />
-            <Card.Body className="cardBody">
-              <Card.Title>{product.name}</Card.Title>
-            </Card.Body>
-          </Card>
-        ))}
-      </CardGroup>
+    <Container fluid>
+      <Row>
+        <div>
+          {products.map((product, i) => (
+            product.visible && (
+              <div key={product._id} className="card2">
+                <Card key={i} onClick={() => handleShow(product._id)} className="text-white card-1" >
+                  <div className="cardBody">
+                    <Card.Img variant="top" src={product.image || ""} className="cardImg" />
+                  </div>
+                  <Card.Body className="d-flex justify-content-between flex-column">
+                    <div className="text-end m-2">
+                      <Card.Title>{product.name}</Card.Title>
+                      <small>${product.price}</small>
+                    </div>
+                  </Card.Body>
+                </Card>
+              </div>
+            )
+          ))}
+        </div>
+      </Row>
+    </Container>
+
+
+
 
       {selectedProduct && (
-        <Modal
-          show={!!selectedProductId}
-          onHide={handleClose}
-          backdrop="static"
-          keyboard={false}
-        >
+        <Modal show={!!selectedProductId} onHide={handleClose} backdrop="static" keyboard={false}>
           <Modal.Header closeButton>
-            <Modal.Title>Personaliza tu hamburguesa - {selectedProduct.name}</Modal.Title>
+            <Modal.Title>Personaliza tu pedido - {selectedProduct.name}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            <Toast show={showToast} onClose={() => setShowToast(false)} bg="danger" text="white">
+              <Toast.Header>
+                <strong className="mr-auto">Mensaje</strong>
+              </Toast.Header>
+              <Toast.Body>Por favor selecciona al menos una opción (simple, doble o triple) antes de agregar al carrito.</Toast.Body>
+            </Toast>
+
             <h5>Opciones</h5>
             {Object.keys(burgerOptions.tipo).map((item) => (
-              <Form.Check
-                key={item}
-                type="checkbox"
-                label={item.charAt(0).toUpperCase() + item.slice(1)}
-                name="tipo"
-                id={`tipo-${item}`}
-                checked={burgerOptions.tipo[item]}
-                onChange={() => handleCheckboxChange("tipo", item)}
-              />
+              <div className="d-flex justify-content-between" key={item}>
+                <label htmlFor={`tipo-${item}`} className="form-check-label">
+                  {item.charAt(0).toUpperCase() + item.slice(1)}
+                </label>
+                <Form.Check
+                  type="checkbox"
+                  id={`tipo-${item}`}
+                  checked={burgerOptions.tipo[item]}
+                  onChange={() => handleCheckboxChange("tipo", item)}
+                  className="ms-auto"
+                />
+              </div>
             ))}
 
             <h5>Extras</h5>
             {Object.keys(burgerOptions.extras).map((item) => (
-              <RenderOptions key={item} category="extras" item={item} />
+              <RenderOptions
+                key={item}
+                category="extras"
+                item={item}
+                handleIncrement={handleIncrement}
+                handleDecrement={handleDecrement}
+                burgerOptions={burgerOptions}
+              />
             ))}
 
             <h5>Quitar</h5>
             {Object.keys(burgerOptions.quitar).map((item) => (
-              <Form.Check
-                type="checkbox"
-                id={`check-${item}`}
-                label={`Sin ${item}`}
-                checked={burgerOptions.quitar[item]}
-                onChange={() => handleCheckboxChange("quitar", item)}
-                key={item}
-              />
+              <div className="d-flex justify-content-between align-items-center mb-2" key={item}>
+                <label htmlFor={`check-${item}`} className="mb-0">{`Sin ${item}`}</label>
+                <Form.Check
+                  type="checkbox"
+                  id={`check-${item}`}
+                  checked={burgerOptions.quitar[item]}
+                  onChange={() => {
+                    handleCheckboxChange("quitar", item);
+                  }}
+                  className="ms-auto"
+                />
+              </div>
             ))}
 
             <h5>Celiacos</h5>
-            <Form.Check
-              type="checkbox"
-              id="sinTacc"
-              label="Sin TACC"
-              checked={burgerOptions.sinTacc}
-              onChange={() => handleCheckboxChange("sinTacc", "sinTacc")}
-            />
+            <div className="d-flex justify-content-between align-items-center mb-2">
+              <label htmlFor="sinTacc" className="mb-0">Sin TACC</label>
+              <Form.Check
+                type="checkbox"
+                id="sinTacc"
+                checked={burgerOptions.sinTacc}
+                onChange={() => handleCheckboxChange("sinTacc", "sinTacc")}
+                className="ms-auto"
+              />
+            </div>
 
             <h5>Aclaraciones</h5>
             <Form.Control
@@ -197,6 +297,7 @@ const CardV2 = ({ onAddCard }) => {
               value={burgerOptions.aclaraciones}
               onChange={handleAclaracionesChange}
             />
+            
             <h5>Cantidad</h5>
             <div className="d-flex justify-content-center align-items-center">
               <Button
