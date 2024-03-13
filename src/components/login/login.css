@@ -5,10 +5,7 @@
   --colorFour: #ebebeb;
   --colorFive: #ff6700;
 }
-/* 
-html {
-  background-color: var(--colorFour);
-} */
+
 .fondoLogin {
   background-image: url(https://i.ibb.co/16672sh/Dise-o-sin-t-tulo-13.png);
   background-position: center;
@@ -16,9 +13,9 @@ html {
   justify-content: center;
   align-items: center;
   /* width: 100%; */
-  margin: 100px 2.5px 0 2.5px !important;
+  margin: 25px 2.5px 0 2.5px !important;
   border-radius: 15px;
-  height: 550px;
+  height: 500px;
 }
 
 .btnLogin {
