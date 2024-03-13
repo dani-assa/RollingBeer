@@ -11,7 +11,6 @@ import {
 
 import "./RegisterUser.css";
 
-
 const RegisterUser = () => {
   const {
     register,
@@ -34,11 +33,11 @@ const RegisterUser = () => {
     <Container>
       <Row className="formRegister">
         <Col sm={6} className="imgFondo rounded">
-          {registerErrors.map((error, i) => (
+          {/* {registerErrors.map((error, i) => (
             <Alert key={i} variant="danger">
               {error}
             </Alert>
-          ))}
+          ))} */}
           <h3 className="text-white mt-3 pt-3">Formulario de Registro</h3>
           <Form onSubmit={onSubmit}>
             <Form.Group>
@@ -119,35 +118,12 @@ const RegisterUser = () => {
                     value: true,
                     message: "El DNI es requerido",
                   },
-                  // pattern: {
-                  //   value: emailRegex,
-                  //   message: "El correo no es valido",
-                  // },
                 })}
               />
               <Form.Control.Feedback type="invalid">
                 {errors.dni?.message}
               </Form.Control.Feedback>
             </Form.Group>
-            <Form.Group>
-              <Form.Label htmlFor="date"></Form.Label>
-              <Form.Control
-                id="date"
-                type="date"
-                placeholder="Fecha de nacimiento"
-                className={errors.date?.message ? "is-invalid" : ""}
-                {...register("date", {
-                  required: {
-                    value: true,
-                    message: "La fecha de nacimiento es requerida",
-                  },
-                })}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.date?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
-            
             <Form.Group>
               <Form.Label htmlFor="password"></Form.Label>
               <Form.Control
