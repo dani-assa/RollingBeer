@@ -20,12 +20,14 @@ const ModalEditUser = ({ users, setIsLoading, setChangeFlag }) => {
 
   const handleSaveEdit = async () => {
     try {
+      console.log(user);
       setIsLoading(true);
-      const {data} = await axios.patch(
+      const { data } = await axios.patch(
         `${URL_BASE}/user/editById/${user._id}`,
         selectedUser
       );
-      setUser(data.userUpdated)
+      setUser(data.userUpdated);
+      console.log(data);
       setChangeFlag((prev) => !prev);
       triggerUserUpdate();
     } catch (error) {
