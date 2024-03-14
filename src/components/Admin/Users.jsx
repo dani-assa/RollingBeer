@@ -8,6 +8,7 @@ import axios from "axios";
 import LoadingScreen from "../../components/loadingScreen/LoadingScreen";
 import UserModal from "./UserModal";
 import Pagination from '../pagination/Pagination';
+import { alertCustom } from '../../utils/alertCustom/alertCustom';
 
 const itemsPerPage = 4;
 const URL_BASE = import.meta.env.VITE_URL_BASE;
@@ -18,6 +19,7 @@ const UsersAdmin = () => {
   const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const isAuthenticated = useAuth();
   const [showMenuModal, setShowMenuModal] = useState(false);
 
@@ -25,11 +27,13 @@ const UsersAdmin = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${URL_BASE}/user/getAll`); 
-        setProducts(response.data);
+        const filteredUsers = response.data.filter(user => user.role === 'client');
+        setProducts(filteredUsers);
         setLoading(false);
       } catch (error) {
-        console.error("Error fetching products:", error);
-        setLoading(false);
+        alertCustom('Upps', 'Ha ocurrido un error al traer los usuarios.', 'error');
+      } finally {
+        setIsLoading(false);
       }
     };
 

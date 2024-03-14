@@ -2,22 +2,26 @@ import React, { useContext } from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { passRegex, emailRegex, nameRegex } from "../../validation/registerValidation";
-import { UserContext } from "../../context/UserContext";
+import { useAuth } from "../../context/UserContext";
 
 
 const UserModal = ({ show, onHide }) => {
-  const { signup, errorsignup } = useContext(UserContext);
+  const { signup, errorsignup } = useAuth();
   const { register, handleSubmit, formState: { errors }, watch } = useForm();
 
-  const onSubmit = async (userData) => {
-    try {
-      await signup(userData);
-      onHide(); //
-      console.log(userData);
-    } catch (error) {
-      console.error("Error al registrar usuario:", error);
-    }
-  };
+  // const onSubmit = async (userData) => {
+  //   try {
+  //     await signup(userData);
+  //     onHide();
+  //     console.log(userData);
+  //   } catch (error) {
+  //     console.error("Error al registrar usuario:", error);
+  //   }
+  // };
+
+  const onSubmit = handleSubmit(async (values) => {
+    signup(values);
+  });
 
   return (
     <Modal show={show} onHide={onHide}>
@@ -25,7 +29,7 @@ const UserModal = ({ show, onHide }) => {
         <Modal.Title>Formulario de Registro</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={onSubmit}>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="name">Nombre y Apellido</Form.Label>
             <Form.Control
@@ -85,18 +89,6 @@ const UserModal = ({ show, onHide }) => {
               })}
             />
             {errors.dni && <span className="text-danger">{errors.dni.message}</span>}
-          </Form.Group>
-          <Form.Group className="mb-3">
-            <Form.Label htmlFor="date">Fecha de Nacimiento</Form.Label>
-            <Form.Control
-              id="date"
-              type="date"
-              placeholder="Fecha de Nacimiento"
-              {...register("date", {
-                required: "La fecha de nacimiento es requerida",
-              })}
-            />
-            {errors.date && <span className="text-danger">{errors.date.message}</span>}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="password">Contraseña</Form.Label>
