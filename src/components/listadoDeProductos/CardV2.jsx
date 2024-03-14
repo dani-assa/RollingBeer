@@ -199,7 +199,7 @@ const CardV2 = ({ onAddCard }) => {
           {products.map((product, i) => (
             product.visible && (
               <div key={product._id} className="card2">
-                <Card key={i} onClick={() => handleShow(product._id)} className="text-white card-1" >
+                <Card key={i} onClick={() => handleShow(product._id)} className="text-white card-1 modal1" >
                   <div className="cardBody">
                     <Card.Img variant="top" src={product.image || ""} className="cardImg" />
                   </div>
@@ -222,10 +222,10 @@ const CardV2 = ({ onAddCard }) => {
 
       {selectedProduct && (
         <Modal show={!!selectedProductId} onHide={handleClose} backdrop="static" keyboard={false}>
-          <Modal.Header closeButton>
+          <Modal.Header closeButton className="modal1">
             <Modal.Title>Personaliza tu pedido - {selectedProduct.name}</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className="modal1">
             <Toast show={showToast} onClose={() => setShowToast(false)} bg="danger" text="white">
               <Toast.Header>
                 <strong className="mr-auto">Mensaje</strong>
@@ -295,6 +295,7 @@ const CardV2 = ({ onAddCard }) => {
               rows={3}
               value={burgerOptions.aclaraciones}
               onChange={handleAclaracionesChange}
+              className="aclaraciones"
             />
             
             <h5>Cantidad</h5>
@@ -316,7 +317,7 @@ const CardV2 = ({ onAddCard }) => {
               </Button>
             </div>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className="modal1">
             <Button variant="primary" onClick={handleAddCard}>
               Agregar al carrito
             </Button>

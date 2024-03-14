@@ -73,3 +73,7 @@
   width: 200%;
   object-fit: cover;
 }
+
+.aclaraciones {
+  background-color: #010101 !important;
+}
