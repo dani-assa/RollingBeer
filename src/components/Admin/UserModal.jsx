@@ -86,7 +86,7 @@ const UserModal = ({ show, onHide }) => {
             />
             {errors.dni && <span className="text-danger">{errors.dni.message}</span>}
           </Form.Group>
-          <Form.Group className="mb-3">
+          {/* <Form.Group className="mb-3">
             <Form.Label htmlFor="date">Fecha de Nacimiento</Form.Label>
             <Form.Control
               id="date"
@@ -97,7 +97,7 @@ const UserModal = ({ show, onHide }) => {
               })}
             />
             {errors.date && <span className="text-danger">{errors.date.message}</span>}
-          </Form.Group>
+          </Form.Group> */}
           <Form.Group className="mb-3">
             <Form.Label htmlFor="password">Contraseña</Form.Label>
             <Form.Control
