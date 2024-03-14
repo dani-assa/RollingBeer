@@ -9,7 +9,7 @@ import {
   nameRegex,
 } from "../../validation/registerValidation";
 
-import "./RegisterUser.css";
+import "./registerUser.css";
 
 const RegisterUser = () => {
   const {
