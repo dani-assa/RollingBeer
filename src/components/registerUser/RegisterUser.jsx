@@ -33,11 +33,11 @@ const RegisterUser = () => {
     <Container>
       <Row className="formRegister">
         <Col sm={6} className="imgFondo rounded">
-          {/* {registerErrors.map((error, i) => (
+          {registerErrors.map((error, i) => (
             <Alert key={i} variant="danger">
               {error}
             </Alert>
-          ))} */}
+          ))}
           <h3 className="text-white mt-3 pt-3">Formulario de Registro</h3>
           <Form onSubmit={onSubmit}>
             <Form.Group>
