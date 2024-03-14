@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Card, Button, Modal, Form, Carousel, Toast, Container, Col, Row } from "react-bootstrap";
-import Slider from "react-slick";
 import axios from "../../api/axios.js"
 import '../listadoDeProductos/listado.css'
 const URL_BASE = import.meta.env.VITE_URL_BASE;

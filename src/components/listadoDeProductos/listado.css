@@ -44,6 +44,22 @@
  
 }
 
+.modal1 {
+  background-color: #000000 !important;
+}
+
+.boton2 {
+  position: relative;
+  background-color: #850a0a !important;
+  color: #fff;
+  border: 1;
+  border-color: var(--colorThree) !important;
+}
+
+.boton3 {
+  background-color: green !important;
+}
+
 .card2 {
   display: flex;
   width: 100%;
@@ -55,4 +71,5 @@
 
 .cardImg {
   width: 200%;
+  object-fit: cover;
 }
