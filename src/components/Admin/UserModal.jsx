@@ -86,18 +86,6 @@ const UserModal = ({ show, onHide }) => {
             />
             {errors.dni && <span className="text-danger">{errors.dni.message}</span>}
           </Form.Group>
-          {/* <Form.Group className="mb-3">
-            <Form.Label htmlFor="date">Fecha de Nacimiento</Form.Label>
-            <Form.Control
-              id="date"
-              type="date"
-              placeholder="Fecha de Nacimiento"
-              {...register("date", {
-                required: "La fecha de nacimiento es requerida",
-              })}
-            />
-            {errors.date && <span className="text-danger">{errors.date.message}</span>}
-          </Form.Group> */}
           <Form.Group className="mb-3">
             <Form.Label htmlFor="password">Contraseña</Form.Label>
             <Form.Control
