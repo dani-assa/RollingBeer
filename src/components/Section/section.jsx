@@ -1,15 +1,30 @@
-import React from 'react'
+import {useState} from 'react'
 import { Container, Row, Col, Image, Button } from 'react-bootstrap'
 import '../../styles/Section.css'
 import CardV1 from './CardV1';
 import FormRegisterV1 from './FormRegisterV1';
+//import ModalDeEntradaV1 from '../listadoDeProductos/ModalDeEntradaV1';
+//import ListadoDeProdV1 from '../listadoDeProductos/ListadoDeProdV1';
+
+
+
 
 function Section() {
+  //const [showTableNumberModal, setShowTableNumberModal] = useState(true);
+  //const [tableNumber, setTableNumber] = useState(null);
+  /*
+  const handleTableNumberSubmit = (number) => {
+    setTableNumber(number);
+    setShowTableNumberModal(false);
+  };*/
+
   return (
 
     <Container fluid className='cont'>
       <Row>
-          
+      {/*<div>
+          {showTableNumberModal && <ModalDeEntradaV1 onSubmit={handleTableNumberSubmit} />}
+  </div>*/}
           <div className="d-flex flex-column justify-content-center align-items-center vh-100" id="section1"> 
               <h1 className='h1h1 text-center mb-5'>Disfruta de un ambiente único y especial</h1>
               <div className='d-flex mt-5 '>

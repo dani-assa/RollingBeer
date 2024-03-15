@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Card, Button, Modal, Form, Carousel, Toast, Container } from "react-bootstrap";
 import Slider from "react-slick";
 import axios from "../../api/axios.js"
+import '../listadoDeProductos/listado.css'
 const URL_BASE = import.meta.env.VITE_URL_BASE;
 
 
@@ -220,10 +221,10 @@ const CardV1 = ({ onAddCard }) => {
 
       {selectedProduct && (
         <Modal show={!!selectedProductId} onHide={handleClose} backdrop="static" keyboard={false}>
-          <Modal.Header closeButton>
+          <Modal.Header closeButton className="modal1">
             <Modal.Title>Personaliza tu pedido - {selectedProduct.name}</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className="modal1">
             <Toast show={showToast} onClose={() => setShowToast(false)} bg="danger" text="white">
               <Toast.Header>
                 <strong className="mr-auto">Mensaje</strong>
@@ -293,6 +294,7 @@ const CardV1 = ({ onAddCard }) => {
               rows={3}
               value={burgerOptions.aclaraciones}
               onChange={handleAclaracionesChange}
+              className="aclaraciones"
             />
             
             <h5>Cantidad</h5>
@@ -314,7 +316,7 @@ const CardV1 = ({ onAddCard }) => {
               </Button>
             </div>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className="modal1">
             <Button variant="primary" onClick={handleAddCard}>
               Agregar al carrito
             </Button>
