@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+{/*import React, { useState } from 'react'
 
 
 export const CartItems = () => {
@@ -14,4 +14,4 @@ export const CartItems = () => {
         cartItems, handleAddCard
     };
 };
-
+*/}

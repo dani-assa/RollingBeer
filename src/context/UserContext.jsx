@@ -25,7 +25,7 @@ export const UserProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const [products, setProducts] = useState([])
   const [userChangeFlag, setUserChangeFlag] = useState(false);
 
   const triggerUserUpdate = () => {
@@ -59,7 +59,15 @@ export const UserProvider = ({ children }) => {
     setIsAuthenticated(false);
     setUser(null);
   };
-
+  const getAllProduct = async () => {
+    try {
+      const res = await axios.get(`product/getAll`)
+      setProducts(res.data)
+      console.log(res.data);
+    } catch (error) {
+      setErrors(error.response.data.message || alertCustom('Upps', 'Ha ocurrido un error.', 'error'));
+    }
+  }
   useEffect(() => {
     if (errors.length > 0) {
       const timer = setTimeout(() => {
@@ -108,6 +116,8 @@ export const UserProvider = ({ children }) => {
         logout,
         triggerUserUpdate,
         setUser,
+        getAllProduct,
+        products
       }}
     >
       {children}
