@@ -1,11 +1,12 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import { Button, Col, Container, Modal, Row, Offcanvas } from 'react-bootstrap';
 import '../listadoDeProductos/listado.css';
 import axios from 'axios';
 import CardV1 from '../Section/CardV1';
 import CardV2 from './CardV2';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
-const URL_BASE = import.meta.env.VITE_URL_BASE;
+import { useAuth } from '../../context/UserContext';
+
 
 const ListadoDeProdV1 = () => {
   const [showModal, setShowModal] = useState(false);
@@ -13,24 +14,11 @@ const ListadoDeProdV1 = () => {
   const handleShow = () => setShowModal(true);
   const [cartItems, setCartItems] = useState([]);
   const [quitar, setQuitar] = useState({ cheddar: false, bacon: false });
-  const [products, setProducts] = useState([]);
   const [tableNumber, setTableNumber] = useState(null);
   const [selectedProductInfo, setSelectedProductInfo] = useState(null);
   const [smShow, setSmShow] = useState(false);
-
-  {/*useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(`${URL_BASE}/product/getAll`);
-        setProducts(response.data);
-      } catch (error) {
-        console.error('Hubo un error al cargar los productos:', error);
-      }
-    };
-
-    fetchProducts();
-  }, []);*/}
-
+  const {products, getAllProduct} = useAuth() 
+  console.log(products);
 
   const handleAddCard = (burgerOptions) => {
     const { tipo, sinTacc, ...rest } = burgerOptions;
@@ -53,6 +41,12 @@ console.log(cartItems);
     setCartItems(updatedCartItems);
   };
 
+ useEffect(() => {
+   getAllProduct()
+ }, [])
+ 
+
+  console.log(selectedProductInfo);
   return (
     <Container fluid>
       <Row>
@@ -67,9 +61,8 @@ console.log(cartItems);
             {cartItems.length === 0 ? (
               <p className='text-center'>No se ha realizado ningún pedido</p>
             ) : (
-              cartItems.map((item, index, product) => (
+              cartItems.map((item, index, products) => (
                 <div key={index}>
-                  <h5 className='text-center'>Producto: {product.name}</h5>
                   {Object.keys(item.tipo).length > 0 ? (
                     <>
                       <p>Opción: {Object.keys(item.tipo).find(key => item.tipo[key]) || 'Ninguna'}</p>
@@ -107,12 +100,6 @@ console.log(cartItems);
                   <Button className='boton2' onClick={() => handleDeleteItem(index)}>Eliminar</Button>
                 </div>
               ))
-            )}
-            {selectedProductInfo && (
-              <div>
-                <h5 className='text-center'>Producto: {selectedProductInfo.name}</h5>
-                <p>Precio: ${selectedProductInfo.price}</p>
-              </div>
             )}
           </Modal.Body>
           {/*<h6>Total de productos seleccionados: </h6>*/}

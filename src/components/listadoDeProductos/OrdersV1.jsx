@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+/*import React, { useState } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import CardV1 from '../Section/CardV1';
 import CardV2 from './CardV2';
@@ -19,7 +19,7 @@ const OrdersV1 = ({ cartItems }) => {
         const sinTaccString = sinTacc ? "Sin TACC" : "";
         const totalCantidad = burgerOptions.cantidad;
         setCartItems([...cartItems, { ...rest, tipo: tipoString, sinTACC: sinTaccString, totalCantidad }]);
-    }*/
+    }
     const handleQuitarChange = (item) => {
         setQuitar((prevState) => ({
             ...prevState,
@@ -30,14 +30,14 @@ const OrdersV1 = ({ cartItems }) => {
         const updatedCartItems = [...cartItems];
         updatedCartItems.splice(index, 1);
         setCartItems(updatedCartItems);
-    };
-
+    };*/
+{/*
     return (
         <>
             <h1>Tu pedido</h1>
 
 
-            <h5 className='text-end m-2'>Mesa {/*tableNumber*/}</h5>
+            <h5 className='text-end m-2'>Mesa {/*tableNumber</h5>
             {cartItems.length === 0 ? (
                 <p className='text-center'>No se ha realizado ningún pedido</p>
             ) : (
@@ -89,7 +89,7 @@ const OrdersV1 = ({ cartItems }) => {
                 </div>
             )}
 
-            {/*<h6>Total de productos seleccionados: </h6>*/}
+            {/*<h6>Total de productos seleccionados: </h6>*
 
             {cartItems.length > 0 && (<Button variant="text-ligth" className='boton3' > Confirmar pedido </Button>)}
         </>
@@ -98,4 +98,4 @@ const OrdersV1 = ({ cartItems }) => {
 
 }
 
-export default OrdersV1
+export default OrdersV1 */}
