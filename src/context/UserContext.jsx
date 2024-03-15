@@ -34,8 +34,7 @@ export const UserProvider = ({ children }) => {
 
   const signup = async (user) => {
     try {
-      //const res = await registerRequest(user);
-      const res = await axios.post(`user/create`,user)
+      const res = await registerRequest(user);
       const usuarioNormalizado = normalizarUsuario(res.data);
       setUser(usuarioNormalizado);
       setIsAuthenticated(true);
