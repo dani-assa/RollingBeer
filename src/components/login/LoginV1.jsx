@@ -27,11 +27,11 @@ const LoginV1 = () => {
     <Container className="fondoLog">
       <Row className="fondoLogin">
         <Col sm={6}>
-          {/* {signinErrors.map((error, i) => (
+          {signinErrors.map((error, i) => (
             <Alert key={i} variant="danger">
               {error}
             </Alert>
-          ))} */}
+          ))}
           <h3 className="text-white mb-5">Iniciar sesión</h3>
           <Form onSubmit={onSubmit}>
             <Form.Group className="">

@@ -1,10 +1,12 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect} from 'react';
 import { Button, Col, Container, Modal, Row, Offcanvas } from 'react-bootstrap';
 import '../listadoDeProductos/listado.css';
 import axios from 'axios';
 import CardV1 from '../Section/CardV1';
 import CardV2 from './CardV2';
-const URL_BASE = import.meta.env.VITE_URL_BASE;
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import { useAuth } from '../../context/UserContext';
+
 
 const ListadoDeProdV1 = () => {
   const [showModal, setShowModal] = useState(false);
@@ -12,24 +14,11 @@ const ListadoDeProdV1 = () => {
   const handleShow = () => setShowModal(true);
   const [cartItems, setCartItems] = useState([]);
   const [quitar, setQuitar] = useState({ cheddar: false, bacon: false });
-  const [products, setProducts] = useState([]);
   const [tableNumber, setTableNumber] = useState(null);
   const [selectedProductInfo, setSelectedProductInfo] = useState(null);
   const [smShow, setSmShow] = useState(false);
-
-  {/*useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get(`${URL_BASE}/product/getAll`);
-        setProducts(response.data);
-      } catch (error) {
-        console.error('Hubo un error al cargar los productos:', error);
-      }
-    };
-
-    fetchProducts();
-  }, []);*/}
-
+  const {products, getAllProduct} = useAuth() 
+  console.log(products);
 
   const handleAddCard = (burgerOptions) => {
     const { tipo, sinTacc, ...rest } = burgerOptions;
@@ -38,7 +27,7 @@ const ListadoDeProdV1 = () => {
     const totalCantidad = burgerOptions.cantidad;
     setCartItems([...cartItems, { ...rest, tipo: tipoString, sinTACC: sinTaccString, totalCantidad }]);
   }
-
+console.log(cartItems);
   const handleQuitarChange = (item) => {
     setQuitar((prevState) => ({
       ...prevState,
@@ -52,11 +41,17 @@ const ListadoDeProdV1 = () => {
     setCartItems(updatedCartItems);
   };
 
+ useEffect(() => {
+   getAllProduct()
+ }, [])
+ 
+
+  console.log(selectedProductInfo);
   return (
     <Container fluid>
       <Row>
         <h1 className='text-center pt-4'>¡Descubre Nuestro Delicioso Menú!</h1>
-        <Button id='boton1' onClick={handleShow} >🛒Ver mi pedido</Button>
+        <Button id='boton1' onClick={handleShow} > <ShoppingBagIcon/> </Button>
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton className='modal1'>
             <Modal.Title>Tu pedido</Modal.Title>
@@ -66,9 +61,8 @@ const ListadoDeProdV1 = () => {
             {cartItems.length === 0 ? (
               <p className='text-center'>No se ha realizado ningún pedido</p>
             ) : (
-              cartItems.map((item, index, product) => (
+              cartItems.map((item, index, products) => (
                 <div key={index}>
-                  <h5 className='text-center'>Producto: {product.name}</h5>
                   {Object.keys(item.tipo).length > 0 ? (
                     <>
                       <p>Opción: {Object.keys(item.tipo).find(key => item.tipo[key]) || 'Ninguna'}</p>
@@ -106,12 +100,6 @@ const ListadoDeProdV1 = () => {
                   <Button className='boton2' onClick={() => handleDeleteItem(index)}>Eliminar</Button>
                 </div>
               ))
-            )}
-            {selectedProductInfo && (
-              <div>
-                <h5 className='text-center'>Producto: {selectedProductInfo.name}</h5>
-                <p>Precio: ${selectedProductInfo.price}</p>
-              </div>
             )}
           </Modal.Body>
           {/*<h6>Total de productos seleccionados: </h6>*/}

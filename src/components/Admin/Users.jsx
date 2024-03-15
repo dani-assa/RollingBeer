@@ -4,31 +4,30 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/UserContext";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
-import axios from "axios"; 
+import axios from "../../api/axios"; 
 import LoadingScreen from "../../components/loadingScreen/LoadingScreen";
 import UserModal from "./UserModal";
 import Pagination from '../pagination/Pagination';
-import { alertCustom } from '../../utils/alertCustom/alertCustom';
+import { alertCustom, alertConfirm } from '../../utils/alertCustom/alertCustom';
 
 const itemsPerPage = 4;
-const URL_BASE = import.meta.env.VITE_URL_BASE;
 
 const UsersAdmin = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [products, setProducts] = useState([]);
+  const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const isAuthenticated = useAuth();
-  const [showMenuModal, setShowMenuModal] = useState(false);
+  const [changeFlag, setChangeFlag] = useState(false);
 
-  useEffect(() => {
+ 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${URL_BASE}/user/getAll`); 
+        const response = await axios.get(`/user/getAll`); 
         const filteredUsers = response.data.filter(user => user.role === 'client');
-        setProducts(filteredUsers);
+        setUsers(filteredUsers);
         setLoading(false);
       } catch (error) {
         alertCustom('Upps', 'Ha ocurrido un error al traer los usuarios.', 'error');
@@ -36,33 +35,54 @@ const UsersAdmin = () => {
         setIsLoading(false);
       }
     };
+  
 
-    fetchData();
-  }, []); 
-
-  const handleEditUser = (userId) => {
-    navigate(`/edit-user/${userId}`);
-  };
-
-  const handleDeleteUser = async (userId) => {
+  const handleEditUser = async ({target}, _id) => {
     try {
-      await axios.delete(`/api/users/${userId}`); 
-      setProducts(products.filter(user => user.id !== userId));
+      setIsLoading(true);
+      await axios.patch(`user/disable/${_id}`, {disabled: !target.checked});
+      fetchData();
     } catch (error) {
-      console.error("Error deleting user:", error);
+      alertCustom('Upps', 'Ha ocurrido un error.', 'error');
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  const handleDeleteUser = async (_id) => {
+    try {
+      setIsLoading(true);
+      alertConfirm(
+        '¿Estas seguro?',
+        'Estas por eliminar el usuario de manera definitiva',
+        'warning',
+        'Eliminar',
+        async () => {
+          await axios.delete(`user/delete/${_id}`);
+          setUsers(users.filter(user => user.id !== user._id));
+          fetchData();
+        });
+    } catch (error) {
+      alertCustom('Upps', 'Ha ocurrido un error.', 'error');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  useEffect(() => {
+    fetchData()
+  }, [changeFlag]);
+
 
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
   const offset = currentPage * itemsPerPage;
-  const paginatedProducts = products.slice(offset, offset + itemsPerPage);
+  const paginatedUsers = users.slice(offset, offset + itemsPerPage);
 
   const handlePageChange = (selectedPage) => {
     setCurrentPage(selectedPage.selected);
   };
-
+  
   return (
     <Container fluid className="justify-content-center">
       <Button variant="primary" size="sm" onClick={handleShowModal} className="float-end">
@@ -72,8 +92,11 @@ const UsersAdmin = () => {
       <Row className="justify-content-center">
         <Col>
           {loading
-            ? <LoadingScreen />
-            : (
+            ? (
+              <LoadingScreen />
+            ) : users.length === 0 ? (
+              <p className="text-center">No hay usuarios para mostrar</p>
+            ) : (
               <Table striped bordered variant='dark' className="mt-3">
                 <thead>
                   <tr>
@@ -84,18 +107,17 @@ const UsersAdmin = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  { paginatedProducts.map((user, i) => (
+                  { paginatedUsers.map((user, i) => (
                       <tr key={i}>
                         <td className="text-center">{user.name}</td>
                         <td className="text-center">{user.userName}</td>
                         <td className="text-center">
-                          <Form.Check checked={!user.visible} onChange={(e) => disabledProduct(e, user._id)} />
+                          <Form.Check checked={!user.disabled} onChange={(e) => handleEditUser(e, user._id)} />
                         </td>
                         <td className="text-center">
-                          <Button variant='danger' size='sm' onClick={() => handleDeleteUser(user.id)}>
+                          <Button variant='danger' size='sm' onClick={() => handleDeleteUser(user._id)}>
                             <DeleteIcon fontSize='small'/>
                           </Button>
-                          {/* Lógica para editar usuario */}
                         </td>
                       </tr>
                     ))
@@ -106,12 +128,11 @@ const UsersAdmin = () => {
           }
         </Col>
         <Pagination
-          pageCount={Math.ceil(products.length / itemsPerPage)}
+          pageCount={Math.ceil(users.length / itemsPerPage)}
           handlePageChange={handlePageChange}
         />
       </Row>
       <UserModal show={showModal} onHide={handleCloseModal} />
-      {/* Menu modal */}
     </Container>
   )
 };
