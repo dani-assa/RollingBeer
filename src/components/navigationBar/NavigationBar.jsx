@@ -11,7 +11,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 const NavigationBar = () => {
   return (
     <Container fluid className="navigationBar">
-      <Link to="./">
+      <Link to="./orders">
         <SettingsIcon fontSize="large" />
       </Link>
       <Link to="./listado">
