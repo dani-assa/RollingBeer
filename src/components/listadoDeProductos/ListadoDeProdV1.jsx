@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Col, Container, Modal, Row } from 'react-bootstrap';
+import React, { useState} from 'react';
+import { Button, Col, Container, Modal, Row, Offcanvas } from 'react-bootstrap';
 import '../listadoDeProductos/listado.css';
 import axios from 'axios';
 import CardV1 from '../Section/CardV1';
 import CardV2 from './CardV2';
-import ModalDeEntradaV1 from './ModalDeEntradaV1';
 const URL_BASE = import.meta.env.VITE_URL_BASE;
 
 const ListadoDeProdV1 = () => {
@@ -14,9 +13,9 @@ const ListadoDeProdV1 = () => {
   const [cartItems, setCartItems] = useState([]);
   const [quitar, setQuitar] = useState({ cheddar: false, bacon: false });
   const [products, setProducts] = useState([]);
-  const [showTableNumberModal, setShowTableNumberModal] = useState(true);
   const [tableNumber, setTableNumber] = useState(null);
-
+  const [selectedProductInfo, setSelectedProductInfo] = useState(null);
+  const [smShow, setSmShow] = useState(false);
 
   {/*useEffect(() => {
     const fetchProducts = async () => {
@@ -53,31 +52,23 @@ const ListadoDeProdV1 = () => {
     setCartItems(updatedCartItems);
   };
 
-  const handleTableNumberSubmit = (number) => {
-    setTableNumber(number);
-    setShowTableNumberModal(false);
-  };
-
   return (
     <Container fluid>
       <Row>
-        <div>
-          {showTableNumberModal && <ModalDeEntradaV1 onSubmit={handleTableNumberSubmit} />}
-        </div>
         <h1 className='text-center pt-4'>¡Descubre Nuestro Delicioso Menú!</h1>
         <Button id='boton1' onClick={handleShow} >🛒Ver mi pedido</Button>
         <Modal show={showModal} onHide={handleClose}>
-          <Modal.Header closeButton>
+          <Modal.Header closeButton className='modal1'>
             <Modal.Title>Tu pedido</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className='modal1'>
             <h5 className='text-end m-2'>Mesa {tableNumber}</h5>
             {cartItems.length === 0 ? (
               <p className='text-center'>No se ha realizado ningún pedido</p>
             ) : (
-              cartItems.map((item, index) => (
+              cartItems.map((item, index, product) => (
                 <div key={index}>
-                  <h5 className='text-center'>Producto: {item.name}</h5>
+                  <h5 className='text-center'>Producto: {product.name}</h5>
                   {Object.keys(item.tipo).length > 0 ? (
                     <>
                       <p>Opción: {Object.keys(item.tipo).find(key => item.tipo[key]) || 'Ninguna'}</p>
@@ -112,19 +103,41 @@ const ListadoDeProdV1 = () => {
                   )}
                   <p>Cantidad: {item.cantidad}</p>
                   <p>Precio: ${item.price}</p>
-                  <Button id='boton1' onClick={() => handleDeleteItem(index)}>Eliminar</Button>
+                  <Button className='boton2' onClick={() => handleDeleteItem(index)}>Eliminar</Button>
                 </div>
               ))
             )}
+            {selectedProductInfo && (
+              <div>
+                <h5 className='text-center'>Producto: {selectedProductInfo.name}</h5>
+                <p>Precio: ${selectedProductInfo.price}</p>
+              </div>
+            )}
           </Modal.Body>
-          <h6>Total de productos seleccionados: </h6>
-          <Modal.Footer>
-            {cartItems.length > 0 && (<Button variant="warning text-ligth"> Confirmar pedido </Button>)}
+          {/*<h6>Total de productos seleccionados: </h6>*/}
+          <Modal.Footer className='modal1'>
+            {cartItems.length > 0 && (<Button variant="text-ligth" className='boton3' onClick={setSmShow}> Confirmar pedido </Button>)}
             <Button variant="secondary" onClick={handleClose}>
               Cerrar
             </Button>
           </Modal.Footer>
         </Modal>
+        <>
+        <Modal
+        size="sm"
+        show={smShow}
+        onHide={() => setSmShow(false)}
+        aria-labelledby="example-modal-sizes-title-sm">
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-sm">
+            Detalle del pedido
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p className='text-start'>Hamburguesa {}</p>
+        </Modal.Body>
+      </Modal>
+        </>
         <Col>
           <h2 className='pt-4 text-center'>Productos destacados</h2>
           <CardV1
@@ -132,6 +145,7 @@ const ListadoDeProdV1 = () => {
             quitar={quitar}
             setQuitar={handleQuitarChange}
             onCloseModal={handleClose}
+            setSelectedProductInfo={setSelectedProductInfo}
           />
         </Col>
         <div>
@@ -139,7 +153,9 @@ const ListadoDeProdV1 = () => {
           <CardV2 onAddCard={handleAddCard}
             quitar={quitar}
             setQuitar={handleQuitarChange}
-            onCloseModal={handleClose} />
+            onCloseModal={handleClose}
+            setSelectedProductInfo={setSelectedProductInfo}
+          />
         </div>
 
 
