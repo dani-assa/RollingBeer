@@ -4,6 +4,7 @@ import '../listadoDeProductos/listado.css';
 import axios from 'axios';
 import CardV1 from '../Section/CardV1';
 import CardV2 from './CardV2';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 const URL_BASE = import.meta.env.VITE_URL_BASE;
 
 const ListadoDeProdV1 = () => {
@@ -38,7 +39,7 @@ const ListadoDeProdV1 = () => {
     const totalCantidad = burgerOptions.cantidad;
     setCartItems([...cartItems, { ...rest, tipo: tipoString, sinTACC: sinTaccString, totalCantidad }]);
   }
-
+console.log(cartItems);
   const handleQuitarChange = (item) => {
     setQuitar((prevState) => ({
       ...prevState,
@@ -56,7 +57,7 @@ const ListadoDeProdV1 = () => {
     <Container fluid>
       <Row>
         <h1 className='text-center pt-4'>¡Descubre Nuestro Delicioso Menú!</h1>
-        <Button id='boton1' onClick={handleShow} >🛒Ver mi pedido</Button>
+        <Button id='boton1' onClick={handleShow} > <ShoppingBagIcon/> </Button>
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton className='modal1'>
             <Modal.Title>Tu pedido</Modal.Title>
