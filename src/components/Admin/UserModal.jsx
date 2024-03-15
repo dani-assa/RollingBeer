@@ -2,22 +2,24 @@ import React, { useContext } from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { passRegex, emailRegex, nameRegex } from "../../validation/registerValidation";
-import { UserContext } from "../../context/UserContext";
+import { useAuth } from "../../context/UserContext";
+import { alertCustom } from '../../utils/alertCustom/alertCustom';
 
 
 const UserModal = ({ show, onHide }) => {
-  const { signup, errorsignup } = useContext(UserContext);
+  const { signup, errorSignup } = useAuth();
   const { register, handleSubmit, formState: { errors }, watch } = useForm();
 
   const onSubmit = async (userData) => {
     try {
       await signup(userData);
-      onHide(); //
+      onHide();
       console.log(userData);
     } catch (error) {
-      console.error("Error al registrar usuario:", error);
+      alertCustom('Upps', 'Ha ocurrido un error al registrar el usuario', 'error');
     }
   };
+
 
   return (
     <Modal show={show} onHide={onHide}>

@@ -32,8 +32,8 @@ const NavigationBar = () => {
           <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z" />
         </svg>
       </Link>
-      <Link to="./">
-        <NotificationsIcon fontSize="large" />
+      <Link to="./orders">
+        <NotificationsIcon  fontSize="large" />
       </Link>
       <Link to="./profile">
         <PersonIcon fontSize="large" />

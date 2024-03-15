@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Table, Form } from 'react-bootstrap';
 import LoadingScreen from "../../components/loadingScreen/LoadingScreen";
-import axios from 'axios';
+import axios from "../../api/axios"; 
 import ProductModalV2 from './ProductModalV2';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
@@ -9,7 +9,7 @@ import { alertCustom, alertConfirm } from '../../utils/alertCustom/alertCustom';
 import Pagination from '../pagination/Pagination';
 import Menu from './Menu';
 
-const URL_BASE = import.meta.env.VITE_URL_BASE
+
 const itemsPerPage = 4;
 
 const ProductAdminV2 = () => {
@@ -22,7 +22,7 @@ const ProductAdminV2 = () => {
   const getAllProduct = async() => {
     try {
       setIsLoading(true);
-      const { data } = await axios.get(`${URL_BASE}/product/getAll`);
+      const { data } = await axios.get(`/product/getAll`);
       setProducts(data);
     } catch (error) {
       alertCustom('Upps', 'Ha ocurrido un error al traer los productos.', 'error');
@@ -35,7 +35,7 @@ const ProductAdminV2 = () => {
     try {
       setIsLoading(true);
       alertConfirm('¿Estas seguro?', 'Estas por eliminar el producto de manera definitiva', 'warning', 'Eliminar', async () => {
-        await axios.delete(`${URL_BASE}/product/delete/${_id}`);
+        await axios.delete(`product/delete/${_id}`);
         getAllProduct();
       });
     } catch (error) {
@@ -48,7 +48,7 @@ const ProductAdminV2 = () => {
   const disabledProduct = async ({target}, _id) => {
     try {
       setIsLoading(true);
-      await axios.patch(`${URL_BASE}/product/visible/${_id}`, {visible: !target.checked});
+      await axios.patch(`product/visible/${_id}`, {visible: !target.checked});
       getAllProduct();
     } catch (error) {
       alertCustom('Upps', 'Ha ocurrido un error.', 'error');
@@ -85,8 +85,11 @@ const ProductAdminV2 = () => {
       <Row className="justify-content-center">
         <Col>
           {isLoading
-            ? <LoadingScreen />
-            : (
+            ? (
+              <LoadingScreen />
+            ) : products.length === 0 ? (
+              <p className="text-center">No hay productos para mostrar</p>
+            ) : (
               <Table striped bordered variant='dark' className="mt-3">
                 <thead>
                   <tr>
