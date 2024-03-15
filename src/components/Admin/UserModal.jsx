@@ -12,7 +12,7 @@ const UserModal = ({ show, onHide }) => {
   const onSubmit = async (userData) => {
     try {
       await signup(userData);
-      onHide(); //
+      onHide(); 
       console.log(userData);
     } catch (error) {
       console.error("Error al registrar usuario:", error);
