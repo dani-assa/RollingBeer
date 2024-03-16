@@ -41,7 +41,11 @@ const UsersAdmin = () => {
     try {
       setIsLoading(true);
       await axios.patch(`user/disable/${_id}`, {disabled: !target.checked});
-      fetchData();
+      setUsers(prevUsers =>
+        prevUsers.map(user =>
+          user._id === _id ? { ...user, disabled: !target.checked } : user
+        )
+      );
     } catch (error) {
       alertCustom('Upps', 'Ha ocurrido un error.', 'error');
     } finally {
@@ -91,7 +95,7 @@ const UsersAdmin = () => {
       <h3 className="mt-5 mb-4 text-center">Administración de Usuarios</h3>
       <Row className="justify-content-center">
         <Col>
-          {loading
+          {isLoading
             ? (
               <LoadingScreen />
             ) : users.length === 0 ? (
@@ -112,7 +116,10 @@ const UsersAdmin = () => {
                         <td className="text-center">{user.name}</td>
                         <td className="text-center">{user.userName}</td>
                         <td className="text-center">
-                          <Form.Check checked={!user.disabled} onChange={(e) => handleEditUser(e, user._id)} />
+                        <Form.Check 
+                            checked={!user.disabled} 
+                            onChange={(e) => handleEditUser(e, user._id)} 
+                          />
                         </td>
                         <td className="text-center">
                           <Button variant='danger' size='sm' onClick={() => handleDeleteUser(user._id)}>
