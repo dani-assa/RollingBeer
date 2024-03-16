@@ -2,7 +2,6 @@ import React from "react";
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./NavigationBar.css";
-import HomeIcon from "@mui/icons-material/Home";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
 import NotificationsIcon from "@mui/icons-material/Notifications";
@@ -11,14 +10,13 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 const NavigationBar = () => {
   return (
     <Container fluid className="navigationBar">
-      {/*<Link to="./orders">
+      <Link to="./">
         <SettingsIcon fontSize="large" />
-  </Link>*/}
+      </Link>
       <Link to="./listado">
         <FavoriteIcon fontSize="large" />
       </Link>
       <Link to="./" className="fondoIconoHome">
-        {/* <HomeIcon fontSize="large"/> */}
         <svg
           className="iconoHome"
           xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +31,7 @@ const NavigationBar = () => {
         </svg>
       </Link>
       <Link to="./orders">
-        <NotificationsIcon  fontSize="large" />
+        <NotificationsIcon fontSize="large" />
       </Link>
       <Link to="./profile">
         <PersonIcon fontSize="large" />
