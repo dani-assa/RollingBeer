@@ -16,7 +16,6 @@ import ProductAdminV2 from "./components/Admin/ProductAdminV2";
 import Users from "./components/Admin/Users"
 import Orders from "./pages/Orders";
 
-
 const App = () => {
   return (
     <BrowserRouter>
@@ -30,7 +29,9 @@ const App = () => {
               <Route path="/register" element={<Register />} />
               <Route path="/listado" element={<ListadoDeProd />} />
               <Route path="/profile" element={<Profile />} />
+
               <Route path="/orders" element={<Orders />} />
+
               <Route element={<ProtectedRouteAdmin />}>
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/admin/productos" element={<ProductAdminV2/>}/>
