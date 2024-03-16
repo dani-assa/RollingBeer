@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Modal, Form, Carousel, Toast, Container, Col, Row } from "react-bootstrap";
-import axios from "../../api/axios.js"
-import '../listadoDeProductos/listado.css'
+import {
+  Card,
+  Button,
+  Modal,
+  Form,
+  Carousel,
+  Toast,
+  Container,
+  Col,
+  Row,
+} from "react-bootstrap";
+import axios from "../../api/axios.js";
+import "../listadoDeProductos/listado.css";
 //import OrdersV1 from "./OrdersV1.jsx";
 const URL_BASE = import.meta.env.VITE_URL_BASE;
-
 
 const CardV2 = ({ onAddCard }) => {
   const [products, setProducts] = useState([]);
@@ -24,7 +33,7 @@ const CardV2 = ({ onAddCard }) => {
         const response = await axios.get(`${URL_BASE}/product/getAll`);
         setProducts(response.data);
       } catch (error) {
-        console.error('Hubo un error al cargar los productos:', error);
+        console.error("Hubo un error al cargar los productos:", error);
       }
     };
 
@@ -46,50 +55,51 @@ const CardV2 = ({ onAddCard }) => {
 
   const handleCheckboxChange = (category, item) => {
     if (category === "tipo") {
-      const updatedOptions = Object.keys(burgerOptions.tipo).reduce((acc, key) => {
-        acc[key] = key === item;
-        return acc;
-      }, {});
-      setBurgerOptions(prevState => ({
+      const updatedOptions = Object.keys(burgerOptions.tipo).reduce(
+        (acc, key) => {
+          acc[key] = key === item;
+          return acc;
+        },
+        {}
+      );
+      setBurgerOptions((prevState) => ({
         ...prevState,
-        tipo: updatedOptions
+        tipo: updatedOptions,
       }));
-
     } else {
       if (category === "quitar" && (item === "bacon" || item === "cheddar")) {
         if (!burgerOptions.quitar[item]) {
-          setBurgerOptions(prevState => ({
+          setBurgerOptions((prevState) => ({
             ...prevState,
             extras: {
               ...prevState.extras,
-              [item.charAt(0).toUpperCase() + item.slice(1)]: 0
+              [item.charAt(0).toUpperCase() + item.slice(1)]: 0,
             },
             [category]: {
               ...prevState[category],
-              [item]: !prevState[category][item]
-            }
+              [item]: !prevState[category][item],
+            },
           }));
         } else {
-          setBurgerOptions(prevState => ({
+          setBurgerOptions((prevState) => ({
             ...prevState,
             [category]: {
               ...prevState[category],
-              [item]: !prevState[category][item]
-            }
+              [item]: !prevState[category][item],
+            },
           }));
         }
       } else {
-        setBurgerOptions(prevState => ({
+        setBurgerOptions((prevState) => ({
           ...prevState,
           [category]: {
             ...prevState[category],
-            [item]: !prevState[category][item]
-          }
+            [item]: !prevState[category][item],
+          },
         }));
       }
     }
   };
-
 
   const handleCantidadChange = (change) => {
     setBurgerOptions((prevState) => ({
@@ -101,7 +111,10 @@ const CardV2 = ({ onAddCard }) => {
   const handleIncrement = (category, item) => {
     setBurgerOptions((prevState) => ({
       ...prevState,
-      [category]: { ...prevState[category], [item]: prevState[category][item] + 1 },
+      [category]: {
+        ...prevState[category],
+        [item]: prevState[category][item] + 1,
+      },
     }));
   };
 
@@ -109,7 +122,10 @@ const CardV2 = ({ onAddCard }) => {
     if (burgerOptions[category][item] > 0) {
       setBurgerOptions((prevState) => ({
         ...prevState,
-        [category]: { ...prevState[category], [item]: prevState[category][item] - 1 },
+        [category]: {
+          ...prevState[category],
+          [item]: prevState[category][item] - 1,
+        },
       }));
     }
   };
@@ -133,7 +149,9 @@ const CardV2 = ({ onAddCard }) => {
   }, [showToast]);
 
   const handleAddCard = () => {
-    const selectedTipo = Object.values(burgerOptions.tipo).some(option => option === true);
+    const selectedTipo = Object.values(burgerOptions.tipo).some(
+      (option) => option === true
+    );
     if (!selectedTipo) {
       setShowToast(true);
       return;
@@ -142,7 +160,6 @@ const CardV2 = ({ onAddCard }) => {
     onAddCard(burgerOptions);
     handleClose();
   };
-
 
   const settings = {
     dots: true,
@@ -158,80 +175,112 @@ const CardV2 = ({ onAddCard }) => {
         breakpoint: 1024,
         settings: {
           slidesToShow: 3,
-          slidesToScroll: 3
-        }
+          slidesToScroll: 3,
+        },
       },
       {
         breakpoint: 830,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 1
-        }
+          slidesToScroll: 1,
+        },
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1
-        }
-      }
-    ]
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
-
-  const RenderOptions = ({ category, item, handleIncrement, handleDecrement, burgerOptions }) => (
+  const RenderOptions = ({
+    category,
+    item,
+    handleIncrement,
+    handleDecrement,
+    burgerOptions,
+  }) => (
     <div className="d-flex justify-content-between align-items-center my-2">
       <span>{item.charAt(0).toUpperCase() + item.slice(1)}</span>
       <div>
-        <Button size="sm" onClick={() => handleDecrement(category, item)}>-</Button>
+        <Button size="sm" onClick={() => handleDecrement(category, item)}>
+          -
+        </Button>
         <span className="mx-2">{burgerOptions[category][item]}</span>
-        <Button size="sm" onClick={() => handleIncrement(category, item)}>+</Button>
+        <Button size="sm" onClick={() => handleIncrement(category, item)}>
+          +
+        </Button>
       </div>
     </div>
   );
 
-  const selectedProduct = products.find((product) => product._id === selectedProductId);
+  const selectedProduct = products.find(
+    (product) => product._id === selectedProductId
+  );
 
   return (
     <>
-    <Container fluid>
-      <Row>
-        <div>
-          {products.map((product, i) => (
-            product.visible && (
-              <div key={product._id} className="card2">
-                <Card key={i} onClick={() => handleShow(product._id)} className="text-white card-1 modal1" >
-                  <div className="cardBody">
-                    <Card.Img variant="top" src={product.image || ""} className="cardImg" />
+      <Container fluid>
+        <Row>
+          <div>
+            {products.map(
+              (product, i) =>
+                product.visible && (
+                  <div key={product._id} className="card2">
+                    <Card
+                      key={i}
+                      onClick={() => handleShow(product._id)}
+                      className="text-white card-1 modal1"
+                    >
+                      <div className="cardBody">
+                        <Card.Img
+                          variant="top"
+                          src={product.image || ""}
+                          className="cardImg"
+                        />
+                      </div>
+                      <Card.Body className="d-flex justify-content-between flex-column">
+                        <div className="text-end m-2">
+                          <Card.Title>{product.name}</Card.Title>
+                          <small>${product.price}</small>
+                        </div>
+                      </Card.Body>
+                    </Card>
                   </div>
-                  <Card.Body className="d-flex justify-content-between flex-column">
-                    <div className="text-end m-2">
-                      <Card.Title>{product.name}</Card.Title>
-                      <small>${product.price}</small>
-                    </div>
-                  </Card.Body>
-                </Card>
-              </div>
-            )
-          ))}
-        </div>
-      </Row>
-    </Container>
-
-
-
+                )
+            )}
+          </div>
+        </Row>
+      </Container>
 
       {selectedProduct && (
-        <Modal show={!!selectedProductId} onHide={handleClose} backdrop="static" keyboard={false}>
+        <Modal
+          show={!!selectedProductId}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+        >
           <Modal.Header closeButton className="modal1">
-            <Modal.Title>Personaliza tu pedido - {selectedProduct.name}</Modal.Title>
+            <Modal.Title>
+              Personaliza tu pedido - {selectedProduct.name}
+            </Modal.Title>
           </Modal.Header>
           <Modal.Body className="modal1">
-            <Toast show={showToast} onClose={() => setShowToast(false)} bg="danger" text="white">
+            <Toast
+              show={showToast}
+              onClose={() => setShowToast(false)}
+              bg="danger"
+              text="white"
+            >
               <Toast.Header>
                 <strong className="mr-auto">Mensaje</strong>
               </Toast.Header>
-              <Toast.Body>Por favor selecciona al menos una opción (simple, doble o triple) antes de agregar al carrito.</Toast.Body>
+              <Toast.Body>
+                Por favor selecciona al menos una opción (simple, doble o
+                triple) antes de agregar al carrito.
+              </Toast.Body>
             </Toast>
 
             <h5>Opciones</h5>
@@ -264,8 +313,14 @@ const CardV2 = ({ onAddCard }) => {
 
             <h5>Quitar</h5>
             {Object.keys(burgerOptions.quitar).map((item) => (
-              <div className="d-flex justify-content-between align-items-center mb-2" key={item}>
-                <label htmlFor={`check-${item}`} className="mb-0">{`Sin ${item}`}</label>
+              <div
+                className="d-flex justify-content-between align-items-center mb-2"
+                key={item}
+              >
+                <label
+                  htmlFor={`check-${item}`}
+                  className="mb-0"
+                >{`Sin ${item}`}</label>
                 <Form.Check
                   type="checkbox"
                   id={`check-${item}`}
@@ -280,7 +335,9 @@ const CardV2 = ({ onAddCard }) => {
 
             <h5>Celiacos</h5>
             <div className="d-flex justify-content-between align-items-center mb-2">
-              <label htmlFor="sinTacc" className="mb-0">Sin TACC</label>
+              <label htmlFor="sinTacc" className="mb-0">
+                Sin TACC
+              </label>
               <Form.Check
                 type="checkbox"
                 id="sinTacc"
@@ -298,7 +355,7 @@ const CardV2 = ({ onAddCard }) => {
               onChange={handleAclaracionesChange}
               className="aclaraciones"
             />
-            
+
             <h5>Cantidad</h5>
             <div className="d-flex justify-content-center align-items-center">
               <Button
@@ -324,7 +381,6 @@ const CardV2 = ({ onAddCard }) => {
             </Button>
           </Modal.Footer>
         </Modal>
-        
       )}
     </>
   );

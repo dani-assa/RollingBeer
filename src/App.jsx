@@ -30,7 +30,11 @@ const App = () => {
               <Route path="/register" element={<Register />} />
               <Route path="/listado" element={<ListadoDeProd />} />
               <Route path="/profile" element={<Profile />} />
+<<<<<<< HEAD
               <Route path="/orders" element={<Orders />} />
+=======
+              {/*<Route path="/orders" element={<Orders />} />*/}
+>>>>>>> d8ffc90806a1f8d1f1af72dda571239983336561
               <Route element={<ProtectedRouteAdmin />}>
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/admin/productos" element={<ProductAdminV2/>}/>
