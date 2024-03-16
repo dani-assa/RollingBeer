@@ -48,7 +48,7 @@ const ProductAdminV2 = () => {
   const disabledProduct = async ({target}, _id) => {
     try {
       setIsLoading(true);
-      await axios.patch(`product/visible/${_id}`, {visible: !target.checked});
+      await axios.patch(`product/visible/${_id}`, {visible: target.checked});
       getAllProduct();
     } catch (error) {
       alertCustom('Upps', 'Ha ocurrido un error.', 'error');
@@ -105,7 +105,7 @@ const ProductAdminV2 = () => {
                       <tr key={i}>
                         <td className="text-center"><img src={product.image} alt="Producto" style={{ width: '50px', height: '50px' }} /></td>
                         <td className="text-center">{product.name}</td>
-                        <td className="text-center"><Form.Check checked={!product.visible} onChange={(e) => disabledProduct(e, product._id)}/> </td>
+                        <td className="text-center"><Form.Check checked={product.visible} onChange={(e) => disabledProduct(e, product._id)}/> </td>
                         <td className="text-center">
                           <Col>
                             <Button variant='danger' size='sm' onClick={() => deleteProduct(product._id)}><DeleteIcon fontSize='small'/></Button>

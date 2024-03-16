@@ -3,6 +3,7 @@ import { registerRequest, verifyTokenRequest } from "../api/user";
 import Cookies from "js-cookie";
 import axios from "../api/axios";
 export const UserContext = createContext();
+import { alertCustom} from '../utils/alertCustom/alertCustom.js';
 
 export const useAuth = () => {
   const context = useContext(UserContext);
@@ -50,7 +51,12 @@ export const UserProvider = ({ children }) => {
       setUser(usuarioNormalizado);
       setIsAuthenticated(true);
     } catch (error) {
-      setErrors(error.response.data);
+      if (error.response && error.response.status === 400 && error.response.data.includes("La cuenta está desactivada.")) {
+        alertCustom('Upps', 'La cuenta está deshabilitada. Por favor, contacte al administrador.', 'error');
+      } else {
+        setErrors(error.response.data);
+        alertCustom('Upps', 'Ocurrió un error al iniciar sesión. Por favor, intente nuevamente.', 'error');
+      }
     }
   };
 
@@ -63,7 +69,6 @@ export const UserProvider = ({ children }) => {
     try {
       const res = await axios.get(`product/getAll`)
       setProducts(res.data)
-      console.log(res.data);
     } catch (error) {
       setErrors(error.response.data.message || alertCustom('Upps', 'Ha ocurrido un error.', 'error'));
     }
