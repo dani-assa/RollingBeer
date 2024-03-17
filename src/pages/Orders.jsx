@@ -1,12 +1,13 @@
-import React from 'react'
-import OrdersV1 from '../components/orders/OrdersV1.jsx'
+// import React from 'react'
 
-const Orders = () => {
-  return (
-    <div>
-      <OrdersV1/>
-    </div>
-  )
-}
 
-export default Orders;
+// import OrdersV1 from '../components/listadoDeProductos/OrdersV1'
+
+// const Orders = () => {
+//   return (
+//     <OrdersV1 />
+//   )
+// }
+
+// export default Orders
+
