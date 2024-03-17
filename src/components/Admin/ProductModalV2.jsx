@@ -1,11 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { Modal, Form, Button } from 'react-bootstrap';
-import axios from 'axios';
+import axios from '../../api/axios';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { alertCustom } from '../../utils/alertCustom/alertCustom';
 
-
-const URL_BASE = import.meta.env.VITE_URL_BASE;
 
 const ModalEditUser = ({product, setIsLoading, setChangeFlag}) => {
   const [showModalEdit, setShowModalEdit] = useState(false);
@@ -23,7 +21,7 @@ const ModalEditUser = ({product, setIsLoading, setChangeFlag}) => {
   const handleSaveEdit = async() => {
     try {
       setIsLoading(true);
-      await axios.patch(`${URL_BASE}/product/edit/${selectedProduct._id}`, selectedProduct);
+      await axios.patch(`/product/edit/${selectedProduct._id}`, selectedProduct);
       setChangeFlag(prev => !prev);
     } catch (error) {
       alertCustom('Upps', 'Ha ocurrido un error al editar el producto', 'error');

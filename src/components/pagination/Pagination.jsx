@@ -2,10 +2,11 @@ import React from 'react';
 import ReactPaginate from 'react-paginate';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import './pagination.css'
 
 const Pagination = ({ pageCount, handlePageChange }) => {
   return (
-    <div className='sticky-top'>
+    <div className='pagination-container'>
       <ReactPaginate
         previousLabel={<KeyboardArrowLeftIcon />}
         nextLabel={<KeyboardArrowRightIcon />}

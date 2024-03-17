@@ -1,13 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { passRegex, emailRegex, nameRegex } from "../../validation/registerValidation";
 import { useAuth } from "../../context/UserContext";
 import { alertCustom } from '../../utils/alertCustom/alertCustom';
 
-
 const UserModal = ({ show, onHide }) => {
-  const { signup, errorSignup } = useAuth();
+  const { signup } = useAuth();
   const { register, handleSubmit, formState: { errors }, watch } = useForm();
 
   const onSubmit = async (userData) => {
@@ -20,9 +19,8 @@ const UserModal = ({ show, onHide }) => {
     }
   };
 
-
   return (
-    <Modal show={show} onHide={onHide}>
+    <Modal show={show} onHide={onHide} backdrop="static" keyboard={true}>
       <Modal.Header closeButton>
         <Modal.Title>Formulario de Registro</Modal.Title>
       </Modal.Header>
@@ -46,7 +44,11 @@ const UserModal = ({ show, onHide }) => {
                 },
               })}
             />
-            {errors.name && <span className="text-danger">{errors.name.message}</span>}
+            {errors.name && (
+              <Alert variant="danger">
+                {errors.name.message}
+              </Alert>
+            )}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="userName">Nombre de Usuario</Form.Label>
@@ -58,7 +60,11 @@ const UserModal = ({ show, onHide }) => {
                 required: "El nombre de usuario es requerido",
               })}
             />
-            {errors.userName && <span className="text-danger">{errors.userName.message}</span>}
+            {errors.userName && (
+              <Alert variant="danger">
+                {errors.userName.message}
+              </Alert>
+            )}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="email">Correo Electrónico</Form.Label>
@@ -74,7 +80,11 @@ const UserModal = ({ show, onHide }) => {
                 },
               })}
             />
-            {errors.email && <span className="text-danger">{errors.email.message}</span>}
+            {errors.email && (
+              <Alert variant="danger">
+                {errors.email.message}
+              </Alert>
+            )}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="dni">DNI (sin puntos)</Form.Label>
@@ -86,7 +96,11 @@ const UserModal = ({ show, onHide }) => {
                 required: "El DNI es requerido",
               })}
             />
-            {errors.dni && <span className="text-danger">{errors.dni.message}</span>}
+            {errors.dni && (
+              <Alert variant="danger">
+                {errors.dni.message}
+              </Alert>
+            )}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="password">Contraseña</Form.Label>
@@ -102,7 +116,11 @@ const UserModal = ({ show, onHide }) => {
                 },
               })}
             />
-            {errors.password && <span className="text-danger">{errors.password.message}</span>}
+            {errors.password && (
+              <Alert variant="danger">
+                {errors.password.message}
+              </Alert>
+            )}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label htmlFor="passwordCheck">Repetir Contraseña</Form.Label>
@@ -115,14 +133,20 @@ const UserModal = ({ show, onHide }) => {
                 validate: (value) => value === watch("password") || "Las contraseñas no coinciden",
               })}
             />
-            {errors.passwordCheck && <span className="text-danger">{errors.passwordCheck.message}</span>}
+            {errors.passwordCheck && (
+              <Alert variant="danger">
+                {errors.passwordCheck.message}
+              </Alert>
+            )}
           </Form.Group>
-          <Button variant="primary" type="submit">
-            Registrar
-          </Button>
-          <Button variant='secondary' onClick={onHide}>
-          Cerrar
-        </Button>
+          <div className="d-flex justify-content-between">
+            <Button variant="secondary" onClick={onHide}>
+              Cancelar
+            </Button>
+            <Button variant="primary" type="submit">
+              Registrar
+            </Button>
+          </div>
         </Form>
       </Modal.Body>
     </Modal>

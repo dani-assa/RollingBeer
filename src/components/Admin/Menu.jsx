@@ -1,12 +1,14 @@
-import React, { useState }  from 'react';
-import { Form, Modal, Button } from 'react-bootstrap';
+import React from 'react';
+import { Form, Modal, Button, Alert } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { nameMenu, imageMenu, priceMenu, cantidadMenu, descriptionRegex } from "../../validation/adminPanelValidations";
 import { useProductAuth } from "../../context/ProductContext";
+import { alertCustom } from '../../utils/alertCustom/alertCustom';
+
 
 const Menu = ({ show, handleCloseModal }) => {
-  const { signin, errors } = useProductAuth();
-  const { register, handleSubmit, setValue } = useForm();
+  const { signin } = useProductAuth();
+  const { register, handleSubmit, formState: { errors }, setValue } = useForm();
 
   const onSubmit = async (formData) => {
     try {
@@ -20,7 +22,7 @@ const Menu = ({ show, handleCloseModal }) => {
       setValue("price", "");
       setValue("cantidad", "");
     } catch (error) {
-      console.error("Error al crear producto:", error);
+      alertCustom('Upps', 'Ha ocurrido un error al crear el producto', 'error');
     }
   };
 
@@ -41,11 +43,15 @@ const Menu = ({ show, handleCloseModal }) => {
                 required: "Este campo es obligatorio",
                 pattern: {
                   value: nameMenu,
-                  message: "Nombre inválido. Debe tener entre 3 y 100 caracteres."
+                  message: "Nombre inválido. Debe ingresar un nombre alfabetico entre 3 y 100 caracteres."
                 }
               })}
             />
-            {errors.name && <span className="text-danger">{errors.name.message}</span>}
+            {errors.name && (
+              <Alert variant="danger">
+                {errors.name.message}
+              </Alert>
+            )}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Descripción</Form.Label>
@@ -62,7 +68,11 @@ const Menu = ({ show, handleCloseModal }) => {
                 }
               })}
             />
-            {errors.description && <span className="text-danger">{errors.description.message}</span>}
+            {errors.description && (
+              <Alert variant="danger">
+                {errors.description.message}
+              </Alert>
+            )}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Categoría</Form.Label>
@@ -74,7 +84,11 @@ const Menu = ({ show, handleCloseModal }) => {
               <option value="Wrap">Wrap</option>
               <option value="Bebidas">Bebidas</option>
             </Form.Select>
-            {errors.category && <span className="text-danger">{errors.category.message}</span>}
+            {errors.category && (
+              <Alert variant="danger">
+                {errors.category.message}
+              </Alert>
+            )}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Imagen URL</Form.Label>
@@ -89,7 +103,11 @@ const Menu = ({ show, handleCloseModal }) => {
                 }
               })}
             />
-            {errors.image && <span className="text-danger">{errors.image.message}</span>}
+            {errors.image && (
+              <Alert variant="danger">
+                {errors.image.message}
+              </Alert>
+            )}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Precio</Form.Label>
@@ -100,11 +118,15 @@ const Menu = ({ show, handleCloseModal }) => {
                 required: "Este campo es obligatorio",
                 pattern: {
                   value: priceMenu,
-                  message: "Precio inválido. Debe ser un número válido entre 0.01 y 100,000,000."
+                  message: "Precio inválido. Debe ser un número válido entre 1 y 100,000,000."
                 }
               })}
             />
-            {errors.price && <span className="text-danger">{errors.price.message}</span>}
+            {errors.price && (
+              <Alert variant="danger">
+                {errors.price.message}
+              </Alert>
+            )}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Cantidad</Form.Label>
@@ -115,11 +137,15 @@ const Menu = ({ show, handleCloseModal }) => {
                 required: "Este campo es obligatorio",
                 pattern: {
                   value: cantidadMenu,
-                  message: "Cantidad inválida. Debe ser un número válido entre 1 y 1,000,000,000."
+                  message: "Cantidad inválida. Debe ser un número válido entre 1 y 100,000,000."
                 }
               })}
             />
-            {errors.cantidad && <span className="text-danger">{errors.cantidad.message}</span>}
+            {errors.cantidad && (
+              <Alert variant="danger">
+                {errors.cantidad.message}
+              </Alert>
+            )}
           </Form.Group>
           <div className="d-flex justify-content-between">
             <Button variant="secondary" onClick={handleCloseModal}>
