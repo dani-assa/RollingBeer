@@ -15,7 +15,7 @@ import "../listadoDeProductos/listado.css";
 //import OrdersV1 from "./OrdersV1.jsx";
 const URL_BASE = import.meta.env.VITE_URL_BASE;
 
-const CardV2 = ({ onAddCard }) => {
+const CardV2 = ({ onAddCard, data }) => {
   const [products, setProducts] = useState([]);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [burgerOptions, setBurgerOptions] = useState({
@@ -224,7 +224,35 @@ const CardV2 = ({ onAddCard }) => {
     <>
       <Container fluid>
         <Row>
+          {data ?         
           <div>
+            {data.map(
+              (product, i) =>
+              product.visible && (
+                <div key={product._id} className="card2">
+                  <Card
+                    key={i}
+                    onClick={() => handleShow(product._id)}
+                    className="text-white card-1 modal1"
+                  >
+                    <div className="cardBody">
+                      <Card.Img
+                        variant="top"
+                        src={product.image || ""}
+                        className="cardImg"
+                      />
+                    </div>
+                    <Card.Body className="d-flex justify-content-between flex-column">
+                      <div className="text-end m-2">
+                        <Card.Title>{product.name}</Card.Title>
+                        <small>${product.price}</small>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </div>
+                )
+            )}
+          </div> : <div>
             {products.map(
               (product, i) =>
                 product.visible && (
@@ -251,7 +279,9 @@ const CardV2 = ({ onAddCard }) => {
                   </div>
                 )
             )}
-          </div>
+          </div>}
+          
+          
         </Row>
       </Container>
 
