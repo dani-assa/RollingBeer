@@ -219,7 +219,6 @@ const CardV2 = ({ onAddCard, data }) => {
   const selectedProduct = products.find(
     (product) => product._id === selectedProductId
   );
-
   return (
     <>
       <Container fluid>

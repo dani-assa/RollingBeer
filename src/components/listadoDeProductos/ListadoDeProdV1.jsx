@@ -105,6 +105,7 @@ const ListadoDeProdV1 = () => {
   const priceInputRef = useRef();
   const categoryInputRef = useRef();
   const searchFormRef = useRef();
+  const [selectedProductId, setSelectedProductId] = useState(null);
 
   const handleAddCard = (burgerOptions) => {
     const { tipo, sinTacc, ...rest } = burgerOptions;
@@ -115,7 +116,20 @@ const ListadoDeProdV1 = () => {
       ...cartItems,
       { ...rest, tipo: tipoString, sinTACC: sinTaccString, totalCantidad },
     ]);
-  };
+    const selectedTipo = Object.values(burgerOptions.tipo).some(option => option === true);
+  if (!selectedTipo) {
+    setShowToast(true);
+    return;
+  }
+
+  if (selectedProduct) {
+    onAddCard({
+      ...burgerOptions,
+      productId: selectedProduct._id // Pasar el ID del producto
+    });
+  }
+  handleClose();
+};
 
   const handleQuitarChange = (item) => {
     setQuitar((prevState) => ({
@@ -146,6 +160,10 @@ const ListadoDeProdV1 = () => {
     e.preventDefault();
   };
 
+  const selectedProduct = products.find(
+    (products) => products._id === selectedProductId
+  );
+
   return (
     <Container fluid>
       <Row className="mb-5">
@@ -156,15 +174,25 @@ const ListadoDeProdV1 = () => {
         </Button>
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton className="modal1">
-            <Modal.Title>Tu pedido</Modal.Title>
+            <Modal.Title>Tu Pedido</Modal.Title>
           </Modal.Header>
           <Modal.Body className="modal1">
             <h5 className="text-end m-2">Mesa {tableNumber}</h5>
             {cartItems.length === 0 ? (
               <p className="text-center">No se ha realizado ningún pedido</p>
             ) : (
-              cartItems.map((item, index, products) => (
+              cartItems.map((item, index) => (
                 <div key={index}>
+                  {products.map(products => {
+                    if (products._id === item.productsId) {
+                      return (
+                        <div key={products._id}>
+                          <p>Nombre: {products.name}</p>
+                          
+                        </div>
+                      );
+                    }
+                  })}
                   {Object.keys(item.tipo).length > 0 ? (
                     <>
                       <p>
@@ -213,7 +241,6 @@ const ListadoDeProdV1 = () => {
                     <p>Aclaraciones: {item.aclaraciones}</p>
                   )}
                   <p>Cantidad: {item.cantidad}</p>
-                  <p>Precio: ${item.price}</p>
                   <Button
                     className="boton2"
                     onClick={() => handleDeleteItem(index)}
@@ -254,7 +281,7 @@ const ListadoDeProdV1 = () => {
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <p className="text-start">Hamburguesa {}</p>
+              <p className="text-start">Hamburguesa { }</p>
             </Modal.Body>
           </Modal>
         </>
@@ -265,6 +292,7 @@ const ListadoDeProdV1 = () => {
             quitar={quitar}
             setQuitar={handleQuitarChange}
             onCloseModal={handleClose}
+            selectedProduct={selectedProductId}
           />
         </Col>
 
@@ -284,11 +312,11 @@ const ListadoDeProdV1 = () => {
                   onKeyDown={(e) =>
                     e.code == "Enter"
                       ? handleQueryParams({
-                          valueSearchInput: searchInputRef.current.value,
-                          valueCategoryInput: categoryInputRef.current.value,
-                          valuePriceInput: priceInputRef.current.value,
-                          setQueryParams: setQueryParams,
-                        })
+                        valueSearchInput: searchInputRef.current.value,
+                        valueCategoryInput: categoryInputRef.current.value,
+                        valuePriceInput: priceInputRef.current.value,
+                        setQueryParams: setQueryParams,
+                      })
                       : ""
                   }
                 />
@@ -383,6 +411,7 @@ const ListadoDeProdV1 = () => {
                 quitar={quitar}
                 setQuitar={handleQuitarChange}
                 onCloseModal={handleClose}
+                selectedProduct={selectedProductId}
               />
             ) : (
               <>
