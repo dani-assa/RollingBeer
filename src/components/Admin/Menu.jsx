@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Modal, Button, Alert } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { nameMenu, imageMenu, priceMenu, cantidadMenu, descriptionRegex } from "../../validation/adminPanelValidations";
 import { useProductAuth } from "../../context/ProductContext";
 import { alertCustom } from '../../utils/alertCustom/alertCustom';
+import { useAuth } from '../../context/UserContext';
 
 
 const Menu = ({ show, handleCloseModal }) => {
   const { signin } = useProductAuth();
+  const {getAllProduct} = useAuth();
   const { register, handleSubmit, formState: { errors }, setValue } = useForm();
-
   const onSubmit = async (formData) => {
     try {
       await signin(formData);
@@ -21,10 +22,14 @@ const Menu = ({ show, handleCloseModal }) => {
       setValue("visible", "");
       setValue("price", "");
       setValue("cantidad", "");
+
+    alertCustom('Éxito', 'Producto creado exitosamente', 'success');
     } catch (error) {
       alertCustom('Upps', 'Ha ocurrido un error al crear el producto', 'error');
     }
   };
+
+  
 
   return (
     <Modal show={show} onHide={handleCloseModal} backdrop="static" keyboard={true}>
