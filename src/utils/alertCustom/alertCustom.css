@@ -1,0 +1,14 @@
+
+.swal2-small-alert {
+  font-size: 20px; /* Reduce el tamaño de la fuente */
+  .swal2-popup {
+    width: auto; /* Ajusta el ancho al contenido o usa un valor específico */
+    padding: 0.5em; /* Reduce el padding */
+  }
+  .swal2-title {
+    font-size: 1em; /* Ajusta el tamaño de la fuente del título */
+  }
+  .swal2-content {
+    font-size: 1em; /* Ajusta el tamaño de la fuente del contenido */
+  }
+}

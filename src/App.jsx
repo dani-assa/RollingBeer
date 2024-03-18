@@ -14,6 +14,7 @@ import Profile from "./pages/Profile";
 import Menu from "./components/Admin/Menu";
 import ProductAdminV2 from "./components/Admin/ProductAdminV2";
 import Users from "./components/Admin/Users"
+import NavbarCart from "./components/navigationBar/NavbarCart";
 
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
       <UserProvider>
         <ProductProvider>
           <main>
+            <NavbarCart />
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Home />} />
