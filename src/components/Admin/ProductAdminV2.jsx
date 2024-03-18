@@ -10,6 +10,7 @@ import Pagination from '../pagination/Pagination';
 import Menu from './Menu';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import CardV1 from '../Section/CardV1';
 
 const itemsPerPage = 4;
 
@@ -58,11 +59,12 @@ const ProductAdminV2 = () => {
     }
   };
 
-  const toggleFavorite = async (_id) => {
+  const toggleFavorite = async (productId, currentState) => {
     try {
       setIsLoading(true);
-      await axios.patch(`product/favorite/${_id}`, {isFavorite: target.isFavorite});
-      getAllProduct();
+      const isFavorite = !currentState; 
+      await axios.patch(`product/favorite/${productId}`, { isFavorite });
+      getAllProduct(); 
     } catch (error) {
       alertCustom('Upps', 'Ha ocurrido un error.', 'error');
     } finally {
@@ -123,7 +125,9 @@ const ProductAdminV2 = () => {
                       <td className="text-center">
                         <Col>
                           <Button variant='danger' size='sm' onClick={() => deleteProduct(product._id)}><DeleteIcon fontSize='small'/></Button>
-                          <Button variant='light' size='sm' onClick={() => toggleFavorite(product._id)}>{product._id.favorite ? <FavoriteIcon style={{ color: 'red' }} /> : <FavoriteBorderIcon />}</Button>
+                          <Button variant='light' size='sm' onClick={() => toggleFavorite(product._id, product.isFavorite)}>
+                            {product.isFavorite ? <FavoriteIcon style={{ color: 'red' }} /> : <FavoriteBorderIcon />}
+                          </Button>
                           <ProductModalV2
                             product={product} 
                             setIsLoading={setIsLoading} 
