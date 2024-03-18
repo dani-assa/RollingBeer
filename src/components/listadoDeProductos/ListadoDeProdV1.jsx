@@ -13,7 +13,7 @@ const searchWithOptions = async ({ setState, setLoading, queryParams }) => {
   setLoading(true);
 
   try {
-    const res = await axios.get(`/productsWithOptions/search${queryParams}`);
+    const res = await axios.get(`/product/productsWithOptions/search${queryParams}`);
     const data = res.data;
     console.log(res);
     if (res.status == 200) {
@@ -55,23 +55,6 @@ const handleQueryParams = ({
   setQueryParams(queryString);
 };
 
-const renderHandler = (data, loading) => {
-  if (loading) {
-    return (
-      <LoadingScreen />
-    );
-  }
-
-  if (data) {
-    return data?.map((product) => (
-      <CardV2 key={product.id} product={product} />
-    ));
-  }
-
-  return <p>Lo sentimos, no hemos podido encontrar lo que buscabas</p>;
-};
-
-
 const ListadoDeProdV1 = () => {
   const [showModal, setShowModal] = useState(false);
   const handleClose = () => setShowModal(false);
@@ -82,7 +65,7 @@ const ListadoDeProdV1 = () => {
   const [selectedProductInfo, setSelectedProductInfo] = useState(null);
   const [smShow, setSmShow] = useState(false);
   const { products, getAllProduct } = useAuth();
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [queryParams, setQueryParams] = useSearchParams();
   const location = useLocation();
@@ -345,20 +328,29 @@ const ListadoDeProdV1 = () => {
         </Form>
       </section>
       <section className="container my-5 vh-50">
-        <div className="row">{renderHandler(data, loading)}</div>
+        <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => handleQueryParams({
+              valueSearchInput: searchInputRef.current.value,
+              valueCategoryInput: categoryInputRef.current.value,
+              valuePriceInput: priceInputRef.current.value,
+              setQueryParams: setQueryParams,
+            })}
+          >
+            Filtrar
+      </button>
       </section>
-        <div>
-          <h2 className="pt-4 text-center">Productos</h2>
-          <CardV2
+      {data.length > 0 && 
+      <CardV2 
+            data = {data}
             onAddCard={handleAddCard}
             quitar={quitar}
             setQuitar={handleQuitarChange}
             onCloseModal={handleClose}
             setSelectedProductInfo={setSelectedProductInfo}
-          />
-        </div>
-
-        
+      />}
+              
       </Row>
     </Container>
   );
