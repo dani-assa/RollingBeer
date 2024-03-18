@@ -5,7 +5,7 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { alertCustom } from '../../utils/alertCustom/alertCustom';
 
 
-const ModalEditUser = ({product, setIsLoading, setChangeFlag}) => {
+const EditProductModal = ({product, setIsLoading, setChangeFlag}) => {
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(product);
 
@@ -24,7 +24,7 @@ const ModalEditUser = ({product, setIsLoading, setChangeFlag}) => {
       await axios.patch(`/product/edit/${selectedProduct._id}`, selectedProduct);
       setChangeFlag(prev => !prev);
     } catch (error) {
-      alertCustom('Upps', 'Ha ocurrido un error al editar el producto', 'error');
+      alertCustom('Upps', 'Ha ocurrido un error al editar el producto.', 'error');
     } finally {
       handleEditClose();
       setIsLoading(false);
@@ -37,7 +37,7 @@ const ModalEditUser = ({product, setIsLoading, setChangeFlag}) => {
 
   return (
     <>
-      <Button variant='success' size='sm' className='mx-2 mb-1' onClick={() => handleEdit(product)}><ModeEditIcon fontSize='small'/></Button>
+      <Button variant='success' size='sm' className='mx-1 mb-1' onClick={() => handleEdit(product)}><ModeEditIcon fontSize='small'/></Button>
       <Modal show={showModalEdit} onHide={handleEditClose}>
         <Modal.Header closeButton>
           <Modal.Title>Producto</Modal.Title>
@@ -139,4 +139,4 @@ const ModalEditUser = ({product, setIsLoading, setChangeFlag}) => {
   )
 }
 
-export default ModalEditUser
+export default EditProductModal;
