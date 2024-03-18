@@ -24,11 +24,9 @@ export const ProductProvider = ({ children }) => {
       if (res.status === 200 || res.status === 201) {
         alertCustom('Éxito', 'Producto creado exitosamente', 'success');
       } else {      
-        console.error(`Received status code: ${res.status}`);
         alertCustom('Upps', 'El producto se creó, pero se recibió un código de estado inesperado.', 'warning');
       }
     } catch (error) {
-      console.error(error);
       const errorMessage = error.response?.data?.message || 'Ha ocurrido un error.';
       alertCustom('Upps', errorMessage, 'error');
     }
