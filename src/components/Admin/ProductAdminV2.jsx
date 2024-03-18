@@ -99,55 +99,57 @@ const ProductAdminV2 = () => {
       </Button>
       <h3 className="mt-5 mb-4 text-center">Administración de Menú</h3>
       <Row className="justify-content-center">
-        <Col>
-          {isLoading
-            ? (
-              <LoadingScreen />
-            ) : products.length === 0 ? (
-              <p className="text-center">No hay productos para mostrar</p>
-            ) : (
-              <Table striped bordered variant='dark' className="mt-3">
-                <thead>
-                  <tr>
-                    <th className="text-center"><b>Imagen</b></th>
-                    <th className="text-center"><b>Nombre</b></th>
-                    <th className="text-center"><b>Estado</b></th>
-                    <th className="text-center"><b>Acciones</b></th>
+      <Col>
+        {isLoading ? (
+          <LoadingScreen />
+        ) : products.length === 0 ? (
+          <p className="text-center">No hay productos para mostrar</p>
+        ) : (
+          <>
+            <Table striped bordered variant='dark' className="mt-3">
+              <thead>
+                <tr>
+                  <th className="text-center"><b>Imagen</b></th>
+                  <th className="text-center"><b>Nombre</b></th>
+                  <th className="text-center"><b>Estado</b></th>
+                  <th className="text-center"><b>Acciones</b></th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginatedProducts &&
+                paginatedProducts.map((product, i) => (
+                  <tr key={i}>
+                    <td className="text-center"><img src={product.image} alt="Producto" style={{ width: '50px', height: '50px' }} /></td>
+                    <td className="text-center">{product.name}</td>
+                    <td className="text-center"><Form.Check checked={product.visible} onChange={(e) => disabledProduct(e, product._id)}/> </td>
+                    <td className="text-center">
+                      <Col>
+                        <Button variant='danger' className='mx-1 mb-1' size='sm' onClick={() => deleteProduct(product._id)}><DeleteIcon fontSize='small'/></Button>
+                        <Button variant='light' className='mb-1' size='sm' onClick={() => toggleFavorite(product._id, product.isFavorite)}>
+                        {product.isFavorite ? 
+                          <FavoriteIcon fontSize='small'  style={{ color: 'red' }} /> : 
+                          <FavoriteBorderIcon fontSize='small' />
+                        }
+                        </Button>
+                        <ProductModalV2
+                          product={product} 
+                          setIsLoading={setIsLoading} 
+                          setChangeFlag={setChangeFlag}
+                          paginatedProducts={paginatedProducts}
+                        />
+                      </Col>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {paginatedProducts &&
-                  paginatedProducts.map((product, i) => (
-                    <tr key={i}>
-                      <td className="text-center"><img src={product.image} alt="Producto" style={{ width: '50px', height: '50px' }} /></td>
-                      <td className="text-center">{product.name}</td>
-                      <td className="text-center"><Form.Check checked={product.visible} onChange={(e) => disabledProduct(e, product._id)}/> </td>
-                      <td className="text-center">
-                        <Col>
-                          <Button variant='danger' size='sm' onClick={() => deleteProduct(product._id)}><DeleteIcon fontSize='small'/></Button>
-                          <Button variant='light' size='sm' onClick={() => toggleFavorite(product._id, product.isFavorite)}>
-                            {product.isFavorite ? <FavoriteIcon style={{ color: 'red' }} /> : <FavoriteBorderIcon />}
-                          </Button>
-                          <ProductModalV2
-                            product={product} 
-                            setIsLoading={setIsLoading} 
-                            setChangeFlag={setChangeFlag}
-                            paginatedProducts={paginatedProducts}
-                          />
-                        </Col>
-                      </td>
-                    </tr>
-                  ))
-                }
-                </tbody>
-              </Table>
-            )
-          }
-        </Col>
-        <Pagination
-          pageCount={Math.ceil(products.length / itemsPerPage)}
-          handlePageChange={handlePageChange}
-        />
+                ))}
+              </tbody>
+            </Table>
+            <Pagination
+              pageCount={Math.ceil(products.length / itemsPerPage)}
+              handlePageChange={handlePageChange}
+            />
+          </>
+        )}
+      </Col>
       </Row>
       <Menu show={showMenuModal} handleCloseModal={handleCloseMenuModal} />
     </Container>

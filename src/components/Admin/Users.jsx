@@ -94,50 +94,49 @@ const UsersAdmin = () => {
       </Button>
       <h3 className="mt-5 mb-4 text-center">Administración de Usuarios</h3>
       <Row className="justify-content-center">
-        <Col>
-          {isLoading
-            ? (
-              <LoadingScreen />
-            ) : users.length === 0 ? (
-              <p className="text-center">No hay usuarios para mostrar</p>
-            ) : (
-              <Table striped bordered variant='dark' className="mt-3">
-                <thead>
-                  <tr>
-                    <th className="text-center "><b>Nombre y Apellido</b></th>
-                    <th className="text-center "><b>Usuario</b></th>
-                    <th className="text-center "><b>Estado</b></th>
-                    <th className="text-center "><b>Acciones</b></th>
+      <Col>
+        {isLoading ? (
+          <LoadingScreen />
+        ) : users.length === 0 ? (
+          <p className="text-center">No hay usuarios para mostrar</p>
+        ) : (
+          <>
+            <Table striped bordered variant='dark' className="mt-3">
+              <thead>
+                <tr>
+                  <th className="text-center"><b>Nombre y Apellido</b></th>
+                  <th className="text-center"><b>Usuario</b></th>
+                  <th className="text-center"><b>Estado</b></th>
+                  <th className="text-center"><b>Acciones</b></th>
+                </tr>
+              </thead>
+              <tbody>
+                {paginatedUsers.map((user, i) => (
+                  <tr key={i}>
+                    <td className="text-center">{user.name}</td>
+                    <td className="text-center">{user.userName}</td>
+                    <td className="text-center">
+                      <Form.Check
+                        checked={!user.disabled}
+                        onChange={(e) => handleEditUser(e, user._id)}
+                      />
+                    </td>
+                    <td className="text-center">
+                      <Button variant='danger' size='sm' onClick={() => handleDeleteUser(user._id)}>
+                        <DeleteIcon fontSize='small'/>
+                      </Button>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  { paginatedUsers.map((user, i) => (
-                      <tr key={i}>
-                        <td className="text-center">{user.name}</td>
-                        <td className="text-center">{user.userName}</td>
-                        <td className="text-center">
-                        <Form.Check 
-                            checked={!user.disabled} 
-                            onChange={(e) => handleEditUser(e, user._id)} 
-                          />
-                        </td>
-                        <td className="text-center">
-                          <Button variant='danger' size='sm' onClick={() => handleDeleteUser(user._id)}>
-                            <DeleteIcon fontSize='small'/>
-                          </Button>
-                        </td>
-                      </tr>
-                    ))
-                  }
-                </tbody>
-              </Table>
-            )
-          }
-        </Col>
-        <Pagination
-          pageCount={Math.ceil(users.length / itemsPerPage)}
-          handlePageChange={handlePageChange}
-        />
+                ))}
+              </tbody>
+            </Table>
+            <Pagination
+              pageCount={Math.ceil(users.length / itemsPerPage)}
+              handlePageChange={handlePageChange}
+            />
+          </>
+        )}
+      </Col>
       </Row>
       <UserModal show={showModal} onHide={handleCloseModal} />
     </Container>
