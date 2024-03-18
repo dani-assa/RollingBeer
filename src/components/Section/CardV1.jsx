@@ -10,6 +10,7 @@ const CardV1 = ({ onAddCard }) => {
   const [products, setProducts] = useState([]);
   const [selectedProductId, setSelectedProductId] = useState(null);
   const [SelectedProductCategory, setSelectedProductCategory] = useState(null);
+
   const [burgerOptions, setBurgerOptions] = useState({
     tipo: { simple: false, doble: false, triple: false },
     extras: { Pepino: 0, Cheddar: 0, Medallon: 0, Bacon: 0, SalsaRolling: 0 },
@@ -487,28 +488,31 @@ const CardV1 = ({ onAddCard }) => {
     }
   };
   
+  const favoriteProducts = products.filter(product => product.isFavorite);
 
   return (
     <>
-      <div className="slider-container">
+    <div className="slider-container">
+      {favoriteProducts.length > 0 ? (
         <Slider {...settings}>
-          {products.map((product, i) => (
-            product.visible && (
-              <div key={product._id} className="mx-3 card-1">
-                <Card key={i} onClick={() => handleShow(product._id)} className="text-white card-1" >
-                  <Card.Img variant="top" src={product.image || ""} className="card-img" />
-                  <div className="titulo">
-                    <Card.Title className="text-center">{product.name}</Card.Title>
-                    <div className="card-footer">
-                      <small>${product.price}</small>
-                    </div>
+          {favoriteProducts.map((product) => (    
+            <div key={product._id} className="mx-3 card-1">
+              <Card onClick={() => handleShow(product._id)} className="text-white card-1">
+                <Card.Img variant="top" src={product.image || ''} className="card-img" />
+                <div className="titulo">
+                  <Card.Title className="text-center">{product.name}</Card.Title>
+                  <div className="card-footer">
+                    <small>${product.price}</small>
                   </div>
-                </Card>
-              </div>
-            )
+                </div>
+              </Card>
+            </div>
           ))}
         </Slider>
-      </div>
+      ) : (
+        <p className="text-center">No hay productos destacados</p> // Mensaje cuando no hay favoritos
+      )}
+    </div>
 
       {selectedProduct && (
         <Modal show={!!selectedProductId} onHide={handleClose} backdrop="static" keyboard={false}>
