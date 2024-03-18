@@ -302,17 +302,6 @@ const CardV1 = ({ onAddCard }) => {
   };
 
 
-  const RenderOptions = ({ category, item, handleIncrement, handleDecrement, burgerOptions }) => (
-    <div className="d-flex justify-content-between align-items-center my-2">
-      <span>{item.charAt(0).toUpperCase() + item.slice(1)}</span>
-      <div>
-        <Button size="sm" onClick={() => handleDecrement(category, item)}>-</Button>
-        <span className="mx-2">{burgerOptions[category][item]}</span>
-        <Button size="sm" onClick={() => handleIncrement(category, item)}>+</Button>
-      </div>
-    </div>
-  );
-
   const selectedProduct = products.find((product) => product._id === selectedProductId);
 
   const renderModalContent = (selectedProductCategory) => {
