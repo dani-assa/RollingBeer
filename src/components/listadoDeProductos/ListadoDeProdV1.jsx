@@ -386,7 +386,7 @@ const ListadoDeProdV1 = () => {
               />
             ) : (
               <>
-                <p className="mb-5 ">Disculpa, no encontramos ningún producto</p>
+                <p className="mb-5 fs-3">Disculpa, no encontramos ningún producto</p>
               </>
             )}
           </>
