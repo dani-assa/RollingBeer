@@ -3,11 +3,11 @@ import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { useAuth } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import LoginV1 from "../login/LoginV1";
-import "./profileV1.css";
+import "./profileUser.css";
 import ModalEditUser from "./ModalEditUser";
 import LoadingScreen from "../../loadingScreen/LoadingScreen";
 
-const ProfileV1 = () => {
+const ProfileUser = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [changeFlag, setChangeFlag] = useState(false);
 
@@ -86,4 +86,4 @@ const ProfileV1 = () => {
   );
 };
 
-export default ProfileV1;
+export default ProfileUser;
