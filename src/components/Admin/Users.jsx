@@ -104,10 +104,10 @@ const UsersAdmin = () => {
               <Table striped bordered variant='dark' className="mt-3">
                 <thead>
                   <tr>
-                    <th className="text-center">Nombre y Apellido</th>
-                    <th className="text-center">Usuario</th>
-                    <th className="text-center">Estado</th>
-                    <th className="text-center">Acciones</th>
+                    <th className="text-center "><b>Nombre y Apellido</b></th>
+                    <th className="text-center "><b>Usuario</b></th>
+                    <th className="text-center "><b>Estado</b></th>
+                    <th className="text-center "><b>Acciones</b></th>
                   </tr>
                 </thead>
                 <tbody>

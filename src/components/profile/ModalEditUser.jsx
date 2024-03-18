@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useAuth } from "../../context/UserContext";
 const URL_BASE = import.meta.env.VITE_URL_BASE;
-import "./profileV1.css";
+import "./profileUser.css";
+import { alertCustom } from "../../utils/alertCustom/alertCustom";
 
 const ModalEditUser = ({ users, setIsLoading, setChangeFlag }) => {
   const { user, setUser, triggerUserUpdate } = useAuth();
@@ -29,7 +30,8 @@ const ModalEditUser = ({ users, setIsLoading, setChangeFlag }) => {
       setChangeFlag((prev) => !prev);
       triggerUserUpdate();
     } catch (error) {
-      console.log(error);
+      alertCustom('Upps', 'Ha ocurrido un error al editar el usuario.', 'error');
+      
     } finally {
       handleEditClose();
       setIsLoading(false);

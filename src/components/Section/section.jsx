@@ -29,7 +29,6 @@ function Section() {
               <h1 className='h1h1 text-center mb-5'>Disfruta de un ambiente único y especial</h1>
               <div className='d-flex mt-5 '>
                 <Button className=' mx-2 mx-md-3 rounded-pill px-5' size='lg'>Ver carta</Button>
-                <Button className=' mx-2 mx-md-3 rounded-pill px-5' size='lg'>Reservar mesa</Button>
               </div>
           </div>
           
@@ -61,9 +60,9 @@ function Section() {
               </div>
           
           </div>
-          <div className="d-flex flex-column justify-content-center align-items-center vh-100" id="section4">
+          {/* <div className="d-flex flex-column justify-content-center align-items-center vh-100" id="section4">
             <FormRegisterV1 />
-          </div>
+          </div> */}
         
       </Row>
     </Container>

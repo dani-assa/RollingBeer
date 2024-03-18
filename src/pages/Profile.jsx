@@ -1,8 +1,8 @@
 import React from "react";
-import ProfileV1 from "../components/profile/ProfileV1";
+import ProfileUser from "../components/profile/ProfileUser";
 
 const Profile = () => {
-  return <ProfileV1 />;
+  return <ProfileUser />;
 };
 
 export default Profile;

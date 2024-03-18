@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Button, Col, Container, Modal, Row, Offcanvas, Form } from "react-bootstrap";
+import { Button, Col, Container, Modal, Row, Form } from "react-bootstrap";
 import "../listadoDeProductos/listado.css";
 import axios from "../../api/axios";
 import CardV1 from "../Section/CardV1";
@@ -8,23 +8,56 @@ import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import { useSearchParams, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/UserContext";
 import LoadingScreen from "../../loadingScreen/LoadingScreen";
+import { alertCustom } from "../../utils/alertCustom/alertCustom";
+
+// const searchWithOptions = async ({ setState, setLoading, queryParams }) => {
+//   setLoading(true);
+
+//   try {
+//     const res = await axios.get(
+//       `/product/productsWithOptions/search${queryParams}`
+//     );
+//     const data = res.data;
+//     if (res.status == 200) {
+//       setState(data);
+//     }
+
+//     if (res.status == 404 || res.status == 500) {
+//       setData(null);
+//     }
+//   } catch (error) {
+//     alertCustom('Upps', 'Producto fuera de stock.', 'error');
+//       } finally {
+//     setLoading(false);
+//   }
+// };
 
 const searchWithOptions = async ({ setState, setLoading, queryParams }) => {
   setLoading(true);
 
   try {
-    const res = await axios.get(`/product/productsWithOptions/search${queryParams}`);
-    const data = res.data;
-    console.log(res);
-    if (res.status == 200) {
-      setState(data);
-    }
+    const res = await axios.get(
+      `/product/productsWithOptions/search${queryParams}`,
+      {
+        validateStatus: function (status) {
+          // Devuelve `true` para todos los estados para evitar que `axios` lance excepciones para códigos fuera de 2xx
+          // Esto significa que el bloque `catch` no se ejecutará para códigos de estado 400,
+          // y podrás manejarlo en los bloques `if` según necesites
+          return true; // Aceptar todos los estados
+        },
+      }
+    );
 
-    if (res.status == 404 || res.status == 500) {
+    if (res.status == 200) {
+      setState(res.data);
+    } else if (res.status == 400) {
+      // Manejar específicamente el estado 400
+      // Aquí puedes llamar a `setState` con algún estado específico o manejar el error como desees
+    } else if (res.status == 404 || res.status == 500) {
       setState(null);
     }
   } catch (error) {
-    console.log(error);
+    alertCustom("Upps", "Producto fuera de stock.", "error");
   } finally {
     setLoading(false);
   }
@@ -62,7 +95,6 @@ const ListadoDeProdV1 = () => {
   const [cartItems, setCartItems] = useState([]);
   const [quitar, setQuitar] = useState({ cheddar: false, bacon: false });
   const [tableNumber, setTableNumber] = useState(null);
-  const [selectedProductInfo, setSelectedProductInfo] = useState(null);
   const [smShow, setSmShow] = useState(false);
   const { products, getAllProduct } = useAuth();
   const [data, setData] = useState([]);
@@ -84,7 +116,7 @@ const ListadoDeProdV1 = () => {
       { ...rest, tipo: tipoString, sinTACC: sinTaccString, totalCantidad },
     ]);
   };
-  console.log(cartItems);
+
   const handleQuitarChange = (item) => {
     setQuitar((prevState) => ({
       ...prevState,
@@ -114,10 +146,9 @@ const ListadoDeProdV1 = () => {
     e.preventDefault();
   };
 
-  console.log(selectedProductInfo);
   return (
     <Container fluid>
-      <Row>
+      <Row className="mb-5">
         <h1 className="text-center pt-4">¡Descubre Nuestro Delicioso Menú!</h1>
         <Button id="boton1" onClick={handleShow}>
           {" "}
@@ -234,123 +265,132 @@ const ListadoDeProdV1 = () => {
             quitar={quitar}
             setQuitar={handleQuitarChange}
             onCloseModal={handleClose}
-            setSelectedProductInfo={setSelectedProductInfo}
           />
         </Col>
 
         <section className="container mt-5 pt-5">
-        <Form
-          ref={searchFormRef}
-          onSubmit={submitHandler}
-          className="row g-3 align-items-center"
-        >
-          <div className="col-12 col-md-4">
-            <div className="input-group">
-              <Form.Control
-                type="text"
-                id="searchInput"
-                placeholder="Buscar por nombre"
-                ref={searchInputRef}
-                onKeyDown={(e) =>
-                  e.code == "Enter"
-                    ? handleQueryParams({
-                        valueSearchInput: searchInputRef.current.value,
-                        valueCategoryInput: categoryInputRef.current.value,
-                        valuePriceInput: priceInputRef.current.value,
-                        setQueryParams: setQueryParams,
-                      })
-                    : ""
-                }
-              />
+          <Form
+            ref={searchFormRef}
+            onSubmit={submitHandler}
+            className="row g-3 align-items-center"
+          >
+            <div className="col-12 col-md-4">
+              <div className="input-group">
+                <Form.Control
+                  type="text"
+                  id="searchInput"
+                  placeholder="Buscar por nombre"
+                  ref={searchInputRef}
+                  onKeyDown={(e) =>
+                    e.code == "Enter"
+                      ? handleQueryParams({
+                          valueSearchInput: searchInputRef.current.value,
+                          valueCategoryInput: categoryInputRef.current.value,
+                          valuePriceInput: priceInputRef.current.value,
+                          setQueryParams: setQueryParams,
+                        })
+                      : ""
+                  }
+                />
+              </div>
             </div>
-          </div>
-          <div className="col-12 col-md-3">
-            <Form.Select
-              className="form-select"
-              id="priceSelect"
-              defaultValue={""}
-              ref={priceInputRef}
-              onChange={(e) =>
-                handleQueryParams({
-                  valueSearchInput: searchInputRef.current.value,
-                  valueCategoryInput: categoryInputRef.current.value,
-                  valuePriceInput: priceInputRef.current.value,
-                  setQueryParams: setQueryParams,
-                })
-              }
-            >
-              <option disabled hidden value="">
-                Filtrar por precio
-              </option>
-              <option value="asc">Precio ascendente</option>
-              <option value="desc">Precio descendiente</option>
-            </Form.Select>
-          </div>
-          <div className="col-12 col-md-3">
-            <Form.Select
-              className="form-select"
-              id="categorySelect"
-              defaultValue={""}
-              ref={categoryInputRef}
-              onChange={(e) =>
-                handleQueryParams({
-                  valueSearchInput: searchInputRef.current.value,
-                  valueCategoryInput: categoryInputRef.current.value,
-                  valuePriceInput: priceInputRef.current.value,
-                  setQueryParams: setQueryParams,
-                })
-              }
-            >
-              <option disabled hidden value="">
-                Filtrar por categoria
-              </option>
-              <option value="Hamburguesa">Hamgurguesa</option>
-              <option value="Sandwich">Sandwich</option>
-              <option value="Para Picar">Para Picar</option>
-              <option value="Bebidas">Bebidas</option>
-              <option value="Wrap">Wrap</option>
-              
-            </Form.Select>
-          </div>
-          <div className="col-md-2">
-            <button
-              type="button"
-              className="btn btn-dark border-1 border-light w-100"
-              onClick={(e) => {
-                e.preventDefault();
-                searchFormRef.current.reset();
-                setQueryParams();
-              }}
-            >
-              Limpiar filtros
-            </button>
-          </div>
-        </Form>
-      </section>
-      <section className="container my-5 vh-50">
-        <button
+            <div className="col-12 col-md-3">
+              <Form.Select
+                className="form-select"
+                id="priceSelect"
+                defaultValue={""}
+                ref={priceInputRef}
+                onChange={(e) =>
+                  handleQueryParams({
+                    valueSearchInput: searchInputRef.current.value,
+                    valueCategoryInput: categoryInputRef.current.value,
+                    valuePriceInput: priceInputRef.current.value,
+                    setQueryParams: setQueryParams,
+                  })
+                }
+              >
+                <option disabled hidden value="">
+                  Filtrar por precio
+                </option>
+                <option value="asc">Precio ascendente</option>
+                <option value="desc">Precio descendiente</option>
+              </Form.Select>
+            </div>
+            <div className="col-12 col-md-3">
+              <Form.Select
+                className="form-select"
+                id="categorySelect"
+                defaultValue={""}
+                ref={categoryInputRef}
+                onChange={(e) =>
+                  handleQueryParams({
+                    valueSearchInput: searchInputRef.current.value,
+                    valueCategoryInput: categoryInputRef.current.value,
+                    valuePriceInput: priceInputRef.current.value,
+                    setQueryParams: setQueryParams,
+                  })
+                }
+              >
+                <option disabled hidden value="">
+                  Filtrar por categoria
+                </option>
+                <option value="Hamburguesa">Hamgurguesa</option>
+                <option value="Sandwich">Sandwich</option>
+                <option value="Para Picar">Para Picar</option>
+                <option value="Bebidas">Bebidas</option>
+                <option value="Wrap">Wrap</option>
+              </Form.Select>
+            </div>
+            <div className="col-md-2">
+              <button
+                type="button"
+                className="btn btn-dark border-1 border-light w-100"
+                onClick={(e) => {
+                  e.preventDefault();
+                  searchFormRef.current.reset();
+                  setQueryParams();
+                }}
+              >
+                Limpiar filtros
+              </button>
+            </div>
+          </Form>
+        </section>
+        <section className="container my-5 vh-50">
+          <button
             type="button"
             className="btn btn-primary"
-            onClick={() => handleQueryParams({
-              valueSearchInput: searchInputRef.current.value,
-              valueCategoryInput: categoryInputRef.current.value,
-              valuePriceInput: priceInputRef.current.value,
-              setQueryParams: setQueryParams,
-            })}
+            onClick={() =>
+              handleQueryParams({
+                valueSearchInput: searchInputRef.current.value,
+                valueCategoryInput: categoryInputRef.current.value,
+                valuePriceInput: priceInputRef.current.value,
+                setQueryParams: setQueryParams,
+              })
+            }
           >
             Filtrar
-      </button>
-      </section>
-      {data.length > 0 && 
-      <CardV2 
-            data = {data}
-            onAddCard={handleAddCard}
-            quitar={quitar}
-            setQuitar={handleQuitarChange}
-            onCloseModal={handleClose}
-            setSelectedProductInfo={setSelectedProductInfo}
-      />}
-              
+          </button>
+        </section>
+        {loading ? (
+          <LoadingScreen />
+        ) : (
+          <>
+            {data?.length > 0 ? (
+              <CardV2
+                data={data}
+                onAddCard={handleAddCard}
+                quitar={quitar}
+                setQuitar={handleQuitarChange}
+                onCloseModal={handleClose}
+              />
+            ) : (
+              <>
+                <p className="mb-5 ">Disculpa, no encontramos ningún producto</p>
+              </>
+            )}
+          </>
+        )}
       </Row>
     </Container>
   );

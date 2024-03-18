@@ -467,7 +467,7 @@ const CardV1 = ({ onAddCard }) => {
         );
         case 'Wrap':
         return (
-           <div>
+          <div>
           <h5>Salsas Especiales Rolling (Selecciona hasta 3)</h5>
           {Object.keys(wrapOptions.salsasEspeciales).map((salsa) => (
               <div key={salsa}>
