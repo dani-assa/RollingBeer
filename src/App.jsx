@@ -14,6 +14,7 @@ import Profile from "./pages/Profile";
 import PanelMenuAdmin from "./components/Admin/PanelMenuAdmin";
 import PanelUserAdmin from "./components/Admin/PanelUserAdmin"
 import Informacion from "./pages/Informacion";
+import Contact from "./pages/Contact";
 
 import NavbarCart from "./components/navigationBar/NavbarCart";
 
@@ -33,6 +34,7 @@ const App = () => {
               <Route path="/listado" element={<ListadoDeProd />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/informacion" element={<Informacion />} />
+              <Route path="/contacto" element={<Contact/>} />
               <Route element={<ProtectedRouteAdmin />}>
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/admin/productos" element={<PanelMenuAdmin/>}/>

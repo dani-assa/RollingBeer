@@ -3,6 +3,7 @@ import { Form, Button, Col, Container, Row } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../styles/Section.css";
+import { alertCustom } from '../../utils/alertCustom/alertCustom.js';
 
 const FormRegisterV1 = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -18,15 +19,13 @@ const FormRegisterV1 = () => {
     event.preventDefault();
     if (!isPastDate(startDate)) {
       setSelectedDateTime(startDate);
-      // Para enviar a la base de datos
-      console.log(startDate);
     } else {
-      alert("Por favor, elige una fecha y hora futuras.");
+      alertCustom('Upps', 'Por favor, elige una fecha y hora futuras.', 'warning');
     }
   };
 
   if (numComensales < 1) {
-    alert("El número de comensales no puede ser menor que 1.");
+    alertCustom('Upps', 'El número de comensales no puede ser menor que 1.', 'warning');
     return;
   }
 

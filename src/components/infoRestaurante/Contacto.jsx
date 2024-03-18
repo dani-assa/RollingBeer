@@ -3,6 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { alertCustom } from '../../utils/alertCustom/alertCustom';
 import LoadingScreen from "../../components/loadingScreen/LoadingScreen";
+import FormRegisterV1 from "../Section/FormRegisterV1.jsx"
 
 
 const Contacto = () => {
@@ -19,7 +20,10 @@ const Contacto = () => {
 
   return (
     <Container fluid className='mt-2'>
-      <h2 className="text-center">Contacto</h2>
+      <h1 className="text-center">Contacto</h1>
+      <Col className='mb-5'>
+           <FormRegisterV1/>       
+      </Col>
       <Row className="justify-content-center ">
       <Col xs={12} md={6} lg={4}>
         <div className="mapa embed-responsive embed-responsive-1by1">
@@ -65,6 +69,7 @@ const Contacto = () => {
             </form>
           </div>
         </Col>
+        
       </Row>
     </Container>
   );
