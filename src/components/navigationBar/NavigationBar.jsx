@@ -3,15 +3,15 @@ import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./NavigationBar.css";
 import PersonIcon from "@mui/icons-material/Person";
-import SettingsIcon from "@mui/icons-material/Settings";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import InfoIcon from '@mui/icons-material/Info';
 
 const NavigationBar = () => {
   return (
     <Container fluid className="navigationBar">
-      <Link to="./">
-        <SettingsIcon fontSize="large" />
+      <Link to="./informacion">
+        <InfoIcon fontSize="large" />
       </Link>
       <Link to="./listado">
         <FavoriteIcon fontSize="large" />

@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Button, Table, Form } from 'react-bootstrap';
-import LoadingScreen from "../../components/loadingScreen/LoadingScreen";
+import LoadingScreen from "../loadingScreen/LoadingScreen";
 import axios from "../../api/axios"; 
-import ProductModalV2 from './ProductModalV2';
+import ProductModalV2 from './EditProductModal';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import { alertCustom, alertConfirm } from '../../utils/alertCustom/alertCustom';
 import Pagination from '../pagination/Pagination';
-import Menu from './Menu';
+import Menu from './CreateProductModal';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import CardV1 from '../Section/CardV1';
 
 const itemsPerPage = 4;
 
-const ProductAdminV2 = () => {
+const PanelMenuAdmin = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [changeFlag, setChangeFlag] = useState(false);
@@ -36,7 +35,7 @@ const ProductAdminV2 = () => {
   const deleteProduct = async (_id) => {
     try {
       setIsLoading(true);
-      alertConfirm('¿Estas seguro?', 'Estas por eliminar el producto de manera definitiva', 'warning', 'Eliminar', async () => {
+      alertConfirm('¿Estas seguro?', 'Estas por eliminar el producto de manera definitiva.', 'warning', 'Eliminar', async () => {
         await axios.delete(`product/delete/${_id}`);
         getAllProduct();
       });
@@ -156,4 +155,4 @@ const ProductAdminV2 = () => {
   )
 };
 
-export default ProductAdminV2;
+export default PanelMenuAdmin;

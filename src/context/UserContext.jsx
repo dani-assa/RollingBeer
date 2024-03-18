@@ -3,7 +3,7 @@ import { registerRequest, verifyTokenRequest } from "../api/user";
 import Cookies from "js-cookie";
 import axios from "../api/axios";
 export const UserContext = createContext();
-import { alertCustom} from '../utils/alertCustom/alertCustom.js';
+import { alertCustom } from "../utils/alertCustom/alertCustom.js";
 
 export const useAuth = () => {
   const context = useContext(UserContext);
@@ -26,8 +26,9 @@ export const UserProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
   const [userChangeFlag, setUserChangeFlag] = useState(false);
+  const [cart, setCart] = useState([]);
 
   const triggerUserUpdate = () => {
     setUserChangeFlag((prevFlag) => !prevFlag);
@@ -51,11 +52,23 @@ export const UserProvider = ({ children }) => {
       setUser(usuarioNormalizado);
       setIsAuthenticated(true);
     } catch (error) {
-      if (error.response && error.response.status === 400 && error.response.data.includes("La cuenta está desactivada.")) {
-        alertCustom('Upps', 'La cuenta está deshabilitada. Por favor, contacte al administrador.', 'error');
+      if (
+        error.response &&
+        error.response.status === 400 &&
+        error.response.data.includes("La cuenta está desactivada.")
+      ) {
+        alertCustom(
+          "Upps",
+          "La cuenta está deshabilitada. Por favor, contacte al administrador.",
+          "error"
+        );
       } else {
         setErrors(error.response.data);
-        alertCustom('Upps', 'Ocurrió un error al iniciar sesión. Por favor, intente nuevamente.', 'error');
+        alertCustom(
+          "Upps",
+          "Ocurrió un error al iniciar sesión. Por favor, intente nuevamente.",
+          "error"
+        );
       }
     }
   };
@@ -67,12 +80,57 @@ export const UserProvider = ({ children }) => {
   };
   const getAllProduct = async () => {
     try {
-      const res = await axios.get(`product/getAll`)
-      setProducts(res.data)
+      const res = await axios.get(`product/getAll`);
+      setProducts(res.data);
     } catch (error) {
-      setErrors(error.response.data.message || alertCustom('Upps', 'Ha ocurrido un error.', 'error'));
+      setErrors(
+        error.response.data.message ||
+          alertCustom("Upps", "Ha ocurrido un error.", "error")
+      );
     }
-  }
+  };
+
+  const addToCart = (product) => {
+    setCart((currentCart) => {
+      const productExists = currentCart.find(
+        (item) => item._id === product._id
+      );
+      if (productExists) {
+        return currentCart.map((item) =>
+          item._id === product._id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      } else {
+        return [...currentCart, { ...product, quantity: 1 }];
+      }
+    });
+  };
+
+  const removeFromCart = (productId) => {
+    setCart(currentCart => currentCart.filter(item => item._id !== productId));
+  };
+
+  const incrementQuantity = (productId) => {
+    setCart(currentCart => 
+      currentCart.map(product => 
+        product._id === productId
+          ? { ...product, quantity: product.quantity + 1 }
+          : product
+      )
+    );
+  };
+  
+  const decrementQuantity = (productId) => {
+    setCart(currentCart => 
+      currentCart.map(product => 
+        product._id === productId && product.quantity > 1
+          ? { ...product, quantity: product.quantity - 1 }
+          : product
+      )
+    );
+  };
+
   useEffect(() => {
     if (errors.length > 0) {
       const timer = setTimeout(() => {
@@ -122,7 +180,12 @@ export const UserProvider = ({ children }) => {
         triggerUserUpdate,
         setUser,
         getAllProduct,
-        products
+        products,
+        addToCart,
+        cart, 
+        removeFromCart,
+        incrementQuantity,
+        decrementQuantity
       }}
     >
       {children}

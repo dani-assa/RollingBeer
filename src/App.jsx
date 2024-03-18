@@ -14,6 +14,8 @@ import Profile from "./pages/Profile";
 import PanelMenuAdmin from "./components/Admin/PanelMenuAdmin";
 import PanelUserAdmin from "./components/Admin/PanelUserAdmin"
 import Informacion from "./pages/Informacion";
+import NavbarCart from "./components/navigationBar/NavbarCart";
+
 
 const App = () => {
   return (
@@ -21,6 +23,7 @@ const App = () => {
       <UserProvider>
         <ProductProvider>
           <main>
+            <NavbarCart />
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<Home />} />

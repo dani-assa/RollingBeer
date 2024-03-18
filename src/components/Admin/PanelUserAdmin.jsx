@@ -5,14 +5,14 @@ import { useAuth } from "../../context/UserContext";
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add';
 import axios from "../../api/axios"; 
-import LoadingScreen from "../../components/loadingScreen/LoadingScreen";
-import UserModal from "./UserModal";
+import LoadingScreen from "../loadingScreen/LoadingScreen";
+import UserModal from "./CreateUserModal";
 import Pagination from '../pagination/Pagination';
 import { alertCustom, alertConfirm } from '../../utils/alertCustom/alertCustom';
 
 const itemsPerPage = 4;
 
-const UsersAdmin = () => {
+const PanelUserAdmin = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -143,4 +143,4 @@ const UsersAdmin = () => {
   )
 };
 
-export default UsersAdmin;
+export default PanelUserAdmin;
