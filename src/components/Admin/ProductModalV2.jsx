@@ -37,7 +37,7 @@ const ModalEditUser = ({product, setIsLoading, setChangeFlag}) => {
 
   return (
     <>
-      <Button variant='success' size='sm' className='mx-2' onClick={() => handleEdit(product)}><ModeEditIcon fontSize='small'/></Button>
+      <Button variant='success' size='sm' className='mx-2 mb-1' onClick={() => handleEdit(product)}><ModeEditIcon fontSize='small'/></Button>
       <Modal show={showModalEdit} onHide={handleEditClose}>
         <Modal.Header closeButton>
           <Modal.Title>Producto</Modal.Title>
