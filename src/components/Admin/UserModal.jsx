@@ -13,7 +13,6 @@ const UserModal = ({ show, onHide }) => {
     try {
       await signup(userData);
       onHide(); 
-      console.log(userData);
     } catch (error) {
       alertCustom('Upps', 'Ha ocurrido un error al registrar el usuario', 'error');
     }

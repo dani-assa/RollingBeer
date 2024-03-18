@@ -107,10 +107,10 @@ const ProductAdminV2 = () => {
               <Table striped bordered variant='dark' className="mt-3">
                 <thead>
                   <tr>
-                    <th className="text-center">Imagen</th>
-                    <th className="text-center">Nombre</th>
-                    <th className="text-center">Estado</th>
-                    <th className="text-center">Acciones</th>
+                    <th className="text-center"><b>Imagen</b></th>
+                    <th className="text-center"><b>Nombre</b></th>
+                    <th className="text-center"><b>Estado</b></th>
+                    <th className="text-center"><b>Acciones</b></th>
                   </tr>
                 </thead>
                 <tbody>
