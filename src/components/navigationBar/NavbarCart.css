@@ -1,0 +1,17 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  color: white;
+  padding: 10px 20px;
+  position: fixed !important;
+  top: 0;
+  width: 100%;
+  box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+  z-index: 1000; /* Asegura que el navbar se mantenga sobre otros elementos */
+}
+
+.cart-icon {
+  cursor: pointer;
+}

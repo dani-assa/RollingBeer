@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import "./alertCustom.css"
 
 export const alertCustom = (title, text, icon, action) => {
   Swal.fire({
@@ -44,3 +45,16 @@ export const alertConfirm = (title, text, icon, confirmButtonText, action) => {
     }
   });
 };
+
+export const alertAdd = (position, icon, title) => {
+  Swal.fire({
+    position,
+    icon,
+    title,
+    showConfirmButton: false,
+    timer: 1500,
+    customClass: {
+      popup: 'swal2-small-alert'
+    }
+  });
+}

@@ -9,6 +9,7 @@ import { useSearchParams, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/UserContext";
 import LoadingScreen from "../../loadingScreen/LoadingScreen";
 import { alertCustom } from "../../utils/alertCustom/alertCustom";
+import CardProduct from "./CardProduct";
 
 // const searchWithOptions = async ({ setState, setLoading, queryParams }) => {
 //   setLoading(true);
@@ -116,20 +117,22 @@ const ListadoDeProdV1 = () => {
       ...cartItems,
       { ...rest, tipo: tipoString, sinTACC: sinTaccString, totalCantidad },
     ]);
-    const selectedTipo = Object.values(burgerOptions.tipo).some(option => option === true);
-  if (!selectedTipo) {
-    setShowToast(true);
-    return;
-  }
+    const selectedTipo = Object.values(burgerOptions.tipo).some(
+      (option) => option === true
+    );
+    if (!selectedTipo) {
+      setShowToast(true);
+      return;
+    }
 
-  if (selectedProduct) {
-    onAddCard({
-      ...burgerOptions,
-      productId: selectedProduct._id // Pasar el ID del producto
-    });
-  }
-  handleClose();
-};
+    if (selectedProduct) {
+      onAddCard({
+        ...burgerOptions,
+        productId: selectedProduct._id, // Pasar el ID del producto
+      });
+    }
+    handleClose();
+  };
 
   const handleQuitarChange = (item) => {
     setQuitar((prevState) => ({
@@ -183,12 +186,11 @@ const ListadoDeProdV1 = () => {
             ) : (
               cartItems.map((item, index) => (
                 <div key={index}>
-                  {products.map(products => {
+                  {products.map((products) => {
                     if (products._id === item.productsId) {
                       return (
                         <div key={products._id}>
                           <p>Nombre: {products.name}</p>
-                          
                         </div>
                       );
                     }
@@ -281,7 +283,7 @@ const ListadoDeProdV1 = () => {
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <p className="text-start">Hamburguesa { }</p>
+              <p className="text-start">Hamburguesa {}</p>
             </Modal.Body>
           </Modal>
         </>
@@ -312,11 +314,11 @@ const ListadoDeProdV1 = () => {
                   onKeyDown={(e) =>
                     e.code == "Enter"
                       ? handleQueryParams({
-                        valueSearchInput: searchInputRef.current.value,
-                        valueCategoryInput: categoryInputRef.current.value,
-                        valuePriceInput: priceInputRef.current.value,
-                        setQueryParams: setQueryParams,
-                      })
+                          valueSearchInput: searchInputRef.current.value,
+                          valueCategoryInput: categoryInputRef.current.value,
+                          valuePriceInput: priceInputRef.current.value,
+                          setQueryParams: setQueryParams,
+                        })
                       : ""
                   }
                 />
@@ -405,17 +407,20 @@ const ListadoDeProdV1 = () => {
         ) : (
           <>
             {data?.length > 0 ? (
-              <CardV2
-                data={data}
-                onAddCard={handleAddCard}
-                quitar={quitar}
-                setQuitar={handleQuitarChange}
-                onCloseModal={handleClose}
-                selectedProduct={selectedProductId}
-              />
+              // <CardV2
+              //   data={data}
+              //   onAddCard={handleAddCard}
+              //   quitar={quitar}
+              //   setQuitar={handleQuitarChange}
+              //   onCloseModal={handleClose}
+              //   selectedProduct={selectedProductId}
+              // />
+              <CardProduct data={data} selectedProduct={selectedProductId} />
             ) : (
               <>
-                <p className="mb-5 fs-3">Disculpa, no encontramos ningún producto</p>
+                <p className="mb-5 fs-3">
+                  Disculpa, no encontramos ningún producto
+                </p>
               </>
             )}
           </>
