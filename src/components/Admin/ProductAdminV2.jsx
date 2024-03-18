@@ -8,7 +8,8 @@ import AddIcon from '@mui/icons-material/Add';
 import { alertCustom, alertConfirm } from '../../utils/alertCustom/alertCustom';
 import Pagination from '../pagination/Pagination';
 import Menu from './Menu';
-
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const itemsPerPage = 4;
 
@@ -57,6 +58,19 @@ const ProductAdminV2 = () => {
     }
   };
 
+  const toggleFavorite = async (_id) => {
+    try {
+      setIsLoading(true);
+      await axios.patch(`product/favorite/${_id}`, {isFavorite: target.isFavorite});
+      getAllProduct();
+    } catch (error) {
+      alertCustom('Upps', 'Ha ocurrido un error.', 'error');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  
+
   useEffect(() => {
     getAllProduct()
   }, [changeFlag]);
@@ -100,26 +114,27 @@ const ProductAdminV2 = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  { paginatedProducts &&
-                    paginatedProducts.map((product, i) => (
-                      <tr key={i}>
-                        <td className="text-center"><img src={product.image} alt="Producto" style={{ width: '50px', height: '50px' }} /></td>
-                        <td className="text-center">{product.name}</td>
-                        <td className="text-center"><Form.Check checked={product.visible} onChange={(e) => disabledProduct(e, product._id)}/> </td>
-                        <td className="text-center">
-                          <Col>
-                            <Button variant='danger' size='sm' onClick={() => deleteProduct(product._id)}><DeleteIcon fontSize='small'/></Button>
-                            <ProductModalV2
-                              product={product} 
-                              setIsLoading={setIsLoading} 
-                              setChangeFlag={setChangeFlag}
-                              paginatedProducts={paginatedProducts}
-                            />
-                          </Col>
-                        </td>
-                      </tr>
-                    ))
-                  }
+                  {paginatedProducts &&
+                  paginatedProducts.map((product, i) => (
+                    <tr key={i}>
+                      <td className="text-center"><img src={product.image} alt="Producto" style={{ width: '50px', height: '50px' }} /></td>
+                      <td className="text-center">{product.name}</td>
+                      <td className="text-center"><Form.Check checked={product.visible} onChange={(e) => disabledProduct(e, product._id)}/> </td>
+                      <td className="text-center">
+                        <Col>
+                          <Button variant='danger' size='sm' onClick={() => deleteProduct(product._id)}><DeleteIcon fontSize='small'/></Button>
+                          <Button variant='light' size='sm' onClick={() => toggleFavorite(product._id)}>{product._id.favorite ? <FavoriteIcon style={{ color: 'red' }} /> : <FavoriteBorderIcon />}</Button>
+                          <ProductModalV2
+                            product={product} 
+                            setIsLoading={setIsLoading} 
+                            setChangeFlag={setChangeFlag}
+                            paginatedProducts={paginatedProducts}
+                          />
+                        </Col>
+                      </td>
+                    </tr>
+                  ))
+                }
                 </tbody>
               </Table>
             )
