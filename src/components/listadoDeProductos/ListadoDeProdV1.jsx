@@ -171,10 +171,7 @@ const ListadoDeProdV1 = () => {
     <Container fluid>
       <Row className="mb-5">
         <h1 className="text-center pt-4">¡Descubre Nuestro Delicioso Menú!</h1>
-        <Button id="boton1" onClick={handleShow}>
-          {" "}
-          <ShoppingBagIcon />{" "}
-        </Button>
+
         <Modal show={showModal} onHide={handleClose}>
           <Modal.Header closeButton className="modal1">
             <Modal.Title>Tu Pedido</Modal.Title>
