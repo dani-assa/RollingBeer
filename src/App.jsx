@@ -14,6 +14,7 @@ import Profile from "./pages/Profile";
 import PanelMenuAdmin from "./components/Admin/PanelMenuAdmin";
 import PanelUserAdmin from "./components/Admin/PanelUserAdmin"
 import Informacion from "./pages/Informacion";
+
 import NavbarCart from "./components/navigationBar/NavbarCart";
 
 
