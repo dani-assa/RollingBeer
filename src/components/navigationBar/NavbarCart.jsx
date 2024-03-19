@@ -44,7 +44,7 @@ const NavbarCart = () => {
   };
 
   localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
-  alertAdd("center", "success", `Pedido confirmado para la mesa ${tableNumber}`);
+  alertAdd("center", "success", `Pedido confirmado para la mesa`);
   };
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const NavbarCart = () => {
       <div className="cart-icon me-3" onClick={handleShow}>
         <ShoppingCartIcon />
       </div>
-      <Offcanvas show={show} onHide={handleClose} placement="end">
+      <Offcanvas className='ofCart' show={show} onHide={handleClose} placement="end">
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Carrito de compra</Offcanvas.Title>
         </Offcanvas.Header>

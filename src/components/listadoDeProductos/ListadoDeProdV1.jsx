@@ -9,6 +9,13 @@ import { useAuth } from "../../context/UserContext";
 import LoadingScreen from "../../loadingScreen/LoadingScreen";
 import { alertCustom } from "../../utils/alertCustom/alertCustom";
 import CardProduct from "./CardProduct";
+import ModalDeEntradaV1 from "./ModalDeEntradaV1";
+import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
+import IconButton from '@mui/material/IconButton';
+import Collapse from '@mui/material/Collapse';
+import CloseIcon from '@mui/icons-material/Close';
+
 
 const searchWithOptions = async ({ setState, setLoading, queryParams }) => {
   setLoading(true);
@@ -61,6 +68,7 @@ const handleQueryParams = ({
   setQueryParams(queryString);
 };
 
+
 const ListadoDeProdV1 = () => {
   const { products, getAllProduct } = useAuth();
   const [data, setData] = useState([]);
@@ -71,6 +79,9 @@ const ListadoDeProdV1 = () => {
   const priceInputRef = useRef();
   const categoryInputRef = useRef();
   const searchFormRef = useRef();
+  const [numeroMesa, setNumeroMesa] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
     searchWithOptions({
@@ -87,6 +98,29 @@ const ListadoDeProdV1 = () => {
   const submitHandler = (e) => {
     e.preventDefault();
   };
+
+   const handleShowModal = () => {
+    setShowModal(true);
+  };
+
+  const handleHideModal = () => {
+    setShowModal(false);
+  };
+
+  const handleChangeMesa = (nuevaMesa) => {
+    setNumeroMesa(nuevaMesa);
+    setShowModal(false);
+    localStorage.setItem('numeroMesa', nuevaMesa); 
+  };
+
+  useEffect(() => {
+    const savedNumeroMesa = localStorage.getItem('numeroMesa');
+    if (savedNumeroMesa) {
+      setNumeroMesa(savedNumeroMesa);
+    } else {
+      handleShowModal();
+    }
+  }, []);
 
   return (
     <Container fluid>
@@ -105,6 +139,7 @@ const ListadoDeProdV1 = () => {
             <div className="col-12 col-md-4">
               <div className="input-group">
                 <Form.Control
+                className="colColor"
                   type="text"
                   id="searchInput"
                   placeholder="Buscar por nombre"
@@ -112,11 +147,11 @@ const ListadoDeProdV1 = () => {
                   onKeyDown={(e) =>
                     e.code == "Enter"
                       ? handleQueryParams({
-                          valueSearchInput: searchInputRef.current.value,
-                          valueCategoryInput: categoryInputRef.current.value,
-                          valuePriceInput: priceInputRef.current.value,
-                          setQueryParams: setQueryParams,
-                        })
+                        valueSearchInput: searchInputRef.current.value,
+                        valueCategoryInput: categoryInputRef.current.value,
+                        valuePriceInput: priceInputRef.current.value,
+                        setQueryParams: setQueryParams,
+                      })
                       : ""
                   }
                 />
@@ -124,7 +159,7 @@ const ListadoDeProdV1 = () => {
             </div>
             <div className="col-12 col-md-3">
               <Form.Select
-                className="form-select"
+                className="form-select colColor"
                 id="priceSelect"
                 defaultValue={""}
                 ref={priceInputRef}
@@ -140,13 +175,13 @@ const ListadoDeProdV1 = () => {
                 <option disabled hidden value="">
                   Filtrar por precio
                 </option>
-                <option value="asc">Precio ascendente</option>
+                <option value="asc" >Precio ascendente</option>
                 <option value="desc">Precio descendiente</option>
               </Form.Select>
             </div>
             <div className="col-12 col-md-3">
               <Form.Select
-                className="form-select"
+                className="form-select colColor"
                 id="categorySelect"
                 defaultValue={""}
                 ref={categoryInputRef}
@@ -189,7 +224,7 @@ const ListadoDeProdV1 = () => {
             <div className="col-lg-1">
               <button
                 type="button"
-                className="btn btn-dark border-1 border-light w-100"
+                className="btn btn-dark border-1 border-light w-100 boton6"
                 onClick={(e) => {
                   e.preventDefault();
                   searchFormRef.current.reset();
@@ -201,7 +236,52 @@ const ListadoDeProdV1 = () => {
             </div>
           </Form>
         </section>
-        <section className="container my-5 vh-50"></section>
+        <section className="container my-5 vh-50">
+          <h5 className="pt-4">Mesa N˚: {numeroMesa}</h5>
+          <Button size="sm" className="boton4" onClick={handleShowModal}>
+            Cambiar N˚
+          </Button>
+          {showModal && (
+          <ModalDeEntradaV1
+            onSubmit={handleChangeMesa}
+            numeroMesa={numeroMesa}
+            show={showModal}
+            onHide={handleHideModal}
+          />
+        )}
+          <Box sx={{ width: '100%' }}>
+            <Collapse in={open}>
+              <Alert
+                action={
+                  <IconButton
+                    aria-label="close"
+                    className=""
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+                sx={{ mb: 2 }}
+              >
+                Un mozo se acercará a su mesa
+              </Alert>
+            </Collapse>
+            <Button
+              disabled={open}
+              className="boton5"
+              variant="outlined"
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
+              Solicitar Atención Personalizada
+            </Button>
+          </Box>
+        </section>
         {loading ? (
           <LoadingScreen />
         ) : (

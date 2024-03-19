@@ -58,6 +58,18 @@
 .boton3 {
   background-color: green !important;
 }
+.boton4 {
+  background-color: transparent !important;
+  border: 0 !important;
+}
+
+.boton5 {
+  margin-top: 20px;
+  background-color: transparent !important;
+  color: #fff;
+  border: 1;
+  border-color: var(--colorThree) !important;
+}
 
 .card2 {
   display: flex;
@@ -84,4 +96,12 @@
 
 .listado{
   margin-bottom: 80px;
+}
+
+.colColor {
+  background-color: transparent!important;
+}
+
+.boton6 {
+  background-color: #000000 !important;
 }

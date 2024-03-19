@@ -8,9 +8,10 @@ const ModalDeEntradaV1 = ({ onSubmit }) => {
     const [showAlert, setShowAlert] = useState(false);
 
     const handleChange = (event) => {
-        const newValue = event.target.value.replace(/\D/g, '');
+        let newValue = event.target.value.replace(/\D/g, ''); 
+        newValue = newValue.slice(0, 2); 
+        setMesa(newValue);
         if (newValue !== '') {
-            setMesa(newValue);
             setShowAlert(false);
         } else {
             setShowAlert(true);

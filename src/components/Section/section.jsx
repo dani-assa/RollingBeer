@@ -29,7 +29,6 @@ const Section = () => {
     if (tableNumber) {
       localStorage.setItem('tableNumber', tableNumber);
       handleClose();
-      // navigate("/");
     }
   };
 

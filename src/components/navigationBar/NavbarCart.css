@@ -25,6 +25,10 @@
 }
 
 .btnQuantily{
-  background: var(--colorTwo) !important;
-  border: 1px solid var(--colorTwo) !important;
+  background: transparent !important;
+  border: 1px solid var(--colorFour) !important;
+}
+
+.ofCart {
+  background-color: #000 !important;
 }
