@@ -10,29 +10,18 @@ import Pagination from '../pagination/Pagination';
 import Menu from './CreateProductModal';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import { useAuth } from '../../context/UserContext';
 
 const itemsPerPage = 4;
 
 
 const PanelMenuAdmin = () => {
-  const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [changeFlag, setChangeFlag] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [showMenuModal, setShowMenuModal] = useState(false);
-
+  const {products, getAllProduct} = useAuth()
   
-  const getAllProduct = async() => {
-    try {
-      setIsLoading(true);
-      const { data } = await axios.get(`/product/getAll`);
-      setProducts(data);
-    } catch (error) {
-      alertCustom('Upps', 'Ha ocurrido un error al traer los productos.', 'error');
-    } finally {
-      setIsLoading(false);
-    }
-  }
 
   const deleteProduct = async (_id) => {
     try {
