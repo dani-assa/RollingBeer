@@ -89,9 +89,9 @@ const PanelUserAdmin = () => {
   
   return (
     <Container fluid className="justify-content-center">
-      <Button variant="primary" size="sm" onClick={handleShowModal} className="float-end">
+      {/* <Button variant="primary" size="sm" onClick={handleShowModal} className="float-end">
         <AddIcon/>
-      </Button>
+      </Button> */}
       <h3 className="mt-5 mb-4 text-center">Administración de Usuarios</h3>
       <Row className="justify-content-center">
       <Col>
