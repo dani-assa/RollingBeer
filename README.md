@@ -1,11 +1,13 @@
 # Rolling Beer - Frontend
-![Logo](https://i.postimg.cc/5ybmDbQ5/Logo-Rolling-Beer.png)
+![Logo](https://i.postimg.cc/q7DKQh9y/panel.png)
 
 Rolling Beer es una aplicación dirigida a quienes deseen compartir un hermoso momento en nuestro bar.
 
 ## Demo
 
-![Netlify](https://img.shields.io/badge/netlify-%23000000.svg?style=for-the-badge&logo=netlify&logoColor=#00C7B7)
+<a href="https://main--rollingbeer1.netlify.app/">
+    <img src="https://img.shields.io/badge/netlify-%23000000.svg?style=for-the-badge&logo=netlify&logoColor=#00C7B7" alt="Netlify">
+</a>
 
 [Repositorio Backend](https://github.com/dani-assa/RollingBeer-backend)
 
