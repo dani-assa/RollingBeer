@@ -13,6 +13,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 const itemsPerPage = 4;
 
+
 const PanelMenuAdmin = () => {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
