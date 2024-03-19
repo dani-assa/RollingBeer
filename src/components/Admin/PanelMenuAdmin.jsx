@@ -18,7 +18,7 @@ const PanelMenuAdmin = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [changeFlag, setChangeFlag] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [showMenuModal, setShowMenuModal] = useState(false); 
+  const [showMenuModal, setShowMenuModal] = useState(false);
 
   
   const getAllProduct = async() => {

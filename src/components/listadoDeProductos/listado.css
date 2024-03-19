@@ -76,3 +76,12 @@
 .aclaraciones {
   background-color: #010101 !important;
 }
+
+.btnFiltrar {
+  background: var(--colorOne) !important;
+  border: 1px solid var(--colorOne) !important;
+}
+
+.listado{
+  margin-bottom: 80px;
+}

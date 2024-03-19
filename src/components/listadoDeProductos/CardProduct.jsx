@@ -18,7 +18,7 @@ const CardProduct = ({ data }) => {
         {(data ? data : products).map((product, i) => 
           product.visible && (
             <Col key={product._id} xs={12} sm={6} md={6} lg={4} xl={3}>
-              <Card className="cardProduct mb-4 "> {/* Agregué mb-4 para dar un margen inferior */}
+              <Card className="cardProduct mb-4 ">
                 <Card.Img className="imgCard" variant="top" src={product.image} alt={product.image} />
                 <Card.Body className="d-flex flex-column justify-content-between">
                   <Card.Title>{product.name}</Card.Title>

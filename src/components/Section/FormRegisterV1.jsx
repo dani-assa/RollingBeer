@@ -120,7 +120,7 @@ const FormRegisterV1 = () => {
                 />
               </Form.Group>
 
-              <Button variant="primary" type="submit">
+              <Button className="btnReservar" variant="primary" type="submit">
                 Reservar
               </Button>
             </Form>
