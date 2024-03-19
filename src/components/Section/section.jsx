@@ -1,17 +1,41 @@
-import {useState} from 'react'
-import { Container, Row, Col, Image, Button } from 'react-bootstrap'
-import '../../styles/Section.css'
+import { useState, useEffect } from 'react';
+import { Container, Row, Col, Image, Button, Modal, Form } from 'react-bootstrap';
+import '../../styles/Section.css';
 import CardV1 from './CardV1';
 import { useNavigate } from 'react-router-dom';
 
+const Section = () => {
+  const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
+  const [tableNumber, setTableNumber] = useState(localStorage.getItem('tableNumber') || '');
 
+  useEffect(() => {
+    
+    const savedTableNumber = localStorage.getItem('tableNumber');
+    if (!savedTableNumber) {
+      setShowModal(true);
+    }
+  }, []);
 
+  const handleClose = () => {
+    
+    if (tableNumber) {
+      setShowModal(false);
+    }
+  };
 
+  const handleSave = () => {
+    
+    if (tableNumber) {
+      localStorage.setItem('tableNumber', tableNumber);
+      handleClose();
+      // navigate("/");
+    }
+  };
 
-const Section = () =>{
-
-    const navigate = useNavigate()
-
+  const handleChange = (e) => {
+    setTableNumber(e.target.value);
+  };
 
   return (
 
@@ -51,7 +75,31 @@ const Section = () =>{
                     </Col>
               </div>
           
-          </div>       
+          </div>
+          <Modal show={showModal} onHide={handleClose} backdrop="static" keyboard={false}>
+        <Modal.Header>
+          <Modal.Title>Ingresar Número de Mesa</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group>
+              <Form.Label>Número de mesa:</Form.Label>
+              <Form.Control
+                type="number"
+                placeholder="Ingresa el número de mesa aquí"
+                value={tableNumber}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleSave} disabled={!tableNumber}>
+            Guardar
+          </Button>
+        </Modal.Footer>
+      </Modal>       
       </Row>
     </Container>
   );
