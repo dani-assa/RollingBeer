@@ -1,0 +1,35 @@
+.NotFoundContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    text-align: center;
+  }
+  
+  .NotFoundContent h1 {
+    font-size: 5em;
+    margin-bottom: 0.5em;
+  }
+  
+  .NotFoundContent h2 {
+    font-size: 2em;
+    margin-bottom: 1em;
+  }
+  
+  .NotFoundContent p {
+    font-size: 1em;
+    margin-bottom: 2em;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+  }
+
+.NotFoundImage {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto 20px;
+  }
