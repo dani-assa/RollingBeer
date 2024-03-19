@@ -1,105 +1,127 @@
-.cont{
-    background-color: #1c1c1c;;
+:root {
+  --colorOne: #004e98;
+  --colorTwo: #3a6ea5;
+  --colorThree: #c0c0c0;
+  --colorFour: #ebebeb;
+  --colorFive: #ff6700;
 }
 
-#section1{
-    background-image: url('../assets/bar1.jpg');
-    border-radius: 25px;
+.cont {
+  background-color: #1c1c1c;
 }
 
-#section2{
-    background-image: url('../assets/barfondo2.PNG');
-    border-radius: 25px;
-    
+#section1 {
+  background-image: url("../assets/bar1.jpg");
+  border-radius: 25px;
 }
 
-#section3{
-    background-image: url('../assets/barsection3.png');
-    border-radius: 25px;
+#section2 {
+  background-image: url("../assets/barfondo2.PNG");
+  border-radius: 25px;
 }
 
-#section4{
-    background-image: url('../assets/barfondo1.PNG');
-    border-radius: 25px;
+#section3 {
+  background-image: url("../assets/barsection3.png");
+  border-radius: 25px;
 }
 
-.text1{
-    position: relative;
-    z-index: 2;
-    text-align: justify;
-    color: #EBEBEB;
-    font-size: 18px;
-    padding: 10px;
-    background-color: rgba(58, 110, 165, 0.5);
-    border-radius: 50px;
+#section4 {
+  background-image: url("../assets/barfondo1.PNG");
+  border-radius: 25px;
 }
 
-.h1h1{
-    font-size: 2rem;
-    padding: 20px;
-    color: white;
-    background-color: rgba(0, 0, 0, 0.5); 
-    border-radius: 50px;
+.text1 {
+  position: relative;
+  z-index: 2;
+  text-align: justify;
+  color: #ebebeb;
+  font-size: 18px;
+  padding: 10px;
+  background-color: rgba(58, 110, 165, 0.5);
+  border-radius: 50px;
 }
 
-
-
-.box1{
-    color: white;
-    background-color: rgba(0, 0, 0, 0.685); 
-    border-radius: 50px;
+.h1h1 {
+  font-size: 2rem;
+  padding: 20px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50px;
 }
 
-.slider-container{
-    padding: 20px; 
-    margin: 20px auto; 
-    width: 100%;
-    position: relative;
-    top: 50%;
-    transform: translateY(-60%);
-    
+.box1 {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.685);
+  border-radius: 50px;
 }
 
-.card-1{
-    cursor: pointer;
-    position: relative;
-    margin: 10px;
-    
-}
-.card-img{
-    width: 100%;
-    height: 600%;
-    object-fit: cover;
+.slider-container {
+  padding: 20px;
+  margin: 20px auto;
+  width: 100%;
+  position: relative;
+  top: 50%;
+  transform: translateY(-60%);
 }
 
-.titulo{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 100%;
+.card-1 {
+  cursor: pointer;
+  position: relative;
+  margin: 10px;
+}
+.card-img {
+  width: 100%;
+  height: 600%;
+  object-fit: cover;
 }
 
+.titulo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+}
 
+.btnVerCarta {
+  background: var(--colorOne) !important;
+  border: 1px solid var(--colorOne) !important;
+}
+
+.btnReservar {
+  background: var(--colorOne) !important;
+  border: 1px solid var(--colorOne) !important;
+}
+
+.contacto {
+  margin-top: 50px;
+}
+
+.btnEnviarCont{
+  margin-bottom: 50px;
+  background: var(--colorOne) !important;
+  border: 1px solid var(--colorOne) !important;
+}
+
+.info{
+  margin-bottom: 50px;
+}
 
 @media (min-width: 768px) {
+  .img1 {
+    margin-left: 5rem;
+  }
 
-    .img1{
-        margin-left: 5rem;
-    }
-    
-    .h1h1{
-        font-size: 4rem;
-        padding: 20px;
-        color: white;
-        background-color: rgba(0, 0, 0, 0.5); 
-        border-radius: 50px;
-    }
+  .h1h1 {
+    font-size: 4rem;
+    padding: 20px;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50px;
+  }
 
-    .card-1{
-        margin: 30px; 
-        width: auto;
-    }
-
-
+  .card-1 {
+    margin: 30px;
+    width: auto;
+  }
 }

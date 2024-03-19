@@ -10,8 +10,6 @@ import LoadingScreen from "../../loadingScreen/LoadingScreen";
 import { alertCustom } from "../../utils/alertCustom/alertCustom";
 import CardProduct from "./CardProduct";
 
-
-
 const searchWithOptions = async ({ setState, setLoading, queryParams }) => {
   setLoading(true);
 
@@ -20,8 +18,7 @@ const searchWithOptions = async ({ setState, setLoading, queryParams }) => {
       `/product/productsWithOptions/search${queryParams}`,
       {
         validateStatus: function (status) {
-          
-          return true; 
+          return true;
         },
       }
     );
@@ -29,12 +26,11 @@ const searchWithOptions = async ({ setState, setLoading, queryParams }) => {
     if (res.status == 200) {
       setState(res.data);
     } else if (res.status == 400) {
-      
     } else if (res.status == 404 || res.status == 500) {
       setState(null);
     }
   } catch (error) {
-    alertCustom("Upps", "Producto fuera de stock.", "error");
+    alertCustom("Upps", "Hay un problema para traer los productos.", "error");
   } finally {
     setLoading(false);
   }
@@ -92,15 +88,13 @@ const ListadoDeProdV1 = () => {
     e.preventDefault();
   };
 
-
-
   return (
     <Container fluid>
-      <Row className="mb-5">
-        <h1 className="text-center pt-4">¡Descubre Nuestro Delicioso Menú!</h1>       
+      <Row className="listado">
+        <h1 className="text-center pt-4">¡Descubre Nuestro Delicioso Menú!</h1>
         <Col>
           <h2 className="pt-4 text-center">Productos destacados</h2>
-          <CardV1/>
+          <CardV1 />
         </Col>
         <section className="container mt-5 pt-5">
           <Form
@@ -175,7 +169,24 @@ const ListadoDeProdV1 = () => {
                 <option value="Wrap">Wrap</option>
               </Form.Select>
             </div>
-            <div className="col-md-2">
+            <div className="col-lg-1">
+              <button
+                type="button"
+                className="btn btn-primary w-100 btnFiltrar"
+                onClick={() =>
+                  handleQueryParams({
+                    valueSearchInput: searchInputRef.current.value,
+                    valueCategoryInput: categoryInputRef.current.value,
+                    valuePriceInput: priceInputRef.current.value,
+                    setQueryParams: setQueryParams,
+                  })
+                }
+              >
+                Filtrar
+              </button>
+
+            </div>
+            <div className="col-lg-1">
               <button
                 type="button"
                 className="btn btn-dark border-1 border-light w-100"
@@ -190,22 +201,7 @@ const ListadoDeProdV1 = () => {
             </div>
           </Form>
         </section>
-        <section className="container my-5 vh-50">
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={() =>
-              handleQueryParams({
-                valueSearchInput: searchInputRef.current.value,
-                valueCategoryInput: categoryInputRef.current.value,
-                valuePriceInput: priceInputRef.current.value,
-                setQueryParams: setQueryParams,
-              })
-            }
-          >
-            Filtrar
-          </button>
-        </section>
+        <section className="container my-5 vh-50"></section>
         {loading ? (
           <LoadingScreen />
         ) : (

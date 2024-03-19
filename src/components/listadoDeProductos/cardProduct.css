@@ -1,0 +1,25 @@
+:root {
+  --colorOne: #004e98;
+  --colorTwo: #3a6ea5;
+  --colorThree: #c0c0c0;
+  --colorFour: #ebebeb;
+  --colorFive: #ff6700;
+}
+
+.cardProduct {
+  display: flex !important;
+  flex-direction: row !important;
+  width: auto !important;
+  height: 230px !important;
+  margin-bottom: 15px;
+}
+
+.imgCard {
+  width: 30% !important;
+  object-fit: contain !important;
+}
+
+.btnAddCart{
+  background: var(--colorOne) !important;
+  border: 1px solid var(--colorOne) !important;
+}

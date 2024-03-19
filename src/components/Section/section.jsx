@@ -44,7 +44,7 @@ const Section = () => {
           <div className="d-flex flex-column justify-content-center align-items-center vh-100" id="section1"> 
               <h1 className='h1h1 text-center mb-5'>Disfruta de un ambiente único y especial</h1>
               <div className='d-flex mt-5 '>
-                <Button className=' mx-2 mx-md-3 rounded-pill px-5' onClick={() => navigate("/listado")} size='lg'>Ver carta</Button>
+                <Button className=' mx-2 mx-md-3 rounded-pill px-5 btnVerCarta' onClick={() => navigate("/listado")} size='lg'>Ver carta</Button>
               </div>
           </div>
           

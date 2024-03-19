@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { useAuth } from "../../context/UserContext";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { alertAdd } from "../../utils/alertCustom/alertCustom";
+import "./cardProduct.css"
 
 const CardProduct = ({ data }) => {
-  const { products, addToCart } = useAuth();
+  const { addToCart } = useAuth();
 
   const handleAddToCart = (product) => {
     addToCart(product);
@@ -14,62 +15,28 @@ const CardProduct = ({ data }) => {
   return (
     <Container>
       <Row>
-        {data ? (
-          <>
-            {data.map(
-              (product, i) =>
-                product.visible && (
-                  <div key={product._id}>
-                    <Card style={{ width: "18rem" }}>
-                      <Card.Img
-                        variant="top"
-                        src={product.image}
-                        alt={product.image}
-                      />
-                      <Card.Body>
-                        <Card.Title>{product.name}</Card.Title>
-                        <Card.Text>{product.description}</Card.Text>
-                        <Card.Title>$ {product.price}</Card.Title>
-                        <Button
-                          variant="primary"
-                          onClick={() => handleAddToCart(product)}
-                        >
-                          Agregar al carrito
-                        </Button>
-                      </Card.Body>
-                    </Card>
+        {(data ? data : products).map((product, i) => 
+          product.visible && (
+            <Col key={product._id} xs={12} sm={6} md={6} lg={4} xl={3}>
+              <Card className="cardProduct mb-4 ">
+                <Card.Img className="imgCard" variant="top" src={product.image} alt={product.image} />
+                <Card.Body className="d-flex flex-column justify-content-between">
+                  <Card.Title>{product.name}</Card.Title>
+                  <Card.Text>{product.description}</Card.Text>
+                  <div className="d-flex flex-column">
+                    <Card.Title className="text-end">$ {product.price}</Card.Title>
+                    <Button
+                      className="btnAddCart"
+                      variant="primary"
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      Agregar al carrito
+                    </Button>
                   </div>
-                )
-            )}
-          </>
-        ) : (
-          <Col>
-            {products.map(
-              (product, i) =>
-                product.visible && (
-                  <div key={product._id}>
-                    <Card style={{ width: "18rem" }}>
-                      <Card.Img
-                        variant="top"
-                        src={product.image}
-                        alt={product.image}
-                      />
-                      <Card.Body>
-                        <Card.Title>{product.name}</Card.Title>
-                        <Card.Text>{product.description}</Card.Text>
-                        <Card.Title>$ {product.price}</Card.Title>
-                        <Button
-                          variant="primary"
-                          onClick={() => handleAddToCart(product)}
-                        >
-                          Agregar al carrito
-                        </Button>
-                      </Card.Body>
-                    </Card>
-                  </div>
-                )
-            )}
-          </Col>
+                </Card.Body>
+              </Card>
+            </Col>
+          )
         )}
       </Row>
     </Container>

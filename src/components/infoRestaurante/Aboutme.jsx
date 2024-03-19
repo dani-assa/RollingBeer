@@ -12,7 +12,7 @@ const Aboutme = () => {
 
   return (
     <Container fluid className='mt-2'>
-      <h2 className="text-center fs-5">Nuestro Equipo</h2>
+      <h2 className="text-center fs-3 contacto">Nuestro Equipo</h2>
       <p className="text-center fs-5">"Juntos hacemos la magia suceder en cada plato."</p>
       <Row className="justify-content-center mt-5">
         {equipo.map((miembro, index) => (
@@ -25,7 +25,7 @@ const Aboutme = () => {
         ))}
       </Row>
       <Row className="justify-content-center">
-        <Col xs={12} md={8} lg={6} className="text-center mt-5">
+        <Col xs={12} md={8} lg={6} className="text-center mt-5 info">
           <p className="fs-5">
             <b>En una vibrante metrópolis, Juan Pablo, Facundo, Nahún y Dani, cuatro programadores apasionados por la cerveza artesanal, se unieron para transformar la experiencia de disfrutar cervezas únicas de Rolling Beer, un restaurante ambulante. Inspirados por la dificultad de acceder a estas cervezas sin saber dónde se ubicaría el restaurante, decidieron crear una aplicación que permitiera a los clientes pedir su selección de cervezas artesanales desde cualquier lugar dentro del área de servicio. </b>
           </p>
