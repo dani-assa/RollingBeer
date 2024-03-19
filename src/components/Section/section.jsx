@@ -46,7 +46,7 @@ const Section = () =>{
                   </Col>
                     <Col md={12} lg={12}>
                       <div className='text-center  ' >
-                        <Image className='img1' src='src\assets\Cerveza1.png' roundedCircle  fluid/>
+                        <Image className='img1' src='https://i.ibb.co/qk3m98W/Cerveza1.png' roundedCircle  fluid/>
                       </div>  
                     </Col>
               </div>
