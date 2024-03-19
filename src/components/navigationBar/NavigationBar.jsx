@@ -3,18 +3,18 @@ import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./NavigationBar.css";
 import PersonIcon from "@mui/icons-material/Person";
-import SettingsIcon from "@mui/icons-material/Settings";
-import NotificationsIcon from "@mui/icons-material/Notifications";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import InfoIcon from '@mui/icons-material/Info';
+import CallIcon from '@mui/icons-material/Call';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
 
 const NavigationBar = () => {
   return (
     <Container fluid className="navigationBar">
-      <Link to="./">
-        <SettingsIcon fontSize="large" />
+      <Link to="./informacion">
+        <InfoIcon fontSize="large" />
       </Link>
-      <Link to="./listado">
-        <FavoriteIcon fontSize="large" />
+      <Link to="./contacto">
+        <CallIcon fontSize="large" />
       </Link>
       <Link to="./" className="fondoIconoHome">
         <svg
@@ -30,8 +30,8 @@ const NavigationBar = () => {
           <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z" />
         </svg>
       </Link>
-      <Link to="./orders">
-        <NotificationsIcon fontSize="large" />
+      <Link to="./listado">
+        <RestaurantIcon fontSize="large" />
       </Link>
       <Link to="./profile">
         <PersonIcon fontSize="large" />

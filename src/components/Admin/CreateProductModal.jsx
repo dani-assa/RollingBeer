@@ -6,7 +6,7 @@ import { useProductAuth } from "../../context/ProductContext";
 import { alertCustom } from '../../utils/alertCustom/alertCustom';
 
 
-const Menu = ({ show, handleCloseModal }) => {
+const CreateProductModal = ({ show, handleCloseModal }) => {
   const { signin } = useProductAuth();
   const { register, handleSubmit, formState: { errors }, setValue } = useForm();
 
@@ -21,8 +21,9 @@ const Menu = ({ show, handleCloseModal }) => {
       setValue("visible", "");
       setValue("price", "");
       setValue("cantidad", "");
+      alertCustom('¡Éxito!', 'El producto fue agregado correctamente.', 'success');
     } catch (error) {
-      alertCustom('Upps', 'Ha ocurrido un error al crear el producto', 'error');
+      alertCustom('Upps', 'Ha ocurrido un error al crear el producto.', 'error');
     }
   };
 
@@ -161,4 +162,4 @@ const Menu = ({ show, handleCloseModal }) => {
   );
 };
 
-export default Menu;
+export default CreateProductModal;

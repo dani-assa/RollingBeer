@@ -11,9 +11,11 @@ import Admin from "./pages/Admin";
 import ProtectedRouteAdmin from "./protectedRoute/ProtectedRouteAdmin";
 import NavigationBar from "./components/navigationBar/NavigationBar";
 import Profile from "./pages/Profile";
-import Menu from "./components/Admin/Menu";
-import ProductAdminV2 from "./components/Admin/ProductAdminV2";
-import Users from "./components/Admin/Users"
+import PanelMenuAdmin from "./components/Admin/PanelMenuAdmin";
+import PanelUserAdmin from "./components/Admin/PanelUserAdmin"
+import Informacion from "./pages/Informacion";
+import Contact from "./pages/Contact";
+
 import NavbarCart from "./components/navigationBar/NavbarCart";
 
 
@@ -31,15 +33,15 @@ const App = () => {
               <Route path="/register" element={<Register />} />
               <Route path="/listado" element={<ListadoDeProd />} />
               <Route path="/profile" element={<Profile />} />
-              
+              <Route path="/informacion" element={<Informacion />} />
+              <Route path="/contacto" element={<Contact/>} />
               <Route element={<ProtectedRouteAdmin />}>
                 <Route path="/admin" element={<Admin />} />
-                <Route path="/admin/productos" element={<ProductAdminV2/>}/>
-                <Route path="/admin/usuarios" element={<Users/>}/>
+                <Route path="/admin/productos" element={<PanelMenuAdmin/>}/>
+                <Route path="/admin/usuarios" element={<PanelUserAdmin/>}/>
               </Route>
             </Routes>
           </main>
-          <Menu />
           <NavigationBar />
         </ProductProvider>
       </UserProvider>

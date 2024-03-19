@@ -5,7 +5,7 @@ import { passRegex, emailRegex, nameRegex } from "../../validation/registerValid
 import { useAuth } from "../../context/UserContext";
 import { alertCustom } from '../../utils/alertCustom/alertCustom';
 
-const UserModal = ({ show, onHide }) => {
+const CreateProductModal = ({ show, onHide }) => {
   const { signup } = useAuth();
   const { register, handleSubmit, formState: { errors }, watch } = useForm();
 
@@ -152,4 +152,4 @@ const UserModal = ({ show, onHide }) => {
   );
 };
 
-export default UserModal;
+export default CreateProductModal;

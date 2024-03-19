@@ -1,6 +1,8 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { productRequest } from "../api/product";
+import axios from "../api/axios";
 import { alertCustom } from '../utils/alertCustom/alertCustom';
+
 
 export const ProductContext = createContext();
 
@@ -17,9 +19,16 @@ export const ProductProvider = ({ children }) => {
 
   const signin = async (product) => {
     try {
-      const res = await productRequest(product);
+      // const res = await productRequest(product);
+      const res = await axios.post(`/product/create`, product);
+      if (res.status === 200 || res.status === 201) {
+        alertCustom('Éxito', 'Producto creado exitosamente', 'success');
+      } else {      
+        alertCustom('Upps', 'El producto se creó, pero se recibió un código de estado inesperado.', 'warning');
+      }
     } catch (error) {
-      setErrors(error.response.data.message || alertCustom('Upps', 'Ha ocurrido un error.', 'error'));
+      const errorMessage = error.response?.data?.message || 'Ha ocurrido un error.';
+      alertCustom('Upps', errorMessage, 'error');
     }
   };
 

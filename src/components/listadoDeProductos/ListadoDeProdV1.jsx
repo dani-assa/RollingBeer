@@ -3,7 +3,6 @@ import { Button, Col, Container, Modal, Row, Form } from "react-bootstrap";
 import "../listadoDeProductos/listado.css";
 import axios from "../../api/axios";
 import CardV1 from "../Section/CardV1";
-import CardV2 from "./CardV2";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import { useSearchParams, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/UserContext";
@@ -11,27 +10,7 @@ import LoadingScreen from "../../loadingScreen/LoadingScreen";
 import { alertCustom } from "../../utils/alertCustom/alertCustom";
 import CardProduct from "./CardProduct";
 
-// const searchWithOptions = async ({ setState, setLoading, queryParams }) => {
-//   setLoading(true);
 
-//   try {
-//     const res = await axios.get(
-//       `/product/productsWithOptions/search${queryParams}`
-//     );
-//     const data = res.data;
-//     if (res.status == 200) {
-//       setState(data);
-//     }
-
-//     if (res.status == 404 || res.status == 500) {
-//       setData(null);
-//     }
-//   } catch (error) {
-//     alertCustom('Upps', 'Producto fuera de stock.', 'error');
-//       } finally {
-//     setLoading(false);
-//   }
-// };
 
 const searchWithOptions = async ({ setState, setLoading, queryParams }) => {
   setLoading(true);
@@ -41,10 +20,8 @@ const searchWithOptions = async ({ setState, setLoading, queryParams }) => {
       `/product/productsWithOptions/search${queryParams}`,
       {
         validateStatus: function (status) {
-          // Devuelve `true` para todos los estados para evitar que `axios` lance excepciones para códigos fuera de 2xx
-          // Esto significa que el bloque `catch` no se ejecutará para códigos de estado 400,
-          // y podrás manejarlo en los bloques `if` según necesites
-          return true; // Aceptar todos los estados
+          
+          return true; 
         },
       }
     );
@@ -52,8 +29,7 @@ const searchWithOptions = async ({ setState, setLoading, queryParams }) => {
     if (res.status == 200) {
       setState(res.data);
     } else if (res.status == 400) {
-      // Manejar específicamente el estado 400
-      // Aquí puedes llamar a `setState` con algún estado específico o manejar el error como desees
+      
     } else if (res.status == 404 || res.status == 500) {
       setState(null);
     }
@@ -90,13 +66,6 @@ const handleQueryParams = ({
 };
 
 const ListadoDeProdV1 = () => {
-  const [showModal, setShowModal] = useState(false);
-  const handleClose = () => setShowModal(false);
-  const handleShow = () => setShowModal(true);
-  const [cartItems, setCartItems] = useState([]);
-  const [quitar, setQuitar] = useState({ cheddar: false, bacon: false });
-  const [tableNumber, setTableNumber] = useState(null);
-  const [smShow, setSmShow] = useState(false);
   const { products, getAllProduct } = useAuth();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -106,46 +75,6 @@ const ListadoDeProdV1 = () => {
   const priceInputRef = useRef();
   const categoryInputRef = useRef();
   const searchFormRef = useRef();
-  const [selectedProductId, setSelectedProductId] = useState(null);
-
-  const handleAddCard = (burgerOptions) => {
-    const { tipo, sinTacc, ...rest } = burgerOptions;
-    const tipoString = Array.isArray(tipo) ? tipo.join(", ") : tipo;
-    const sinTaccString = sinTacc ? "Sin TACC" : "";
-    const totalCantidad = burgerOptions.cantidad;
-    setCartItems([
-      ...cartItems,
-      { ...rest, tipo: tipoString, sinTACC: sinTaccString, totalCantidad },
-    ]);
-    const selectedTipo = Object.values(burgerOptions.tipo).some(
-      (option) => option === true
-    );
-    if (!selectedTipo) {
-      setShowToast(true);
-      return;
-    }
-
-    if (selectedProduct) {
-      onAddCard({
-        ...burgerOptions,
-        productId: selectedProduct._id, // Pasar el ID del producto
-      });
-    }
-    handleClose();
-  };
-
-  const handleQuitarChange = (item) => {
-    setQuitar((prevState) => ({
-      ...prevState,
-      [item]: !prevState[item],
-    }));
-  };
-
-  const handleDeleteItem = (index) => {
-    const updatedCartItems = [...cartItems];
-    updatedCartItems.splice(index, 1);
-    setCartItems(updatedCartItems);
-  };
 
   useEffect(() => {
     searchWithOptions({
@@ -163,138 +92,16 @@ const ListadoDeProdV1 = () => {
     e.preventDefault();
   };
 
-  const selectedProduct = products.find(
-    (products) => products._id === selectedProductId
-  );
+
 
   return (
     <Container fluid>
       <Row className="mb-5">
-        <h1 className="text-center pt-4">¡Descubre Nuestro Delicioso Menú!</h1>
-
-        <Modal show={showModal} onHide={handleClose}>
-          <Modal.Header closeButton className="modal1">
-            <Modal.Title>Tu Pedido</Modal.Title>
-          </Modal.Header>
-          <Modal.Body className="modal1">
-            <h5 className="text-end m-2">Mesa {tableNumber}</h5>
-            {cartItems.length === 0 ? (
-              <p className="text-center">No se ha realizado ningún pedido</p>
-            ) : (
-              cartItems.map((item, index) => (
-                <div key={index}>
-                  {products.map((products) => {
-                    if (products._id === item.productsId) {
-                      return (
-                        <div key={products._id}>
-                          <p>Nombre: {products.name}</p>
-                        </div>
-                      );
-                    }
-                  })}
-                  {Object.keys(item.tipo).length > 0 ? (
-                    <>
-                      <p>
-                        Opción:{" "}
-                        {Object.keys(item.tipo).find((key) => item.tipo[key]) ||
-                          "Ninguna"}
-                      </p>
-                    </>
-                  ) : (
-                    <span>No seleccionó ninguna opción</span>
-                  )}
-
-                  {Object.keys(item.extras).length > 0 &&
-                    Object.values(item.extras).some((count) => count > 0) && (
-                      <>
-                        <p>Extras:</p>
-                        <ul>
-                          {Object.keys(item.extras).map(
-                            (extra, index) =>
-                              item.extras[extra] > 0 && (
-                                <li key={index}>
-                                  {extra}: {item.extras[extra]}
-                                </li>
-                              )
-                          )}
-                        </ul>
-                        <p>
-                          Total de extras:{" "}
-                          {Object.values(item.extras).reduce(
-                            (total, count) => total + count,
-                            0
-                          )}
-                        </p>
-                      </>
-                    )}
-
-                  {item.sinTACC && <p>{item.sinTACC}</p>}
-                  {Object.entries(item.quitar).map(
-                    ([ingrediente, seleccionado]) =>
-                      seleccionado && (
-                        <p key={ingrediente}>{`Quitar: ${ingrediente}`}</p>
-                      )
-                  )}
-
-                  {item.aclaraciones && (
-                    <p>Aclaraciones: {item.aclaraciones}</p>
-                  )}
-                  <p>Cantidad: {item.cantidad}</p>
-                  <Button
-                    className="boton2"
-                    onClick={() => handleDeleteItem(index)}
-                  >
-                    Eliminar
-                  </Button>
-                </div>
-              ))
-            )}
-          </Modal.Body>
-          {/*<h6>Total de productos seleccionados: </h6>*/}
-          <Modal.Footer className="modal1">
-            {cartItems.length > 0 && (
-              <Button
-                variant="text-ligth"
-                className="boton3"
-                onClick={setSmShow}
-              >
-                {" "}
-                Confirmar pedido{" "}
-              </Button>
-            )}
-            <Button variant="secondary" onClick={handleClose}>
-              Cerrar
-            </Button>
-          </Modal.Footer>
-        </Modal>
-        <>
-          <Modal
-            size="sm"
-            show={smShow}
-            onHide={() => setSmShow(false)}
-            aria-labelledby="example-modal-sizes-title-sm"
-          >
-            <Modal.Header closeButton>
-              <Modal.Title id="example-modal-sizes-title-sm">
-                Detalle del pedido
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <p className="text-start">Hamburguesa {}</p>
-            </Modal.Body>
-          </Modal>
-        </>
+        <h1 className="text-center pt-4">¡Descubre Nuestro Delicioso Menú!</h1>       
         <Col>
           <h2 className="pt-4 text-center">Productos destacados</h2>
-          <CardV1
-            onAddCard={handleAddCard}
-            quitar={quitar}
-            setQuitar={handleQuitarChange}
-            onCloseModal={handleClose}
-            selectedProduct={selectedProductId}
-          />
+          <CardV1/>
         </Col>
-
         <section className="container mt-5 pt-5">
           <Form
             ref={searchFormRef}
@@ -404,15 +211,7 @@ const ListadoDeProdV1 = () => {
         ) : (
           <>
             {data?.length > 0 ? (
-              // <CardV2
-              //   data={data}
-              //   onAddCard={handleAddCard}
-              //   quitar={quitar}
-              //   setQuitar={handleQuitarChange}
-              //   onCloseModal={handleClose}
-              //   selectedProduct={selectedProductId}
-              // />
-              <CardProduct data={data} selectedProduct={selectedProductId} />
+              <CardProduct data={data} />
             ) : (
               <>
                 <p className="mb-5 fs-3">
