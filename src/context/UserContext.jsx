@@ -108,22 +108,28 @@ export const UserProvider = ({ children }) => {
   };
 
   const removeFromCart = (productId) => {
-    setCart(currentCart => currentCart.filter(item => item._id !== productId));
+    setCart((currentCart) =>
+      currentCart.filter((item) => item._id !== productId)
+    );
+  };
+
+  const clearCart = () => {
+    setCart([]);
   };
 
   const incrementQuantity = (productId) => {
-    setCart(currentCart => 
-      currentCart.map(product => 
+    setCart((currentCart) =>
+      currentCart.map((product) =>
         product._id === productId
           ? { ...product, quantity: product.quantity + 1 }
           : product
       )
     );
   };
-  
+
   const decrementQuantity = (productId) => {
-    setCart(currentCart => 
-      currentCart.map(product => 
+    setCart((currentCart) =>
+      currentCart.map((product) =>
         product._id === productId && product.quantity > 1
           ? { ...product, quantity: product.quantity - 1 }
           : product
@@ -182,10 +188,11 @@ export const UserProvider = ({ children }) => {
         getAllProduct,
         products,
         addToCart,
-        cart, 
+        cart,
         removeFromCart,
         incrementQuantity,
-        decrementQuantity
+        decrementQuantity,
+        clearCart
       }}
     >
       {children}
