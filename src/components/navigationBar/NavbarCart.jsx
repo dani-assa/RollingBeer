@@ -7,10 +7,15 @@ import { alertAdd } from "../../utils/alertCustom/alertCustom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const NavbarCart = () => {
-  const { cart, removeFromCart, incrementQuantity, decrementQuantity, } =
-    useAuth();
+  const {
+    cart,
+    removeFromCart,
+    incrementQuantity,
+    decrementQuantity,
+    clearCart,
+  } = useAuth();
   const [show, setShow] = useState(false);
-  const [tableNumber, setTableNumber] = useState('');
+  const [tableNumber, setTableNumber] = useState("");
   const [triggerRerender, setTriggerRerender] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -20,17 +25,19 @@ const NavbarCart = () => {
     0
   );
 
-  
+  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+
+
   useEffect(() => {
     const handleStorageChange = (event) => {
-      if (event.key === 'tableNumber') {
-        setTriggerRerender(prev => !prev); 
+      if (event.key === "tableNumber") {
+        setTriggerRerender((prev) => !prev);
       }
     };
 
-    window.addEventListener('storage', handleStorageChange);
+    window.addEventListener("storage", handleStorageChange);
     return () => {
-      window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener("storage", handleStorageChange);
     };
   }, []);
 
@@ -38,29 +45,34 @@ const NavbarCart = () => {
     localStorage.setItem("cart", JSON.stringify(cart));
     alertAdd("center", "success", "Pedido confirmado");
     const orderDetails = {
-      tableNumber, 
-      cart, 
+      tableNumber,
+      cart,
       total: total.toFixed(2),
-  };
+    };
 
-  localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
-  alertAdd("center", "success", `Pedido confirmado para la mesa ${tableNumber}`);
+    localStorage.setItem("orderDetails", JSON.stringify(orderDetails));
+    clearCart();
+    alertAdd(
+      "center",
+      "success",
+      `Pedido confirmado para la mesa ${tableNumber}`
+    );
   };
 
   useEffect(() => {
-    const savedTableNumber = localStorage.getItem('tableNumber');
+    const savedTableNumber = localStorage.getItem("tableNumber");
     if (savedTableNumber) {
       setTableNumber(savedTableNumber);
     }
   }, [triggerRerender]);
 
-  
-
-  return  (
+  return (
     <nav className="navbar">
-      <h1></h1>
+      {/* <h1></h1> */}
+      <img src="https://i.ibb.co/8bTtr9p/Logo-Rolling-Beer-removebg-preview1.png" alt="Logo" className="logo"/>
       <div className="cart-icon me-3" onClick={handleShow}>
         <ShoppingCartIcon />
+        {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
       </div>
       <Offcanvas show={show} onHide={handleClose} placement="end">
         <Offcanvas.Header closeButton>
@@ -74,6 +86,7 @@ const NavbarCart = () => {
                   <h5>{item.name}</h5>
                   <p>Precio: ${item.price}</p>
                   <p>Cantidad: {item.quantity}</p>
+                  <p className="fw-bold">Subtotal: ${(item.price * item.quantity).toFixed(2)}</p>
                   <Button
                     className="btnQuantily"
                     variant="primary"
