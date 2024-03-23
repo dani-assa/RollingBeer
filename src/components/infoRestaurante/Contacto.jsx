@@ -64,6 +64,7 @@ const Contacto = () => {
               <div className="mb-3">
                 <textarea
                   placeholder="Mensaje"
+                  maxLength={100}
                   className={`form-control ${
                     errors.mensaje ? "is-invalid" : ""
                   }`}
