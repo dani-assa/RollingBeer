@@ -1,25 +1,68 @@
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { useForm } from "react-hook-form";
 import { alertCustom } from "../../utils/alertCustom/alertCustom";
 import LoadingScreen from "../../components/loadingScreen/LoadingScreen";
 import FormRegisterV1 from "../Section/FormRegisterV1.jsx";
+import emailjs from "@emailjs/browser";
 
 const Contacto = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm();
+  const [formData, setFormData] = useState({ email: "", mensaje: "" });
+  const [errors, setErrors] = useState({ email: "", mensaje: "" });
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = () => {
-    setIsLoading(true);
-    alertCustom("Consulta registrada", "Su consulta fue registrada", "success");
-    setValue("email", "");
-    setValue("mensaje", "");
-    setIsLoading(false);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const validateForm = () => {
+    let valid = true;
+    const newErrors = { ...errors };
+
+    if (!formData.email) {
+      newErrors.email = "Por favor, introduce tu correo electrónico.";
+      valid = false;
+    } else if (!/\S+@\S+/.test(formData.email)) {
+      newErrors.email = "Por favor, introduce un correo electrónico válido.";
+      valid = false;
+    } else {
+      newErrors.email = "";
+    }
+
+    if (!formData.mensaje) {
+      newErrors.mensaje = "Por favor, introduce tu mensaje.";
+      valid = false;
+    } else {
+      newErrors.mensaje = "";
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    if (validateForm()) {
+      setIsLoading(true);
+      emailjs
+        .sendForm(
+          'service_flmu4lj',
+          'template_u8c1gph',
+          e.target,
+          'Yo_m98AJHfyDLsv1O'
+        )
+        .then((response) => {
+          alertCustom('Consulta registrada', 'Su consulta fue registrada', 'success');
+          setFormData({ email: "", mensaje: "" });
+        })
+        .catch((error) => {
+          alertCustom('Error', 'Hubo un error al enviar el formulario', 'error');
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
   };
 
   return (
@@ -40,44 +83,28 @@ const Contacto = () => {
         </Col>
         <Col xs={12} md={6} lg={4}>
           <div className="formulario-contacto">
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <form onSubmit={sendEmail}>
               <div className="mb-1">
                 <input
                   placeholder="Email"
                   type="email"
                   className={`form-control ${errors.email ? "is-invalid" : ""}`}
-                  id="email"
                   name="email"
-                  {...register("email", {
-                    required: "Por favor, introduce tu correo electrónico.",
-                    pattern: {
-                      value: /^\S+@\S+$/i,
-                      message:
-                        "Por favor, introduce un correo electrónico válido.",
-                    },
-                  })}
+                  value={formData.email}
+                  onChange={handleChange}
                 />
-                {errors.email && (
-                  <div className="invalid-feedback">{errors.email.message}</div>
-                )}
+                {errors.email && <div className="invalid-feedback">{errors.email}</div>}
               </div>
               <div className="mb-3">
                 <textarea
                   placeholder="Mensaje"
-                  className={`form-control ${
-                    errors.mensaje ? "is-invalid" : ""
-                  }`}
-                  id="mensaje"
+                  maxLength={100}
+                  className={`form-control ${errors.mensaje ? "is-invalid" : ""}`}
                   name="mensaje"
-                  {...register("mensaje", {
-                    required: "Por favor, introduce tu mensaje.",
-                  })}
+                  value={formData.mensaje}
+                  onChange={handleChange}
                 ></textarea>
-                {errors.mensaje && (
-                  <div className="invalid-feedback">
-                    {errors.mensaje.message}
-                  </div>
-                )}
+                {errors.mensaje && <div className="invalid-feedback">{errors.mensaje}</div>}
               </div>
               {isLoading && <LoadingScreen />}
               <button type="submit" className="btn btn-primary btnEnviarCont">
