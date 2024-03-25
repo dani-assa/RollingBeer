@@ -6,7 +6,7 @@ import { useProductAuth } from "../../context/ProductContext";
 import { alertCustom } from '../../utils/alertCustom/alertCustom';
 
 
-const CreateProductModal = ({ show, handleCloseModal }) => {
+const CreateProductModal = ({ show, handleCloseModal, onProductCreated }) => {
   const { signin } = useProductAuth();
   const { register, handleSubmit, formState: { errors }, setValue } = useForm();
 
@@ -22,6 +22,7 @@ const CreateProductModal = ({ show, handleCloseModal }) => {
       setValue("price", "");
       setValue("cantidad", "");
       alertCustom('¡Éxito!', 'El producto fue agregado correctamente.', 'success');
+      onProductCreated();
     } catch (error) {
       alertCustom('Upps', 'Ha ocurrido un error al crear el producto.', 'error');
     }
@@ -159,6 +160,7 @@ const CreateProductModal = ({ show, handleCloseModal }) => {
         </Form>
       </Modal.Body>
     </Modal>
+    
   );
 };
 

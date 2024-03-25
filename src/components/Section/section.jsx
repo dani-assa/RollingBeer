@@ -6,8 +6,9 @@ import { useNavigate } from 'react-router-dom';
 
 const Section = () => {
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
   const [tableNumber, setTableNumber] = useState(localStorage.getItem('tableNumber') || '');
+  const [showModal, setShowModal] = useState(!localStorage.getItem('tableNumber'));
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     
@@ -18,23 +19,28 @@ const Section = () => {
   }, []);
 
   const handleClose = () => {
-    
-    if (tableNumber) {
-      setShowModal(false);
-    }
+    setShowModal(false);
   };
 
   const handleSave = () => {
-    
-    if (tableNumber) {
+    const num = parseInt(tableNumber);
+    if (num > 0 && num <= 50) { 
       localStorage.setItem('tableNumber', tableNumber);
-      handleClose();
-      // navigate("/");
+      setShowModal(false);
+      navigate("/login");
+    } else {
+      setShowAlert(true); 
     }
   };
 
   const handleChange = (e) => {
-    setTableNumber(e.target.value);
+    const newValue = e.target.value.replace(/\D/g, ''); 
+    setTableNumber(newValue);
+    if (newValue !== '') {
+      setShowAlert(false); 
+    } else {
+      setShowAlert(true); 
+    }
   };
 
   return (
@@ -85,13 +91,18 @@ const Section = () => {
             <Form.Group>
               <Form.Label>Número de mesa:</Form.Label>
               <Form.Control
-                type="number"
+                type="text"
                 placeholder="Ingresa el número de mesa aquí"
                 value={tableNumber}
                 onChange={handleChange}
                 required
               />
             </Form.Group>
+            {showAlert && (
+              <Alert variant="danger">
+                {parseInt(tableNumber) <= 0 ? 'Por favor ingrese un número de mesa válido.' : 'No tenemos esa cantidad de mesas. Por favor, ingresa un número de mesa válido.'}
+              </Alert>
+            )}
           </Form>
         </Modal.Body>
         <Modal.Footer>
@@ -99,7 +110,7 @@ const Section = () => {
             Guardar
           </Button>
         </Modal.Footer>
-      </Modal>       
+      </Modal>      
       </Row>
     </Container>
   );

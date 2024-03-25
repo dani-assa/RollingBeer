@@ -16,6 +16,7 @@ export const useProductAuth = () => {
 
 export const ProductProvider = ({ children }) => {
   const [errors, setErrors] = useState("");
+  const [products, setProducts] = useState([]);
 
   const signin = async (product) => {
     try {
@@ -32,6 +33,10 @@ export const ProductProvider = ({ children }) => {
     }
   };
 
+  const addProduct = (product) => {
+    setProducts(currentProducts => [...currentProducts, product]);
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setErrors("");
@@ -43,6 +48,7 @@ export const ProductProvider = ({ children }) => {
     <ProductContext.Provider
       value={{
         signin,
+        addProduct,
         errors,
       }}
     >
