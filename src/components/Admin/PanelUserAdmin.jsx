@@ -53,12 +53,12 @@ const PanelUserAdmin = () => {
     }
   };
 
-  const handleDeleteUser = async (_id) => {
+  const handleDeleteUser = async (_id,userName) => {
     try {
       setIsLoading(true);
       alertConfirm(
         '¿Estas seguro?',
-        'Estas por eliminar el usuario de manera definitiva',
+        `Estas por eliminar el usuario ${userName} de manera definitiva`,
         'warning',
         'Eliminar',
         async () => {
@@ -122,7 +122,7 @@ const PanelUserAdmin = () => {
                       />
                     </td>
                     <td className="text-center">
-                      <Button variant='danger' size='sm' onClick={() => handleDeleteUser(user._id)}>
+                      <Button variant='danger' size='sm' onClick={() => handleDeleteUser(user._id, user.name)}>
                         <DeleteIcon fontSize='small'/>
                       </Button>
                     </td>
