@@ -40,6 +40,7 @@ const CardV1 = ({}) => {
       }
     ]
   };
+
   
   const favoriteProducts = products.filter(product => product.isFavorite);
 

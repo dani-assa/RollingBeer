@@ -61,6 +61,10 @@ const PanelMenuAdmin = () => {
       setIsLoading(false);
     }
   };
+
+  const handleProductCreated = () => {
+    getAllProduct(); 
+  };
   
 
   useEffect(() => {
@@ -141,7 +145,7 @@ const PanelMenuAdmin = () => {
         )}
       </Col>
       </Row>
-      <Menu show={showMenuModal} handleCloseModal={handleCloseMenuModal} />
+      <Menu show={showMenuModal} handleCloseModal={handleCloseMenuModal} onProductCreated={handleProductCreated} />
     </Container>
   )
 };
