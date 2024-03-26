@@ -15,11 +15,10 @@ import LoadingScreen from "../../loadingScreen/LoadingScreen";
 
 const Section = () => {
   const navigate = useNavigate();
-  const [showModal, setShowModal] = useState(false);
-  const [tableNumber, setTableNumber] = useState(
-    localStorage.getItem("tableNumber") || ""
-  );
-  const [loading, setLoading] = useState(false);
+  const [tableNumber, setTableNumber] = useState(localStorage.getItem('tableNumber') || '');
+  const [showModal, setShowModal] = useState(!localStorage.getItem('tableNumber'));
+  const [showAlert, setShowAlert] = useState(false);
+
 
   useEffect(() => {
     const savedTableNumber = localStorage.getItem("tableNumber");
@@ -29,21 +28,29 @@ const Section = () => {
   }, []);
 
   const handleClose = () => {
-    if (tableNumber) {
-      setShowModal(false);
-    }
+
+    setShowModal(false);
   };
 
   const handleSave = () => {
-    if (tableNumber) {
-      localStorage.setItem("tableNumber", tableNumber);
-      handleClose();
-      // navigate("/");
+    const num = parseInt(tableNumber);
+    if (num > 0 && num <= 50) { 
+      localStorage.setItem('tableNumber', tableNumber);
+      setShowModal(false);
+      navigate("/login");
+    } else {
+      setShowAlert(true); 
     }
   };
 
   const handleChange = (e) => {
-    setTableNumber(e.target.value);
+    const newValue = e.target.value.replace(/\D/g, ''); 
+    setTableNumber(newValue);
+    if (newValue !== '') {
+      setShowAlert(false); 
+    } else {
+      setShowAlert(true); 
+    }
   };
 
   return (
@@ -132,40 +139,35 @@ const Section = () => {
               </div>
             </Col>
           </div>
-        </div>
-        <Modal
-          show={showModal}
-          onHide={handleClose}
-          backdrop="static"
-          keyboard={false}
-        >
-          <Modal.Header>
-            <Modal.Title>Ingresar Número de Mesa</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form>
-              <Form.Group>
-                <Form.Label>Número de mesa:</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Ingresa el número de mesa aquí"
-                  value={tableNumber}
-                  onChange={handleChange}
-                  required
-                />
-              </Form.Group>
-            </Form>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button
-              variant="primary"
-              onClick={handleSave}
-              disabled={!tableNumber}
-            >
-              Guardar
-            </Button>
-          </Modal.Footer>
-        </Modal>
+          <Modal show={showModal} onHide={handleClose} backdrop="static" keyboard={false}>
+        <Modal.Header>
+          <Modal.Title>Ingresar Número de Mesa</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group>
+              <Form.Label>Número de mesa:</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Ingresa el número de mesa aquí"
+                value={tableNumber}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+            {showAlert && (
+              <Alert variant="danger">
+                {parseInt(tableNumber) <= 0 ? 'Por favor ingrese un número de mesa válido.' : 'No tenemos esa cantidad de mesas. Por favor, ingresa un número de mesa válido.'}
+              </Alert>
+            )}
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleSave} disabled={!tableNumber}>
+            Guardar
+          </Button>
+        </Modal.Footer>
+      </Modal>     
       </Row>
     </Container>
   );

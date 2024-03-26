@@ -23,10 +23,10 @@ const PanelMenuAdmin = () => {
   const {products, getAllProduct} = useAuth()
   
 
-  const deleteProduct = async (_id) => {
+  const deleteProduct = async (_id, name) => {
     try {
       setIsLoading(true);
-      alertConfirm('¿Estas seguro?', 'Estas por eliminar el producto de manera definitiva.', 'warning', 'Eliminar', async () => {
+      alertConfirm('¿Estas seguro?', `Estas por eliminar el producto ${name} de manera definitiva.`, 'warning', 'Eliminar', async () => {
         await axios.delete(`product/delete/${_id}`);
         getAllProduct();
       });
@@ -60,6 +60,10 @@ const PanelMenuAdmin = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleProductCreated = () => {
+    getAllProduct(); 
   };
   
 
@@ -114,7 +118,7 @@ const PanelMenuAdmin = () => {
                     <td className="text-center"><Form.Check checked={product.visible} onChange={(e) => disabledProduct(e, product._id)}/> </td>
                     <td className="text-center">
                       <Col>
-                        <Button variant='danger' className='mx-1 mb-1' size='sm' onClick={() => deleteProduct(product._id)}><DeleteIcon fontSize='small'/></Button>
+                        <Button variant='danger' className='mx-1 mb-1' size='sm' onClick={() => deleteProduct(product._id, product.name)}><DeleteIcon fontSize='small'/></Button>
                         <Button variant='light' className='mb-1' size='sm' onClick={() => toggleFavorite(product._id, product.isFavorite)}>
                         {product.isFavorite ? 
                           <FavoriteIcon fontSize='small'  style={{ color: 'red' }} /> : 
@@ -141,7 +145,7 @@ const PanelMenuAdmin = () => {
         )}
       </Col>
       </Row>
-      <Menu show={showMenuModal} handleCloseModal={handleCloseMenuModal} />
+      <Menu show={showMenuModal} handleCloseModal={handleCloseMenuModal} onProductCreated={handleProductCreated} />
     </Container>
   )
 };
