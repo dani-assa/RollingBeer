@@ -11,14 +11,19 @@ import {
 import "../../styles/Section.css";
 import CardV1 from "./CardV1";
 import { useNavigate } from "react-router-dom";
-import LoadingScreen from "../../loadingScreen/LoadingScreen";
+import LoadingScreen from "../loadingScreen/LoadingScreen";
+import { useAuth } from "../../context/UserContext";
 
 const Section = () => {
   const navigate = useNavigate();
-  const [tableNumber, setTableNumber] = useState(localStorage.getItem('tableNumber') || '');
-  const [showModal, setShowModal] = useState(!localStorage.getItem('tableNumber'));
+  const [tableNumber, setTableNumber] = useState(
+    localStorage.getItem("tableNumber") || ""
+  );
+  const [showModal, setShowModal] = useState(
+    !localStorage.getItem("tableNumber")
+  );
   const [showAlert, setShowAlert] = useState(false);
-
+  const { products, loading } = useAuth();
 
   useEffect(() => {
     const savedTableNumber = localStorage.getItem("tableNumber");
@@ -28,28 +33,27 @@ const Section = () => {
   }, []);
 
   const handleClose = () => {
-
     setShowModal(false);
   };
 
   const handleSave = () => {
     const num = parseInt(tableNumber);
-    if (num > 0 && num <= 50) { 
-      localStorage.setItem('tableNumber', tableNumber);
+    if (num > 0 && num <= 50) {
+      localStorage.setItem("tableNumber", tableNumber);
       setShowModal(false);
-      navigate("/login");
+      navigate("/");
     } else {
-      setShowAlert(true); 
+      setShowAlert(true);
     }
   };
 
   const handleChange = (e) => {
-    const newValue = e.target.value.replace(/\D/g, ''); 
+    const newValue = e.target.value.replace(/\D/g, "");
     setTableNumber(newValue);
-    if (newValue !== '') {
-      setShowAlert(false); 
+    if (newValue !== "") {
+      setShowAlert(false);
     } else {
-      setShowAlert(true); 
+      setShowAlert(true);
     }
   };
 
@@ -75,13 +79,7 @@ const Section = () => {
         </div>
 
         <div className="vh-100" id="section2">
-          {loading ? (
-            <LoadingScreen />
-          ) : (
-            <>
-              <CardV1 />
-            </>
-          )}
+          {loading ? <LoadingScreen /> : <CardV1 />}
         </div>
         <div
           className="d-flex justify-content-center align-items-center vh-100"
@@ -139,35 +137,47 @@ const Section = () => {
               </div>
             </Col>
           </div>
-          <Modal show={showModal} onHide={handleClose} backdrop="static" keyboard={false}>
-        <Modal.Header>
-          <Modal.Title>Ingresar Número de Mesa</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group>
-              <Form.Label>Número de mesa:</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingresa el número de mesa aquí"
-                value={tableNumber}
-                onChange={handleChange}
-                required
-              />
-            </Form.Group>
-            {showAlert && (
-              <Alert variant="danger">
-                {parseInt(tableNumber) <= 0 ? 'Por favor ingrese un número de mesa válido.' : 'No tenemos esa cantidad de mesas. Por favor, ingresa un número de mesa válido.'}
-              </Alert>
-            )}
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handleSave} disabled={!tableNumber}>
-            Guardar
-          </Button>
-        </Modal.Footer>
-      </Modal>     
+        </div>
+        <Modal
+          show={showModal}
+          onHide={handleClose}
+          backdrop="static"
+          keyboard={false}
+        >
+          <Modal.Header>
+            <Modal.Title>Ingresar Número de Mesa</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group>
+                <Form.Label>Número de mesa:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Ingresa el número de mesa aquí"
+                  value={tableNumber}
+                  onChange={handleChange}
+                  required
+                />
+              </Form.Group>
+              {showAlert && (
+                <Alert variant="danger">
+                  {parseInt(tableNumber) <= 0
+                    ? "Por favor ingrese un número de mesa válido."
+                    : "No tenemos esa cantidad de mesas. Por favor, ingresa un número de mesa válido."}
+                </Alert>
+              )}
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="primary"
+              onClick={handleSave}
+              disabled={!tableNumber}
+            >
+              Guardar
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </Row>
     </Container>
   );
