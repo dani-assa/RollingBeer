@@ -1,11 +1,11 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Card } from "react-bootstrap";
 import Slider from "react-slick";
 import '../listadoDeProductos/listado.css'
 import { useAuth } from "../../context/UserContext.jsx";
 
 const CardV1 = ({}) => {
-  const {products} = useAuth();
+  const {products, getAllProduct} = useAuth();
 
   const settings = {
     dots: true,
@@ -41,6 +41,9 @@ const CardV1 = ({}) => {
     ]
   };
 
+  useEffect(() => {
+    getAllProduct(); 
+  }, []);
   
   const favoriteProducts = products.filter(product => product.isFavorite);
 
