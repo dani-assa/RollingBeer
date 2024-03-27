@@ -51,7 +51,7 @@ export const UserProvider = ({ children }) => {
       const usuarioNormalizado = normalizarUsuario(res.data);
       setUser(usuarioNormalizado);
       setIsAuthenticated(true);
-      Cookies.set('token', res.data.token, { expires: 1, secure: true, sameSite: 'Strict' });
+      Cookies.set('token', token, { expires: 1, secure: true, sameSite: 'Strict' });
     } catch (error) {
       if (
         error.response &&
