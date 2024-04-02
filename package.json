@@ -13,6 +13,7 @@
     "@emailjs/browser": "^4.3.3",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
+    "@mercadopago/sdk-react": "^0.0.19",
     "@mui/icons-material": "^5.15.11",
     "@mui/material": "^5.15.11",
     "axios": "^1.6.7",
@@ -29,7 +30,7 @@
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1",
     "sweetalert": "^2.1.2",
-    "sweetalert2": "^11.10.6"
+    "sweetalert2": "^11.6.13"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
