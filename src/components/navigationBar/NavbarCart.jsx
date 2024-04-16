@@ -4,7 +4,7 @@ import { Button, Offcanvas } from "react-bootstrap";
 import { useAuth } from "../../context/UserContext";
 import { alertAdd } from "../../utils/alertCustom/alertCustom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
+// import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 import axios from '../../api/axios';
 const KEY_MP = import.meta.env.VITE_KEY_MP;
 
@@ -14,9 +14,9 @@ const NavbarCart = () => {
   const [triggerRerender, setTriggerRerender] = useState(false);
   const [show, setShow] = useState(false);
 
-  useEffect(() => {
-    initMercadoPago(KEY_MP, { locale: 'es-AR' });
-  }, []);
+  // useEffect(() => {
+  //   initMercadoPago(KEY_MP, { locale: 'es-AR' });
+  // }, []);
 
   const { cart, removeFromCart, incrementQuantity, decrementQuantity, clearCart } = useAuth();
   
@@ -60,34 +60,34 @@ const NavbarCart = () => {
     }
   }, [triggerRerender]);
 
-  const handleBuy = async () => {
-    try {
-      if (cart.length > 0) {
-        const body = {
-          items: cart.map(item => ({
-            title: item.name,
-            quantity: Number(item.quantity),
-            unit_price: Number(item.price) / Number(item.quantity),
-            currency_id: 'ARS', 
-          })),
-          back_urls: {
-            success: "https://main--rollingbeer1.netlify.app/",
-            failure: "https://main--rollingbeer1.netlify.app/",
-            pending: "https://main--rollingbeer1.netlify.app/",
-          },
-          auto_return: 'approved',
-        };
+  // const handleBuy = async () => {
+  //   try {
+  //     if (cart.length > 0) {
+  //       const body = {
+  //         items: cart.map(item => ({
+  //           title: item.name,
+  //           quantity: Number(item.quantity),
+  //           unit_price: Number(item.price) / Number(item.quantity),
+  //           currency_id: 'ARS', 
+  //         })),
+  //         back_urls: {
+  //           success: "https://main--rollingbeer1.netlify.app",
+  //           failure: "https://main--rollingbeer1.netlify.app",
+  //           pending: "https://main--rollingbeer1.netlify.app",
+  //         },
+  //         auto_return: 'approved',
+  //       };
         
-        const response = await axios.post('/create_preference', body); 
-        const { id } = response.data; 
-        setPreferenceIds(id); 
-      } else {
-        console.error('No hay productos en el carrito');
-      }
-    } catch (error) {
-      console.error('Error al crear preferencia:', error);
-    }
-  };
+  //       const response = await axios.post('/create_preference', body); 
+  //       const { id } = response.data; 
+  //       setPreferenceIds(id); 
+  //     } else {
+  //       console.error('No hay productos en el carrito');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error al crear preferencia:', error);
+  //   }
+  // };
   
 
   return (
@@ -118,7 +118,7 @@ const NavbarCart = () => {
               <div className="cart-total mb-4">
                 <h5>Total del Pedido: ${total.toFixed(2)}</h5>
               </div>
-              <Button variant="success" onClick={handleBuy}>Confirmar Pedido</Button>
+              <Button variant="success" onClick={handleConfirmOrder}>Confirmar Pedido</Button>
               {preferenceIds.length > 0 && <Wallet initialization={{ preferenceId: preferenceIds }} customization={{ texts:{ valueProp: 'smart_option'}}} />}
             </>
           ) : (
