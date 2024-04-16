@@ -71,9 +71,9 @@ const NavbarCart = () => {
             currency_id: 'ARS', 
           })),
           back_urls: {
-            success: "http://localhost:5173/",
-            failure: "http://localhost:5173/",
-            pending: "http://localhost:5173/",
+            success: "https://main--rollingbeer1.netlify.app/",
+            failure: "https://main--rollingbeer1.netlify.app/",
+            pending: "https://main--rollingbeer1.netlify.app/",
           },
           auto_return: 'approved',
         };
